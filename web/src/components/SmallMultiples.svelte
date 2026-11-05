@@ -92,31 +92,31 @@
 
 <style>
   /* boxed controls, like a magazine's section tabs */
-  .controls { display: flex; flex-wrap: wrap; align-items: stretch; margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.78rem; }
+  .controls { display: flex; flex-wrap: wrap; align-items: stretch; margin-top: var(--space-3); font-family: var(--font-sans); font-size: 0.88rem; }
   .controls span { display: flex; align-items: center; padding-right: 0.75rem; color: var(--text-muted); }
   .controls button { all: unset; cursor: pointer; padding: 0.4rem 0.8rem; border: 1px solid var(--rule); margin-left: -1px; color: var(--text); }
   .controls button:hover { background: var(--grid); }
   .controls button[aria-pressed='true'] { background: var(--text); color: var(--page); font-weight: 600; }
   .controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; position: relative; }
 
-  h3 { display: flex; align-items: baseline; gap: 0.5rem; font-size: 1.35rem; font-weight: 500; letter-spacing: -0.01em;
-       margin: 2.5rem 0 0.2rem; padding-top: 0.5rem; border-top: 1px solid var(--rule); }
-  .count { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
+  h3 { display: flex; align-items: baseline; gap: 0.5rem; font-family: var(--font-sans); font-size: 1.2rem; font-weight: 700;
+       margin: var(--space-5) 0 0.25rem; }
+  .count { font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted); }
   .note { color: var(--text-muted); font-size: 0.95rem; margin: 0.6rem 0 0; }
   h3 + .note { margin-top: 0; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: 1.6rem 1.25rem; margin-top: 1.1rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: var(--space-3); margin-top: var(--space-2); }
   .cell { all: unset; box-sizing: border-box; display: block; cursor: pointer; }
   .cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
   .cell:hover .name { text-decoration: underline; text-underline-offset: 3px; }
 
-  .head { display: flex; align-items: center; gap: 0.4rem; font-size: 0.98rem; font-weight: 600; margin-bottom: 0.3rem; min-width: 0; }
+  .head { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-sans); font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; min-width: 0; }
   .head img { width: 14px; height: 10.5px; flex: none; box-shadow: 0 0 0 0.5px var(--border); }
   .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .score { margin-left: auto; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .score { margin-left: auto; font-family: var(--font-chart); font-size: 0.75rem; font-weight: 500; font-variant-numeric: tabular-nums; }
   .current .name, .current .score { color: var(--accent); }
   svg { display: block; width: 100%; height: auto; overflow: visible; }
-  .foot { display: flex; justify-content: space-between; gap: 0.3rem; font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-muted);
+  .foot { display: flex; justify-content: space-between; gap: 0.3rem; font-family: var(--font-chart); font-size: 0.6rem; color: var(--text-muted);
           margin-top: 0.25rem; font-variant-numeric: tabular-nums; }
   .change, .shown { white-space: nowrap; }
   .shown { color: var(--accent); font-weight: 600; }

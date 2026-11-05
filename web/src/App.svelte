@@ -51,10 +51,7 @@
     in V-Dem’s data, this page follows the Liberal Democracy Index since 1945, from 0 (least democratic) to 1 (most),
     and shades the party that led the government during each big rise or fall.
   </p>
-  <p class="byline">
-    By <a href="https://gitnoise.github.io/portfolio/">Patrick Wojda</a> · {countries.length || 45} countries · 1945–2025 ·
-    Liberal Democracy Index
-  </p>
+  <p class="byline">By <a href="https://gitnoise.github.io/portfolio/">Patrick Wojda</a></p>
 </header>
 
 <div class="picker" id="chart">
@@ -95,27 +92,27 @@
 
 <footer>
   <p>Methods, data and code: <a href="https://github.com/GitNoise/europe-democracy-dashboard">github.com/GitNoise/europe-democracy-dashboard</a>.</p>
-  <p>Made by Patrick Wojda · <a href="https://gitnoise.github.io/portfolio/">Portfolio</a> · <a href="https://www.linkedin.com/in/patrickwojda/">LinkedIn</a></p>
+  <p>Made by Patrick Wojda. More of my work is in my <a href="https://gitnoise.github.io/portfolio/">portfolio</a>, or find me on <a href="https://www.linkedin.com/in/patrickwojda/">LinkedIn</a>.</p>
 </footer>
 
 <style>
-  .masthead { margin: 0 -1rem 3rem; border-bottom: 1px solid var(--rule); font-family: var(--font-mono); font-size: 0.78rem; }
+  .masthead { margin: 0 -1rem var(--space-5); font-family: var(--font-sans); font-size: 0.88rem; }
   .masthead .inner { max-width: 46rem; margin-inline: auto; padding: 0.9rem 1rem; display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap; }
-  .masthead .title { font-weight: 600; }
+  .masthead .title { font-weight: 700; }
   .masthead .links { margin-left: auto; display: flex; gap: 1.25rem; }
   .masthead a { color: var(--text); text-decoration: none; }
   .masthead a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   .intro, .picker, .frame, .all, footer { max-width: 46rem; margin-inline: auto; }
-  .intro { margin-bottom: 2.25rem; }
-  .intro h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 500; line-height: 1.04; letter-spacing: -0.02em;
-              margin: 0 0 1.1rem; text-wrap: balance; }
-  .dek { font-size: 1.25rem; line-height: 1.5; margin: 0 0 1.1rem; max-width: 40rem; text-wrap: pretty; }
-  .byline { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin: 0; }
+  .intro { margin-bottom: 0; }
+  .intro h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 700; line-height: 1.06; letter-spacing: -0.015em;
+              margin: 0 0 var(--space-2); text-wrap: balance; }
+  .dek { font-size: 1.25rem; line-height: 1.5; margin: 0 0 var(--space-2); max-width: 40rem; text-wrap: pretty; }
+  .byline { font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted); margin: 0; }
 
-  /* the picker box and the link to the grid, centred side by side with room around them */
-  .picker { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem 1.25rem; margin-top: 2rem; margin-bottom: 3rem;
-            font-family: var(--font-mono); font-size: 0.8rem; scroll-margin-top: 1rem; }
+  /* the picker box and the link to the grid, side by side on the text column's left edge */
+  .picker { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-top: var(--space-5); margin-bottom: var(--space-3);
+            font-family: var(--font-sans); font-size: 0.9rem; scroll-margin-top: 1rem; }
   .bar { display: flex; align-items: stretch; min-width: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
   .bar label { display: flex; align-items: center; padding: 0.5rem 0.75rem; border-inline: 1px solid var(--rule); }
   select { font: inherit; font-weight: 600; color: var(--text); background: transparent; border: none; border-radius: 0; cursor: pointer;
@@ -138,13 +135,13 @@
     .frame { aspect-ratio: auto; }
     .frame > :global(.chart) { flex: none; height: 22rem; }
   }
-  .status { color: var(--text-muted); margin: auto; font-family: var(--font-mono); font-size: 0.8rem; }
-  .source { font-family: var(--font-mono); color: var(--text-muted); font-size: 0.68rem; line-height: 1.6; margin: 1.25rem 0 0; }
+  .status { color: var(--text-muted); margin: auto; font-family: var(--font-sans); font-size: 0.9rem; }
+  .source { font-family: var(--font-sans); color: var(--text-muted); font-size: 0.78rem; line-height: 1.6; margin: var(--space-2) 0 0; }
 
-  .all { margin-top: 4rem; padding-top: 0.75rem; border-top: 1px solid var(--rule); scroll-margin-top: 1rem; }
-  .all h2 { font-size: 2rem; font-weight: 500; line-height: 1.1; letter-spacing: -0.015em; margin: 0 0 0.5rem; }
+  .all { margin-top: var(--space-6); scroll-margin-top: 1rem; }
+  .all h2 { font-size: 2rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; margin: 0 0 var(--space-1); }
   .all p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.45; margin: 0; }
-  footer { margin-top: 3.5rem; padding-top: 0.75rem; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
+  footer { margin-top: var(--space-7); font-family: var(--font-sans); font-size: 0.82rem; color: var(--text-muted); }
   footer a, .byline a { color: var(--text); text-underline-offset: 3px; }
   footer p { margin: 0 0 0.4rem; }
 </style>

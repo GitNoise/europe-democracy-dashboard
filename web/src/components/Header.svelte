@@ -19,8 +19,8 @@
 {/if}
 
 <style>
-  h1 { font-size: 1.9rem; font-weight: 500; line-height: 1.1; letter-spacing: -0.015em; margin: 0 0 0.6rem; text-wrap: balance; }
+  h1 { font-size: 1.9rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; margin: 0 0 var(--space-1); text-wrap: pretty; }
   p { color: var(--text-muted); font-size: 1rem; line-height: 1.45; margin: 0 0 0.35rem; text-wrap: pretty; }
-  p.last { margin-bottom: 1.4rem; }
+  p.last { margin-bottom: var(--space-3); }
   b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
 </style>
