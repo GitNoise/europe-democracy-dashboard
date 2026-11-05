@@ -51,15 +51,20 @@
     in V-Dem’s data, this page follows the Liberal Democracy Index since 1945, from 0 (least democratic) to 1 (most),
     and shades the party that led the government during each big rise or fall.
   </p>
-  <p class="byline">{countries.length || 45} countries · 1945–2025 · Liberal Democracy Index</p>
+  <p class="byline">
+    By <a href="https://gitnoise.github.io/portfolio/">Patrick Wojda</a> · {countries.length || 45} countries · 1945–2025 ·
+    Liberal Democracy Index
+  </p>
 </header>
 
-<div class="bar" id="chart">
-  <label for="country">Country</label>
-  <select id="country" value={country?.id} onchange={(e) => select(e.currentTarget.value)}>
-    {#each byName as c (c.id)}<option value={c.id}>{c.name}</option>{/each}
-  </select>
-  <button type="button" class="link" onclick={scrollToAll}>All countries ↓</button>
+<div class="picker" id="chart">
+  <div class="bar">
+    <label for="country">Country</label>
+    <select id="country" value={country?.id} onchange={(e) => select(e.currentTarget.value)}>
+      {#each byName as c (c.id)}<option value={c.id}>{c.name}</option>{/each}
+    </select>
+  </div>
+  <span class="or">or <button type="button" class="link" onclick={scrollToAll}>browse all countries ↓</button></span>
 </div>
 
 <main class="frame">
@@ -89,7 +94,8 @@
 {/if}
 
 <footer>
-  Methods, data and code: <a href="https://github.com/GitNoise/europe-democracy-dashboard">github.com/GitNoise/europe-democracy-dashboard</a>.
+  <p>Methods, data and code: <a href="https://github.com/GitNoise/europe-democracy-dashboard">github.com/GitNoise/europe-democracy-dashboard</a>.</p>
+  <p>Made by Patrick Wojda · <a href="https://gitnoise.github.io/portfolio/">Portfolio</a> · <a href="https://www.linkedin.com/in/patrickwojda/">LinkedIn</a></p>
 </footer>
 
 <style>
@@ -100,25 +106,27 @@
   .masthead a { color: var(--text); text-decoration: none; }
   .masthead a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-  .intro, .bar, .frame, .all, footer { max-width: 46rem; margin-inline: auto; }
+  .intro, .picker, .frame, .all, footer { max-width: 46rem; margin-inline: auto; }
   .intro { margin-bottom: 2.25rem; }
   .intro h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 500; line-height: 1.04; letter-spacing: -0.02em;
               margin: 0 0 1.1rem; text-wrap: balance; }
   .dek { font-size: 1.25rem; line-height: 1.5; margin: 0 0 1.1rem; max-width: 40rem; text-wrap: pretty; }
   .byline { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin: 0; }
 
-  .bar { display: flex; align-items: stretch; margin-bottom: 1.75rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
-         font-family: var(--font-mono); font-size: 0.8rem; scroll-margin-top: 1rem; }
-  .bar label { display: flex; align-items: center; padding: 0.5rem 0.75rem 0.5rem 0; border-right: 1px solid var(--rule); }
+  /* the picker box and the link to the grid, centred side by side with room around them */
+  .picker { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem 1.25rem; margin-top: 2rem; margin-bottom: 3rem;
+            font-family: var(--font-mono); font-size: 0.8rem; scroll-margin-top: 1rem; }
+  .bar { display: flex; align-items: stretch; min-width: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .bar label { display: flex; align-items: center; padding: 0.5rem 0.75rem; border-inline: 1px solid var(--rule); }
   select { font: inherit; font-weight: 600; color: var(--text); background: transparent; border: none; border-radius: 0; cursor: pointer;
            padding: 0.5rem 1.8rem 0.5rem 0.75rem; appearance: none;
            background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(-45deg, transparent 50%, currentColor 50%);
            background-size: 5px 5px; background-position: right 12px center, right 7px center; background-repeat: no-repeat; }
-  /* the dropdown is its own box, closed by a rule; the link to the grid sits apart on the right */
-  select { flex: 0 1 15rem; min-width: 0; border-right: 1px solid var(--rule); }
+  /* the dropdown is its own box, closed by a rule; the link to the grid sits on its own row below */
+  select { flex: 0 1 15rem; min-width: 10rem; border-right: 1px solid var(--rule); }
   select:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-  .link { all: unset; cursor: pointer; margin-left: auto; padding: 0.5rem 0 0.5rem 1rem; color: var(--text); text-decoration: underline;
-          text-underline-offset: 3px; white-space: nowrap; }
+  .or { color: var(--text-muted); white-space: nowrap; }
+  .link { all: unset; cursor: pointer; color: var(--text); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
   .link:hover { color: var(--accent); }
   .link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
@@ -137,5 +145,6 @@
   .all h2 { font-size: 2rem; font-weight: 500; line-height: 1.1; letter-spacing: -0.015em; margin: 0 0 0.5rem; }
   .all p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.45; margin: 0; }
   footer { margin-top: 3.5rem; padding-top: 0.75rem; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
-  footer a { color: var(--text); }
+  footer a, .byline a { color: var(--text); text-underline-offset: 3px; }
+  footer p { margin: 0 0 0.4rem; }
 </style>
