@@ -4,7 +4,7 @@ Every rule that turns V-Dem data into a chart. Rules marked **[build]** are appl
 
 ## 1. Data [build]
 
-- Source: V-Dem country-year dataset. Countries: `countries` in `config.json` (European countries with a national election 2022–2027, incl. Türkiye, Cyprus and the South Caucasus; Ukraine left out). Years from `first_year` (1945) to the last year in the release.
+- Source: V-Dem country-year dataset. Countries: `countries` in `config.json` (all European countries in V-Dem, incl. Türkiye, Cyprus and the South Caucasus). Years from `first_year` (1945) to the last year in the release.
 - Per country-year: Liberal Democracy Index (`v2x_libdem`) with its low and high estimates (`_codelow`, `_codehigh`, ±1 standard deviation), Regimes of the World class (`v2x_regime`: 0 closed autocracy, 1 electoral autocracy, 2 electoral democracy, 3 liberal democracy), national election year (`v2xel_elecparl` or `v2xel_elecpres` = 1).
 - Governments (`web/public/data/governments.csv`) are maintained by hand: party code, full name, colour, headline name, start and end date. They only need to cover years inside shaded moves.
 

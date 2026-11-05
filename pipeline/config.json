@@ -44,9 +44,10 @@
     "SVN",
     "SWE",
     "TUR",
+    "UKR",
     "XKX"
   ],
-  "country_note": "European countries with a national election 2022–2027 (incl. Türkiye, Cyprus, South Caucasus; Ukraine left out). Armenia’s June 2026 election comes from election calendars, not V-Dem.",
+  "country_note": "All European countries in V-Dem (incl. Türkiye, Cyprus, South Caucasus). Armenia’s June 2026 election comes from election calendars, not V-Dem.",
   "thresholds": {
     "ep_start": 0.01,
     "ep_turn": 0.03,

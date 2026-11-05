@@ -1,6 +1,6 @@
 # Democracy in Europe, 1945–2025
 
-Who governed during the biggest rises and falls in V-Dem's Liberal Democracy Index, for 44 European countries with a national election between 2022 and 2027.
+Who governed during the biggest rises and falls in V-Dem's Liberal Democracy Index, for all 45 European countries in V-Dem.
 
 **Live site:** https://gitnoise.github.io/europe-democracy-dashboard/ (link to a country with `#HUN`, `#TUR`, …)
 
@@ -37,7 +37,7 @@ npm run dev
 
 ## Publish on GitHub Pages
 
-The workflow in `.github/workflows/deploy.yml` builds and publishes the site on every push to `main`.
+The workflow in `.github/workflows/pages.yml` builds and publishes the site on every push to `main`.
 Once, in the repository: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 ## Update for a new V-Dem release

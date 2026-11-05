@@ -73,7 +73,8 @@ export function chartLayout(country, width, height) {
     labels: labels.map((l) => ({ ...l, baseline: top - 8 - l.row * LABEL_ROW_HEIGHT })),
     gridlines: [0.5, 1].map((v) => ({ y: y(v), label: v === 1 ? '1.0' : String(v) })),
     // each year's label sits under the middle of that year's segment (its score is plotted at 31 December)
-    ticks: TICK_YEARS.map((yr) => ({ x: x(Date.UTC(yr, 6, 1)), label: String(yr) })),
+    // narrow charts (phones) label every other decade so the years don't run into each other
+    ticks: TICK_YEARS.filter((_, i) => width >= 480 || i % 2 === 0).map((yr) => ({ x: x(Date.UTC(yr, 6, 1)), label: String(yr) })),
     path: line().x((d) => x(d.date)).y((d) => y(d.val))(series),
     end: { x: x(last.date), y: y(last.val), label: fmt(last.val) },
     reference, brackets, arrows,
