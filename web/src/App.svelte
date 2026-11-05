@@ -35,27 +35,13 @@
 </script>
 
 <header class="intro">
-  <p class="kicker">V-Dem Liberal Democracy Index · {countries.length || 45} countries · 1945–2025</p>
   <h1>Who governed when Europe’s democracies rose and fell</h1>
   <p class="dek">
     Democracies don’t erode or recover on their own: someone is in charge while it happens. For every European country
-    in V-Dem’s data, this page follows the Liberal Democracy Index since 1945 and shades the parties in power during
-    each big rise or fall.
+    in V-Dem’s data, this page follows the Liberal Democracy Index since 1945, from 0 (least democratic) to 1 (most),
+    and shades the party that led the government during each big rise or fall.
   </p>
-  <ul class="key">
-    <li>
-      <svg viewBox="0 0 28 14" aria-hidden="true"><path d="M1 11 L8 9 L13 10 L19 4 L27 3" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round" /></svg>
-      <span><b>The line</b> is V-Dem’s score, from 0 (least democratic) to 1 (most).</span>
-    </li>
-    <li>
-      <svg viewBox="0 0 28 14" aria-hidden="true"><rect x="2" y="0" width="11" height="14" fill="#1B3892" fill-opacity="0.22" /><rect x="15" y="0" width="11" height="14" fill="#9aa0a6" fill-opacity="0.22" /></svg>
-      <span><b>Shading</b> marks who led the government during a rise or fall of 0.10 or more. Grey: coalitions, caretakers, no set colour.</span>
-    </li>
-    <li>
-      <svg viewBox="0 0 28 14" aria-hidden="true"><path d="M3 3 C 12 2, 18 5, 22 11" fill="none" stroke="var(--ink)" stroke-width="1.2" /><path d="M19 10 L22 11 L22.5 7.8" fill="none" stroke="var(--ink)" stroke-width="1.2" /></svg>
-      <span><b>Notes</b> say what happened at each turning point.</span>
-    </li>
-  </ul>
+  <p class="byline">Data: V-Dem Institute, v16 · {countries.length || 45} countries, 1945–2025</p>
 </header>
 
 <div class="bar" id="chart">
@@ -63,7 +49,7 @@
   <select id="country" value={country?.id} onchange={(e) => select(e.currentTarget.value)}>
     {#each byName as c (c.id)}<option value={c.id}>{c.name}</option>{/each}
   </select>
-  <button type="button" class="link" onclick={scrollToAll}>or browse all countries ↓</button>
+  <button type="button" class="link" onclick={scrollToAll}>All countries ↓</button>
 </div>
 
 <main class="frame">
@@ -98,24 +84,24 @@
 
 <style>
   .intro, .bar, .frame, .all, footer { max-width: 46rem; margin-inline: auto; }
-  .intro { padding: 0.5rem 0 1.75rem; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem; }
-  .kicker { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 0.6rem; }
-  .intro h1 { font-family: var(--font-serif); font-size: clamp(1.9rem, 5vw, 2.6rem); line-height: 1.06; letter-spacing: -0.02em;
-              margin: 0 0 0.8rem; text-wrap: balance; }
-  .dek { font-size: 1.05rem; line-height: 1.5; margin: 0 0 1.25rem; max-width: 38rem; text-wrap: pretty; }
-  .key { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.6rem 1.25rem; }
-  .key li { display: flex; gap: 0.55rem; align-items: flex-start; font-size: 0.8rem; line-height: 1.4; color: var(--text-muted); }
-  .key svg { flex: none; width: 28px; height: 14px; margin-top: 0.15rem; }
-  .key b { color: var(--text); }
-  .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; margin-bottom: 0.75rem; font-size: 0.8rem; color: var(--text-muted);
-         scroll-margin-top: 1rem; }
-  .link { all: unset; cursor: pointer; color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; }
-  .link:hover { color: var(--text); }
-  .link:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; border-radius: 2px; }
-  .all { scroll-margin-top: 1rem; }
-  select { font: inherit; font-size: 0.85rem; color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.5rem; }
-  .frame { position: relative; aspect-ratio: 4 / 5; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden;
-           padding: 1.75rem 1.75rem 1.25rem; background: var(--panel); border: 1px solid var(--border); }
+  .intro { margin-bottom: 2rem; }
+  .intro h1 { font-size: clamp(1.9rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.025em;
+              margin: 0 0 1rem; text-wrap: balance; }
+  .dek { font-size: 1.125rem; line-height: 1.55; margin: 0 0 1rem; max-width: 40rem; text-wrap: pretty; }
+  .byline { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
+
+  .bar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 0.9rem; padding-top: 0.6rem; border-top: 1px solid var(--rule);
+         margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-muted); scroll-margin-top: 1rem; }
+  select { font: inherit; font-size: 1rem; font-weight: 700; color: var(--text); background: transparent; border: none;
+           border-bottom: 1px solid var(--text); border-radius: 0; padding: 0.1rem 1.4rem 0.15rem 0; cursor: pointer;
+           appearance: none; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(-45deg, transparent 50%, currentColor 50%);
+           background-size: 5px 5px; background-position: right 6px center, right 1px center; background-repeat: no-repeat; }
+  select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .link { all: unset; cursor: pointer; margin-left: auto; color: var(--text-muted); }
+  .link:hover { color: var(--accent); }
+  .link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .frame { position: relative; aspect-ratio: 4 / 5; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden; }
   .frame > :global(*) { flex: none; }
   .frame > :global(.chart) { flex: 1 1 0; }
   /* on phones the 4:5 frame leaves the chart no room under a long headline: let the frame grow, give the chart a fixed height */
@@ -124,10 +110,12 @@
     .frame > :global(.chart) { flex: none; height: 22rem; }
   }
   .status { color: var(--text-muted); margin: auto; }
-  .source { color: var(--text-muted); font-size: 0.68rem; line-height: 1.45; margin: 1.25rem 0 0; }
-  .all { margin-top: 2.5rem; }
-  .all h2 { font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.15; margin: 0 0 0.35rem; letter-spacing: -0.01em; }
-  .all p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.4; margin: 0; }
-  footer { margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); }
+  .source { color: var(--text-muted); font-size: 0.7rem; line-height: 1.5; margin: 1.25rem 0 0; }
+
+  .all { margin-top: 3.5rem; padding-top: 0.6rem; border-top: 1px solid var(--rule); scroll-margin-top: 1rem; }
+  .all h2 { font-size: 1.5rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.015em; margin: 0 0 0.4rem; }
+  .all p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.45; margin: 0; }
+  footer { margin-top: 3rem; padding-top: 0.6rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-muted); }
   footer a { color: inherit; }
+  footer a:hover { color: var(--accent); }
 </style>

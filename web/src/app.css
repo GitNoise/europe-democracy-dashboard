@@ -1,34 +1,38 @@
-/* Design tokens, light and dark. Component styles live in each .svelte file. */
+/* Design tokens, light and dark. Component styles live in each .svelte file.
+   One typeface (Libre Franklin); hierarchy from size and weight. Plain page, no boxes; one accent colour for highlights. */
 :root {
   color-scheme: light dark;
-  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-sans: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
-  --ink: #121212;            /* the line, arrows, brackets */
-  --text: #121212;
-  --text-muted: #6b6b6b;
-  --page: #f3f3f1;
-  --panel: #ffffff;
-  --border: #dedede;
+  --ink: #1a1a1a;            /* the line, arrows, brackets */
+  --text: #1a1a1a;
+  --text-muted: #666666;
+  --accent: #d0490f;         /* the selected country, links on hover */
+  --page: #ffffff;
+  --panel: #ffffff;          /* same as the page: used to cut gaps between bands and for the hover dot */
+  --border: #e2e2e2;
+  --rule: #1a1a1a;           /* thin rules above sections */
   --axis: #9a9a9a;
-  --grid: #e6e6e6;
+  --grid: #ebebeb;
   --popover: #ffffff;
-  --popover-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --popover-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --ink: #ececec;
     --text: #ececec;
-    --text-muted: #a3a3a3;
+    --text-muted: #a0a0a0;
+    --accent: #ff8a4c;
     --page: #121212;
-    --panel: #1c1c1c;
+    --panel: #121212;
     --border: #333333;
+    --rule: #ececec;
     --axis: #777777;
-    --grid: #2c2c2c;
-    --popover: #262626;
-    --popover-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --grid: #2a2a2a;
+    --popover: #1f1f1f;
+    --popover-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   }
 }
 
 html, body { margin: 0; background: var(--page); color: var(--text); }
-body { padding: 1.5rem 1rem 3rem; font-family: var(--font-sans); }
+body { padding: 2.5rem 1rem 3rem; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }

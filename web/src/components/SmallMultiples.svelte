@@ -11,7 +11,7 @@
   const CHANGE_FROM = 2015;
   const GROUPS = ['Closed autocracies', 'Electoral autocracies', 'Electoral democracies', 'Liberal democracies'];
   const SORTS = [
-    { key: 'regime', label: 'By regime' },
+    { key: 'regime', label: 'Regime' },
     { key: 'change', label: `Change since ${CHANGE_FROM}` },
     { key: 'name', label: 'A–Z' },
   ];
@@ -50,6 +50,7 @@
 </script>
 
 <div class="controls" role="group" aria-label="Order countries">
+  <span>Sort by</span>
   {#each SORTS as s (s.key)}
     <button type="button" aria-pressed={sortBy === s.key} onclick={() => (sortBy = s.key)}>{s.label}</button>
   {/each}
@@ -75,8 +76,8 @@
           {#each bandsOf(c) as b}<rect x={b.x0} width={b.x1 - b.x0} y="0" height={H} fill={b.colour} fill-opacity="0.22" />{/each}
           {#each [0.5, 1] as v}<line x1="0" x2={W} y1={y(v)} y2={y(v)} stroke="var(--grid)" />{/each}
           <line x1="0" x2={W} y1={H} y2={H} stroke="var(--axis)" />
-          <path d={line().x((d) => x(d.date)).y((d) => y(d.val))(c.series)} fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round" />
-          <circle cx={x(c.last.date)} cy={y(c.last.val)} r="2.2" fill="var(--ink)" />
+          <path d={line().x((d) => x(d.date)).y((d) => y(d.val))(c.series)} fill="none" stroke={c.id === selected ? 'var(--accent)' : 'var(--ink)'} stroke-width={c.id === selected ? 2 : 1.4} stroke-linejoin="round" />
+          <circle cx={x(c.last.date)} cy={y(c.last.val)} r="2.2" fill={c.id === selected ? 'var(--accent)' : 'var(--ink)'} />
         </svg>
         <div class="foot">
           <span>{FIRST_YEAR}</span>
@@ -90,32 +91,30 @@
 {/each}
 
 <style>
-  .controls { display: inline-flex; flex-wrap: wrap; gap: 0; margin-top: 1rem; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--panel); }
-  .controls button { all: unset; cursor: pointer; font-size: 0.78rem; padding: 0.35rem 0.75rem; color: var(--text-muted); border-left: 1px solid var(--border); }
-  .controls button:first-child { border-left: none; }
+  .controls { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1rem; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted); }
+  .controls button { all: unset; cursor: pointer; color: var(--text-muted); padding-bottom: 1px; border-bottom: 2px solid transparent; }
   .controls button:hover { color: var(--text); }
-  .controls button[aria-pressed='true'] { background: var(--text); color: var(--panel); font-weight: 700; }
-  .controls button:focus-visible { outline: 2px solid var(--text); outline-offset: -2px; }
+  .controls button[aria-pressed='true'] { color: var(--text); font-weight: 700; border-bottom-color: var(--text); }
+  .controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  h3 { display: flex; align-items: baseline; gap: 0.4rem; font-size: 0.95rem; margin: 1.6rem 0 0.1rem; }
-  .count { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); font-variant-numeric: tabular-nums; }
-  .note { color: var(--text-muted); font-size: 0.78rem; margin: 0.15rem 0 0; }
+  h3 { display: flex; align-items: baseline; gap: 0.4rem; font-size: 1rem; font-weight: 700; margin: 2.25rem 0 0.15rem; }
+  .count { font-size: 0.8rem; font-weight: 400; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .note { color: var(--text-muted); font-size: 0.8rem; margin: 0.5rem 0 0; }
   h3 + .note { margin-top: 0; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 0.6rem; margin-top: 0.7rem; }
-  .cell { all: unset; box-sizing: border-box; display: block; cursor: pointer; padding: 0.55rem 0.6rem 0.45rem;
-          background: var(--panel); border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.12s, box-shadow 0.12s; }
-  .cell:hover { border-color: var(--axis); box-shadow: var(--popover-shadow); }
-  .cell:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
-  .cell.current { border-color: var(--text); box-shadow: 0 0 0 1px var(--text); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: 1.6rem 1.25rem; margin-top: 1rem; }
+  .cell { all: unset; box-sizing: border-box; display: block; cursor: pointer; }
+  .cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .cell:hover .name { text-decoration: underline; text-underline-offset: 2px; }
 
-  .head { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 700; margin-bottom: 0.35rem; min-width: 0; }
-  .head img { width: 16px; height: 12px; flex: none; border-radius: 1px; box-shadow: 0 0 0 1px var(--border); }
+  .head { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; min-width: 0; }
+  .head img { width: 14px; height: 10.5px; flex: none; box-shadow: 0 0 0 0.5px var(--border); }
   .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .score { margin-left: auto; font-variant-numeric: tabular-nums; }
+  .score { margin-left: auto; font-weight: 400; font-variant-numeric: tabular-nums; }
+  .current .name, .current .score { color: var(--accent); }
   svg { display: block; width: 100%; height: auto; overflow: visible; }
-  .foot { display: flex; justify-content: space-between; gap: 0.3rem; font-size: 0.62rem; color: var(--text-muted); margin-top: 0.2rem;
+  .foot { display: flex; justify-content: space-between; gap: 0.3rem; font-size: 0.65rem; color: var(--text-muted); margin-top: 0.25rem;
           font-variant-numeric: tabular-nums; }
   .change, .shown { white-space: nowrap; }
-  .shown { color: var(--text); font-weight: 700; }
+  .shown { color: var(--accent); font-weight: 700; }
 </style>
