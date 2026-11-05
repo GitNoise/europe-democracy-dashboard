@@ -1,0 +1,258 @@
+id,start,end,party,name,colour,headline
+ALB,1944-11-29,1992-04-13,PPSh,Party of Labour (communist),#b41f24,the Party of Labour
+ALB,1992-04-13,1997-07-24,PD,Democratic Party (PD),#1c3f94,the Democratic Party
+ALB,1997-07-24,2005-09-11,PS,Socialist Party (PS),#E3171B,the Socialist Party
+ALB,2005-09-11,2013-09-15,PD,Democratic Party (PD),#1c3f94,the Democratic Party
+ARM,1991-10-16,1998-02-03,ANM,Pan-Armenian National Movement (Ter-Petrosyan),,
+ARM,1998-02-03,2008-04-09,Kocharyan,Kocharyan (Republican-led governments),,
+ARM,2008-04-09,2018-05-08,HHK,Republican Party (HHK),,
+ARM,2018-05-08,2026-01-01,Civil Contract,Civil Contract,#2C2755,Civil Contract
+AUT,1945-04-27,1945-12-20,Provisional,Renner provisional government (all parties),,
+AUT,1945-12-20,1966-04-19,ÖVP–SPÖ,Grand coalition (ÖVP–SPÖ),,
+AZE,1945-01-01,1992-06-16,Communists,Communist Party / Mutallibov,#b41f24,the Communist Party / Mutallibov
+AZE,1992-06-16,1993-06-18,APF,Popular Front (APF),,
+AZE,1993-06-18,2026-01-01,YAP,"New Azerbaijan Party (YAP), Heydar then Ilham Aliyev",#0075C1,the New Azerbaijan Party
+BEL,1944-09-26,1947-03-20,Coalitions,Coalition governments,,
+BEL,1947-03-20,1949-08-11,BSP–CVP,Socialist–Christian Democrat coalition,,
+BEL,1949-08-11,1950-06-08,CVP–Liberals,Christian Democrat–Liberal coalition,,
+BEL,1950-06-08,1954-04-23,CVP,Christian Democrats (CVP),#f5822a,the Christian Democrats
+BEL,1954-04-23,1958-06-26,BSP–Liberals,Socialist–Liberal coalition,,
+BEL,1958-06-26,1961-04-25,CVP–Liberals,Christian Democrat–Liberal coalition,,
+BEL,1961-04-25,1966-03-19,CVP–BSP,Christian Democrat–Socialist coalition,,
+BGR,1946-09-15,1991-11-08,BSP,"Communist Party, renamed Socialist Party (BSP) in 1990",#db0f28,"the Communist Party, renamed Socialist Party in 1990"
+BGR,1991-11-08,1992-12-30,SDS,Union of Democratic Forces (SDS),#102a83,the Union of Democratic Forces
+BGR,1992-12-30,1995-01-25,Experts,Expert and caretaker governments,,
+BGR,1995-01-25,1997-02-12,BSP,Socialist Party (BSP),#db0f28,the Socialist Party
+BGR,1997-02-12,2001-07-24,SDS,Union of Democratic Forces (SDS),#102a83,the Union of Democratic Forces
+BGR,2001-07-24,2005-08-16,NDSV,National Movement Simeon II (NDSV),#F5CE42,the National Movement Simeon II
+BGR,2005-08-16,2009-07-27,BSP,Socialist-led coalition (BSP),#db0f28,Socialist-led coalition
+BGR,2009-07-27,2013-03-13,GERB,GERB,#0054a6,GERB
+BGR,2013-03-13,2013-05-29,Caretaker,Caretaker government,,
+BGR,2013-05-29,2014-08-06,BSP–DPS,BSP–DPS coalition (Oresharski),,
+BGR,2014-08-06,2014-11-07,Caretaker,Caretaker government,,
+BGR,2014-11-07,2017-01-27,GERB,GERB,#0054a6,GERB
+BGR,2017-01-27,2017-05-04,Caretaker,Caretaker government,,
+BGR,2017-05-04,2021-05-12,GERB,GERB,#0054a6,GERB
+BGR,2021-05-12,2021-12-13,Caretaker,Caretaker government,,
+BGR,2021-12-13,2022-08-02,PP,We Continue the Change (PP),,
+BGR,2022-08-02,2023-06-06,Caretaker,Caretaker government,,
+BGR,2023-06-06,2024-04-09,PP–DB,PP–DB with GERB,,
+BGR,2024-04-09,2025-01-16,Caretaker,Caretaker government,,
+BGR,2025-01-16,2026-01-01,GERB,GERB,#0054a6,GERB
+BIH,1994-01-01,2001-02-22,SDA/HDZ/SDS,"Power-sharing of SDA, HDZ BiH and SDS",,
+BIH,2001-02-22,2002-12-23,SDP,Alliance for Change (SDP),#FF0000,the Alliance for Change
+BIH,2002-12-23,2007-01-11,SDA,Party of Democratic Action (SDA),#008000,the Party of Democratic Action
+BLR,1990-01-01,1994-07-20,Kebich,Kebich government (former communists),,
+BLR,1994-07-20,2026-01-01,Lukashenko,Lukashenko (no party),,
+CHE,1959-12-17,2026-01-01,Federal Council,Federal Council (all major parties),,
+CYP,1955-01-01,1960-08-16,British rule,British colonial administration,,
+CYP,1960-08-16,1974-07-15,Makarios,Makarios III (president),,
+CYP,1974-07-15,1974-12-07,Coup,Coup and acting president Clerides,,
+CYP,1974-12-07,1977-08-03,Makarios,Makarios III (president),,
+CYP,1977-08-03,1988-02-28,DIKO,Democratic Party (DIKO),#0033A1,the Democratic Party
+CYP,1988-02-28,1993-02-28,Vassiliou,Vassiliou (independent),,
+CYP,1993-02-28,2003-02-28,DISY,Democratic Rally (DISY),#1569c7,the Democratic Rally
+CYP,2003-02-28,2008-02-28,DIKO,Democratic Party (DIKO),#0033A1,the Democratic Party
+CYP,2008-02-28,2013-02-28,AKEL,Progressive Party of Working People (AKEL),#e2011a,the Progressive Party of Working People
+CYP,2013-02-28,2023-02-28,DISY,Democratic Rally (DISY),#1569c7,the Democratic Rally
+CZE,1945-04-05,1948-02-25,National Front,National Front government,,
+CZE,1948-02-25,1989-12-10,KSČ,Communist Party (KSČ),#b41f24,the Communist Party
+CZE,1989-12-10,1992-07-02,OF/VPN,Civic Forum / Public Against Violence,,
+CZE,1992-07-02,1997-12-17,ODS,Civic Democrats (ODS),#004494,the Civic Democrats
+CZE,2010-07-13,2013-07-10,ODS,Civic Democrats (ODS),#004494,the Civic Democrats
+CZE,2013-07-10,2014-01-29,Caretaker,Caretaker government,,
+CZE,2014-01-29,2017-12-13,ČSSD,Social Democrats (ČSSD),#ec5800,the Social Democrats
+CZE,2017-12-13,2021-12-17,ANO,ANO,,ANO
+CZE,2021-12-17,2025-12-09,SPOLU,SPOLU coalition (ODS-led),,
+DNK,1945-05-05,1945-11-07,Unity,Liberation unity government,,
+DNK,1945-11-07,1947-11-13,Venstre,Liberals (Venstre),#254264,the Liberals
+DNK,1947-11-13,1950-10-30,Social Democrats,Social Democrats,#c8102e,the Social Democrats
+DNK,1950-10-30,1953-09-30,Venstre,Liberals (Venstre),#254264,the Liberals
+ESP,1973-12-31,1976-07-03,Francoist,Francoist government (Arias Navarro),,
+ESP,1976-07-03,1982-12-02,UCD,Suárez governments (UCD from 1977),#FF8C00,Suárez governments
+ESP,1982-12-02,1996-05-05,PSOE,Socialists (PSOE),#e1001a,the Socialists
+EST,1990-04-03,1992-01-30,Popular Front,Popular Front,#0D4ABD,the Popular Front
+EST,1992-01-30,1992-10-21,Caretaker,Caretaker government,,
+EST,1992-10-21,1994-11-08,Isamaa,Pro Patria (Isamaa),#014F9A,Pro Patria
+EST,1994-11-08,1995-04-17,Moderates,Moderates (Tarand),#E10600,the Moderates
+EST,1995-04-17,1997-03-17,KMÜ,Coalition Party (Vähi),,
+FIN,1944-11-17,1948-07-29,Coalitions,Broad coalitions (Paasikivi and Pekkala),,
+FIN,1948-07-29,1950-03-17,SDP,Social Democrats (SDP),#e11931,the Social Democrats
+FIN,1950-03-17,1953-11-17,Agrarians,Agrarian League–led coalitions (Kekkonen),#3aad2e,the Agrarian League–led coalitions
+FRA,1944-09-09,1947-01-22,Provisional,Provisional government,,
+FRA,1947-01-22,1947-11-24,Tripartism,Ramadier coalition,,
+FRA,1947-11-24,1954-06-18,Third Force,Third Force coalitions,,
+FRA,1959-01-08,1974-05-27,Gaullists,"Gaullist presidents (de Gaulle, Pompidou)",#0d378a,Gaullist presidents
+FRA,1974-05-27,1981-05-21,Giscard,Giscard d’Estaing (UDF),,
+GBR,1945-05-23,1945-07-26,Con,Conservatives,#0087dc,the Conservatives
+GBR,1945-07-26,1951-10-26,Lab,Labour,#e4003b,Labour
+GBR,2010-05-11,2024-07-05,Con,Conservatives,#0087dc,the Conservatives
+GBR,2024-07-05,2026-01-01,Lab,Labour,#e4003b,Labour
+GEO,1992-03-10,2003-11-23,Shevardnadze,Shevardnadze (Citizens’ Union from 1993),,
+GEO,2003-11-23,2004-01-25,Interim,Interim government,,
+GEO,2004-01-25,2012-10-25,UNM,United National Movement (UNM),#e4012e,the United National Movement
+GEO,2012-10-25,2026-01-01,GD,Georgian Dream (GD),#004a99,Georgian Dream
+GRC,1945-04-08,1946-04-18,Caretakers,Caretaker and centrist governments,,
+GRC,1946-04-18,1947-01-24,People’s Party,People’s Party (Tsaldaris),#4169E1,the People’s Party
+GRC,1947-01-24,1952-11-19,Coalitions,Coalition governments,,
+GRC,1952-11-19,1955-10-06,Greek Rally,Greek Rally (Papagos),#1935D0,the Greek Rally
+GRC,1955-10-06,1963-06-17,ERE,National Radical Union (ERE),#005AC0,the National Radical Union
+GRC,1964-02-19,1965-07-15,EK,Centre Union (G. Papandreou),,
+GRC,1965-07-15,1967-04-21,Caretakers,Royal-appointed and caretaker governments,,
+GRC,1967-04-21,1974-07-24,Junta,Military junta,,
+GRC,1974-07-24,1974-11-21,Unity,National unity government,,
+GRC,1974-11-21,1981-10-21,ND,New Democracy (ND),#1a4a97,New Democracy
+GRC,1981-10-21,1989-07-02,PASOK,PASOK,#1d8a3c,PASOK
+GRC,2012-06-20,2015-01-26,ND,New Democracy–led coalition (Samaras),#1a4a97,New Democracy
+GRC,2015-01-26,2019-07-08,SYRIZA,SYRIZA,#EF7C9A,SYRIZA
+GRC,2019-07-08,2026-01-01,ND,New Democracy (ND),#1a4a97,New Democracy
+HRV,1990-05-30,2000-01-27,HDZ,Croatian Democratic Union (HDZ),#0b5ea8,the HDZ
+HRV,2000-01-27,2003-12-23,SDP,Social Democrats (SDP),#e3000f,the Social Democrats
+HRV,2003-12-23,2011-12-23,HDZ,Croatian Democratic Union (HDZ),#0b5ea8,the HDZ
+HRV,2011-12-23,2016-01-22,SDP,Social Democrats (SDP),#e3000f,the Social Democrats
+HRV,2016-01-22,2016-10-19,Orešković,Orešković (HDZ–Most),,
+HRV,2016-10-19,2026-01-01,HDZ,Croatian Democratic Union (HDZ),#0b5ea8,the HDZ
+HUN,1944-12-22,1945-11-15,Provisional,Provisional national government,,
+HUN,1945-11-15,1947-05-31,FKGP,Smallholders’ Party (FKGP),#36492B,the Smallholders’ Party
+HUN,1956-11-04,1988-11-24,MSZMP,Communist Party (MSZMP),#b41f24,the Communist Party
+HUN,1988-11-24,1990-05-23,MSZP,Németh government (Socialist Party),#cc0000,Németh government
+HUN,1990-05-23,1994-07-15,MDF,Democratic Forum (MDF),#3a8f3a,the Democratic Forum
+HUN,2002-05-27,2010-05-29,MSZP,Socialist Party (MSZP),#cc0000,the Socialist Party
+HUN,2010-05-29,2026-01-01,Fidesz,Fidesz,#fd8100,Fidesz
+ITA,1945-06-21,1945-12-10,CLN,National Liberation Committee (Parri),,
+ITA,1945-12-10,1981-06-28,DC,Christian Democracy (DC)-led governments,#6ea0d8,Christian Democracy-led governments
+ITA,2013-04-28,2018-06-01,PD,Democratic Party (PD)-led governments,#ef1c27,the Democratic Party-led governments
+ITA,2018-06-01,2019-09-05,M5S–Lega,Five Star–League,,
+ITA,2019-09-05,2021-02-13,M5S–PD,Five Star–Democratic Party,,
+ITA,2021-02-13,2022-10-22,Draghi,Draghi national-unity government,,
+ITA,2022-10-22,2026-01-01,FdI,Brothers of Italy (FdI),#03386a,Brothers of Italy
+LUX,1945-04-23,1947-03-01,Unity,National union government,,
+LUX,1947-03-01,1951-07-03,CSV–DP,Christian Social–Democratic coalition,,
+LUX,1951-07-03,1959-03-02,CSV–LSAP,Christian Social–Socialist coalition,,
+LVA,1990-05-07,1993-08-03,LTF,Popular Front (LTF),,
+LVA,1993-08-03,1995-12-21,LC,Latvia’s Way (LC),,
+LVA,1995-12-21,1997-08-07,Šķēle,Šķēle coalition,,
+LVA,1997-08-07,1998-11-26,TB/LNNK,For Fatherland and Freedom (TB/LNNK),,
+LVA,1998-11-26,1999-07-16,LC,Latvia’s Way (LC),,
+LVA,1999-07-16,2000-05-05,TP,People’s Party (TP),,
+LVA,2000-05-05,2002-11-07,LC,Latvia’s Way (LC),,
+MDA,1990-05-25,1992-07-01,Popular Front,Popular Front–era governments,#0044AF,the Popular Front–era governments
+MDA,1992-07-01,1997-01-24,PDAM,Agrarian Democrats (PDAM),,
+MDA,1997-01-24,1999-12-21,Coalitions,Coalition governments,,
+MDA,1999-12-21,2001-04-19,Braghiș,Braghiș government (independent),,
+MDA,2001-04-19,2009-09-25,PCRM,Communist Party (PCRM),#b41f24,the Communist Party
+MDA,2009-09-25,2016-01-20,PLDM,Liberal Democrats (PLDM),,
+MDA,2016-01-20,2019-06-08,PDM,Democratic Party (PDM),#264B9D,the Democratic Party
+MDA,2019-06-08,2019-11-14,ACUM,ACUM (PAS–DA),,
+MDA,2019-11-14,2021-08-06,PSRM,Socialist-backed government (Chicu),#e3001b,the Socialists
+MDA,2021-08-06,2026-01-01,PAS,Action and Solidarity (PAS),#ffd200,Action and Solidarity
+MKD,1991-03-20,1992-09-04,Experts,Expert government,,
+MKD,1992-09-04,1998-11-30,SDSM,Social Democrats (SDSM),#e3001b,the Social Democrats
+MKD,1998-11-30,2002-11-01,VMRO-DPMNE,VMRO-DPMNE,#B5121B,VMRO-DPMNE
+MKD,2002-11-01,2006-08-26,SDSM,Social Democrats (SDSM),#e3001b,the Social Democrats
+MKD,2006-08-26,2017-05-31,VMRO-DPMNE,VMRO-DPMNE,#B5121B,VMRO-DPMNE
+MKD,2017-05-31,2020-01-03,SDSM,Social Democrats (SDSM),#e3001b,the Social Democrats
+MLT,1945-01-01,1947-11-04,British rule,British colonial administration,,
+MLT,1947-11-04,1950-09-26,Labour,Labour Party,#d22b2b,the Labour Party
+MLT,1955-03-11,1958-04-26,Labour,Labour Party,#d22b2b,the Labour Party
+MLT,1958-04-26,1962-03-05,British rule,British direct rule,,
+MLT,1962-03-05,1971-06-21,PN,Nationalist Party (PN),#003a74,the Nationalist Party
+MLT,1984-12-22,1987-05-12,Labour,Labour Party,#d22b2b,the Labour Party
+MLT,1987-05-12,1996-10-28,PN,Nationalist Party (PN),#003a74,the Nationalist Party
+MLT,1996-10-28,1998-09-06,Labour,Labour Party,#d22b2b,the Labour Party
+MNE,1991-02-15,2020-12-04,DPS,Democratic Party of Socialists (DPS),#524FA1,the Democratic Party of Socialists
+MNE,2020-12-04,2022-04-28,Krivokapić,Krivokapić coalition government,,
+MNE,2022-04-28,2023-10-31,URA,United Reform Action (URA),,
+MNE,2023-10-31,2026-01-01,PES,Europe Now (PES),,
+NLD,1945-06-24,1946-07-03,Emergency cabinet,Schermerhorn–Drees emergency cabinet,,
+NLD,1946-07-03,1948-08-07,KVP–PvdA,Catholic–Labour coalition,,
+NLD,1948-08-07,1958-12-22,Drees,Drees coalitions (PvdA-led),,
+NOR,1945-06-25,1945-11-05,Unity,National unity government,,
+NOR,1945-11-05,1965-10-12,Ap,Labour Party (Ap),#e4002b,the Labour Party
+POL,1945-01-01,1989-08-24,PZPR,"Communist Party (PPR, then PZPR)",#b41f24,the Communist Party
+POL,1989-08-24,1991-01-12,Solidarity,Solidarity (Mazowiecki),#d4213d,Solidarity
+POL,1991-01-12,1991-12-23,KLD,Liberal Democratic Congress (KLD),,
+POL,1991-12-23,1992-07-11,PC,Centre Agreement (PC),#DD1D1A,the Centre Agreement
+POL,1992-07-11,1993-10-26,UD,Democratic Union (UD),,
+POL,1993-10-26,1995-03-07,PSL,Peasants’ Party (PSL),#3a8f3a,the Peasants’ Party
+POL,2007-11-16,2015-11-16,PO,Civic Platform (PO),#f68f2d,Civic Platform
+POL,2015-11-16,2023-12-13,PiS,Law and Justice (PiS),#263778,Law and Justice
+POL,2023-12-13,2026-01-01,KO,Civic Coalition (KO),#f68f2d,the Civic Coalition
+PRT,1968-09-27,1974-04-25,Estado Novo,Estado Novo dictatorship (Caetano),,
+PRT,1974-04-25,1976-07-23,Provisional,Provisional revolutionary governments,,
+PRT,1976-07-23,1978-08-28,PS,Socialists (PS),#ff66ff,the Socialists
+PRT,1978-08-28,1980-01-03,Presidential,President-appointed governments,,
+PRT,1980-01-03,1983-06-09,AD,Democratic Alliance (PSD-led),#ff8000,the Democratic Alliance
+PRT,1983-06-09,1985-11-06,PS–PSD,Central Bloc (PS–PSD),,
+PRT,1985-11-06,1995-10-28,PSD,Social Democrats (PSD),#ff8000,the Social Democrats
+PRT,2015-11-26,2024-04-02,PS,Socialists (PS),#ff66ff,the Socialists
+PRT,2024-04-02,2026-01-01,AD,Democratic Alliance (PSD-led),#ff8000,the Democratic Alliance
+ROU,1947-12-30,1989-12-26,PCR,Communist Party (PCR),#b41f24,the Communist Party
+ROU,1989-12-26,1991-10-16,FSN,National Salvation Front (FSN),,
+ROU,1991-10-16,1992-11-19,Technocrats,Stolojan technocratic government,,
+ROU,1992-11-19,1996-12-12,PDSR,Social Democracy Party (PDSR),#ed2128,the Social Democracy Party
+ROU,1996-12-12,1998-04-15,CDR,Democratic Convention (CDR),#FFFF01,Democratic Convention
+ROU,2000-12-28,2004-12-29,PSD,Social Democrats (PSD),#ed2128,the Social Democrats
+ROU,2004-12-29,2008-12-22,PNL,National Liberals (PNL),#ffdd00,the National Liberals
+ROU,2008-12-22,2012-05-07,PDL,Democratic Liberals (PDL),#ff6633,the Democratic Liberals
+ROU,2012-05-07,2015-11-17,PSD,Social Democrats (PSD),#ed2128,the Social Democrats
+ROU,2015-11-17,2017-01-04,Technocrats,Cioloș technocratic government,,
+ROU,2017-01-04,2019-11-04,PSD,Social Democrats (PSD),#ed2128,the Social Democrats
+ROU,2019-11-04,2021-11-25,PNL,National Liberals (PNL),#ffdd00,the National Liberals
+ROU,2021-11-25,2023-06-15,PNL–PSD,PNL–PSD coalition (Ciucă),,
+ROU,2023-06-15,2025-05-06,PSD–PNL,PSD–PNL coalition (Ciolacu),,
+RUS,1945-01-01,1991-12-26,CPSU,Soviet Communist Party,#b41f24,the Soviet Communist Party
+RUS,1991-12-26,1999-12-31,Yeltsin,Yeltsin (no party),,
+RUS,1999-12-31,2026-01-01,United Russia,Putin (United Russia),#2862b3,United Russia
+SRB,1995-01-01,2000-10-05,SPS,Socialist Party (SPS),#d7262e,the Socialist Party
+SRB,2000-10-05,2004-03-03,DOS,DOS coalition,,
+SRB,2008-07-07,2012-05-31,DS,Democratic Party (DS),#f2c200,the Democratic Party
+SRB,2012-05-31,2026-01-01,SNS,Progressive Party (SNS),#0c4076,the Progressive Party
+SVK,1992-06-24,1994-03-16,HZDS,Movement for a Democratic Slovakia (HZDS),#185CB4,the Movement for a Democratic Slovakia
+SVK,1994-03-16,1994-12-13,DÚ,Democratic Union (DÚ),,
+SVK,1994-12-13,1998-10-30,HZDS,Movement for a Democratic Slovakia (HZDS),#185CB4,the Movement for a Democratic Slovakia
+SVK,1998-10-30,2006-07-04,SDK,"Dzurinda governments (SDK, then SDKÚ)",#0750A4,the Slovak Democratic Coalition
+SVK,2020-03-21,2023-05-15,OĽaNO,OĽaNO,#42B5C2,OĽaNO
+SVK,2023-05-15,2023-10-25,Caretaker,Caretaker government,,
+SVK,2023-10-25,2026-01-01,Smer,Smer,#d82222,Smer
+SVN,1945-01-01,1990-05-16,ZKS,League of Communists (ZKS),#b41f24,the League of Communists
+SVN,1990-05-16,1992-05-14,Demos,Demos coalition,,
+SVN,1992-05-14,2000-06-07,LDS,Liberal Democracy (LDS),#6CB4E4,Liberal Democracy
+SVN,2004-12-03,2008-11-21,SDS,Slovenian Democratic Party (SDS),#F2C500,the Slovenian Democratic Party
+SVN,2008-11-21,2012-02-10,SD,Social Democrats (SD),#e3001b,the Social Democrats
+SVN,2012-02-10,2013-03-20,SDS,Slovenian Democratic Party (SDS),#F2C500,the Slovenian Democratic Party
+SVN,2013-03-20,2014-09-18,PS,Positive Slovenia (PS),,
+SVN,2014-09-18,2018-09-13,SMC,Modern Centre Party (SMC),,
+SVN,2018-09-13,2020-03-13,LMŠ,List of Marjan Šarec (LMŠ),,
+SVN,2020-03-13,2022-06-01,SDS,Slovenian Democratic Party (SDS),#F2C500,the Slovenian Democratic Party
+SVN,2022-06-01,2026-01-01,GS,Freedom Movement (GS),,
+SWE,1939-12-13,1945-07-31,Unity,National unity government,,
+SWE,1945-07-31,1976-10-08,S,Social Democrats (S),#e8112d,the Social Democrats
+TUR,1945-01-01,1950-05-22,CHP,Republican People’s Party (CHP),#ed1c24,the Republican People’s Party
+TUR,1950-05-22,1960-05-27,DP,Democrat Party (DP),#FF3333,the Democrat Party
+TUR,1960-05-27,1961-11-20,Junta,Military government,,
+TUR,1961-11-20,1965-02-20,CHP,CHP-led coalitions (İnönü),#ed1c24,CHP-led coalitions
+TUR,1965-02-20,1965-10-27,Caretaker,Caretaker coalition,,
+TUR,1965-10-27,1971-03-26,AP,Justice Party (AP),#DE0000,the Justice Party
+TUR,1971-03-26,1973-04-15,Military-backed,Military-backed governments,,
+TUR,1973-04-15,1974-01-26,Talu,Talu coalition,,
+TUR,1974-01-26,1974-11-17,CHP–MSP,CHP–MSP coalition (Ecevit),,
+TUR,1977-06-21,1977-07-21,CHP,CHP minority government (Ecevit),#ed1c24,CHP minority government
+TUR,1977-07-21,1978-01-05,AP,Justice Party (AP)-led Nationalist Front,#DE0000,the Justice Party-led Nationalist Front
+TUR,1978-01-05,1979-11-12,CHP,CHP-led coalition (Ecevit),#ed1c24,CHP-led coalition
+TUR,1979-11-12,1980-09-12,AP,Justice Party (AP),#DE0000,the Justice Party
+TUR,1980-09-12,1983-12-13,Junta,Military junta,,
+TUR,1983-12-13,1991-11-20,ANAP,Motherland Party (ANAP),#F2CA30,the Motherland Party
+TUR,1991-11-20,1996-03-06,DYP,True Path Party (DYP)-led governments,#CD0001,the True Path Party
+TUR,1996-03-06,1996-06-28,ANAP,Motherland Party (ANAP),#F2CA30,the Motherland Party
+TUR,1996-06-28,1997-06-30,RP,Welfare Party (RP),#D60000,the Welfare Party
+TUR,1997-06-30,1999-01-11,ANAP,Motherland Party (ANAP),#F2CA30,the Motherland Party
+TUR,1999-01-11,2002-11-18,DSP,Democratic Left Party (DSP),#02CDFF,the Democratic Left Party
+TUR,2002-11-18,2026-01-01,AKP,Justice and Development (AKP),#fdb813,the AKP
+XKX,1999-06-10,2002-03-04,UNMIK,UN administration (UNMIK),,
+XKX,2002-03-04,2004-12-03,PDK,Democratic Party of Kosovo (PDK),#2E96D2,the Democratic Party of Kosovo
+XKX,2014-12-12,2017-09-09,LDK,Democratic League of Kosovo (LDK),#EC2426,the Democratic League of Kosovo
+XKX,2017-09-09,2020-02-03,AAK,Alliance for the Future of Kosovo (AAK),,
+XKX,2020-02-03,2020-06-03,VV,Vetëvendosje (VV),#e30613,Vetëvendosje
+XKX,2020-06-03,2021-03-22,LDK,Democratic League of Kosovo (LDK),#EC2426,the Democratic League of Kosovo
+XKX,2021-03-22,2026-01-01,VV,Vetëvendosje (VV),#e30613,Vetëvendosje

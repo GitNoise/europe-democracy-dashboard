@@ -1,0 +1,81 @@
+// Everything the main chart draws, worked out as plain data. Chart.svelte only renders it.
+import { format, line, scaleLinear, scaleUtc } from 'd3';
+import { FIRST_YEAR, GREY } from './constants.js';
+import { yearEnd } from './data.js';
+import { LABEL_ROW_HEIGHT, layoutPartyLabels } from './labels.js';
+import { placeArrowNotes, placeBrackets } from './notes.js';
+import { shadedBands, tenure, termText } from './shading.js';
+import { FONTS, textWidth } from './text.js';
+
+const fmt = format('.2f');
+const TICK_YEARS = [1945, 1955, 1965, 1975, 1985, 1995, 2005, 2015, 2025];
+
+export function chartLayout(country, width, height) {
+  const { series, last } = country;
+  const W = Math.max(300, width);
+
+  // the plot starts right of the axis labels ('1.0', 'most', 'democratic') and leaves room for the end value
+  const left = Math.ceil(textWidth('democratic', FONTS.axis)) + 8;
+  const right = W - (Math.ceil(textWidth('0.00', FONTS.endValue)) + 16);
+  const marginBottom = 24;
+  const x = scaleUtc([Date.UTC(FIRST_YEAR, 0, 1), yearEnd(last.year)], [left, right]);
+
+  // bands are drawn only over the years with data; labels give the party's real time in power
+  const dataStart = +series[0].date, dataEnd = +last.date;
+  const bands = shadedBands(country)
+    .map((b) => ({ ...b, xa: x(Math.max(b.a, dataStart)), xb: x(Math.min(b.b, dataEnd)), years: b.party ? termText(tenure(country, b), last.year) : '' }))
+    .filter((b) => b.xb > b.xa);
+  const { labels, rows } = layoutPartyLabels(bands, W, textWidth('1.0', FONTS.axis) + 6);
+
+  const top = Math.max(26, rows * LABEL_ROW_HEIGHT + 10);
+  const H = Math.max(top + marginBottom + 160, height);
+  const bottom = H - marginBottom;
+  const y = scaleLinear([0, 1], [bottom, top]);
+  const plot = { x, y, left, right, top, bottom,
+    contains: (b) => b.l >= left + 2 && b.r <= right - 2 && b.t >= top + 2 && b.b <= y(0) - 12 };
+
+  // obstacles the notes must keep clear of
+  const boxes = [{ l: 0, r: textWidth('democratic', FONTS.axis) + 2, t: y(1) + 2, b: y(1) + 26 }];
+
+  // "Lowest / highest since …": a dotted line from where the series last crossed today's level
+  let reference = null;
+  if (country.record?.since) {
+    const i = series.findIndex((r) => r.year === country.record.since), from = series[i], next = series[i + 1];
+    let x1 = x(from.date);
+    if (next && next.val !== from.val) x1 += (x(next.date) - x(from.date)) * Math.min(1, Math.max(0, (last.val - from.val) / (next.val - from.val)));
+    const low = country.record.kind === 'low';
+    const below = low ? last.val > 0.08 : last.val > 0.92;
+    const text = `${low ? 'Lowest' : 'Highest'} since ${country.record.since}`;
+    const textY = y(last.val) + (below ? 15 : -7), textW = textWidth(text, FONTS.note);
+    reference = { x1, x2: x(last.date), y: y(last.val), text, textX: x(last.date) - 10, textY };
+    boxes.push({ l: x(last.date) - 10 - textW, r: x(last.date) - 10, t: textY - 11, b: textY + 3 },
+               { l: x1, r: x(last.date), t: y(last.val) - 1, b: y(last.val) + 1 });
+  }
+
+  // the line itself, sampled every few pixels, and the end value
+  for (let k = 1; k < series.length; k++) {
+    const [x1, y1, x2, y2] = [x(series[k - 1].date), y(series[k - 1].val), x(series[k].date), y(series[k].val)];
+    const steps = Math.max(1, Math.ceil(Math.hypot(x2 - x1, y2 - y1) / 4));
+    for (let j = 0; j <= steps; j++) {
+      const px = x1 + ((x2 - x1) * j) / steps, py = y1 + ((y2 - y1) * j) / steps;
+      boxes.push({ l: px - 2, r: px + 2, t: py - 2, b: py + 2 });
+    }
+  }
+  boxes.push({ l: x(last.date) - 4, r: W, t: y(last.val) - 9, b: y(last.val) + 9 });
+
+  const brackets = placeBrackets(country, plot, boxes);
+  const arrows = placeArrowNotes(country, plot, boxes);
+
+  return {
+    width: W, height: H, plot,
+    bands: bands.map((b, k) => ({ x: b.xa, width: Math.max(1, b.xb - b.xa), colour: b.colour || GREY,
+                                  divider: k > 0 && bands[k - 1].b === b.a })),
+    labels: labels.map((l) => ({ ...l, baseline: top - 8 - l.row * LABEL_ROW_HEIGHT })),
+    gridlines: [0.5, 1].map((v) => ({ y: y(v), label: v === 1 ? '1.0' : String(v) })),
+    // each year's label sits under the middle of that year's segment (its score is plotted at 31 December)
+    ticks: TICK_YEARS.map((yr) => ({ x: x(Date.UTC(yr, 6, 1)), label: String(yr) })),
+    path: line().x((d) => x(d.date)).y((d) => y(d.val))(series),
+    end: { x: x(last.date), y: y(last.val), label: fmt(last.val) },
+    reference, brackets, arrows,
+  };
+}

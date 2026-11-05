@@ -1,0 +1,34 @@
+/* Design tokens, light and dark. Component styles live in each .svelte file. */
+:root {
+  color-scheme: light dark;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --ink: #121212;            /* the line, arrows, brackets */
+  --text: #121212;
+  --text-muted: #6b6b6b;
+  --page: #f3f3f1;
+  --panel: #ffffff;
+  --border: #dedede;
+  --axis: #9a9a9a;
+  --grid: #e6e6e6;
+  --popover: #ffffff;
+  --popover-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #ececec;
+    --text: #ececec;
+    --text-muted: #a3a3a3;
+    --page: #121212;
+    --panel: #1c1c1c;
+    --border: #333333;
+    --axis: #777777;
+    --grid: #2c2c2c;
+    --popover: #262626;
+    --popover-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  }
+}
+
+html, body { margin: 0; background: var(--page); color: var(--text); }
+body { padding: 1.5rem 1rem 3rem; font-family: var(--font-sans); }
