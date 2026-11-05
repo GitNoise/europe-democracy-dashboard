@@ -65,6 +65,8 @@
     "trend_min_years": 4,
     "trend_min_slope_change": 0.005,
     "slow_min": 0.08,
-    "sharp_min": 0.08
+    "sharp_min": 0.08,
+    "step_window": 2,
+    "step_flat": 0.02
   }
 }

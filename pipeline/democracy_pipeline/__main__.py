@@ -50,7 +50,9 @@ def main():
     governments = pd.read_csv(GOVERNMENTS_FILE, keep_default_na=False)
     lines = report.write(PIPELINE_DIR / "report.md", vdem_file=args.vdem.name, scores=scores, moves=moves, log=log,
                          gaps=report.government_gaps(moves, governments),
-                         unnamed=report.parties_without_headline_name(governments), previous=previous)
+                         unnamed=report.parties_without_headline_name(governments),
+                         steps=report.steps_without_note(moves, series, scores_by_year, notes.load_exceptions()),
+                         previous=previous)
     print("\n".join(lines[:7]))
     print(f"Wrote {SCORES_FILE.name}, {EPISODES_FILE.name} and report.md")
 
