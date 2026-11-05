@@ -36,7 +36,8 @@
 
 <nav class="masthead" aria-label="Site">
   <div class="inner">
-    <span class="title">Democracy in Europe</span>
+    <a class="title" href="https://gitnoise.github.io/portfolio/">Patrick Wojda</a>
+    <span class="project">Democracy in Europe</span>
     <span class="links">
       <a href="https://www.v-dem.net/">Data: V-Dem v16</a>
       <a href="https://github.com/GitNoise/europe-democracy-dashboard">Code</a>
@@ -45,13 +46,13 @@
 </nav>
 
 <header class="intro">
-  <h1>Who governed when Europe’s democracies rose and fell</h1>
+  <h1><span class="label">Who governed</span> when Europe’s democracies <span class="rose">rose</span> and <span class="fell">fell</span></h1>
   <p class="dek">
     Democracies don’t erode or recover on their own: someone is in charge while it happens. For every European country
     in V-Dem’s data, this page follows the Liberal Democracy Index since 1945, from 0 (least democratic) to 1 (most),
     and shades the party that led the government during each big rise or fall.
   </p>
-  <p class="byline">By <a href="https://gitnoise.github.io/portfolio/">Patrick Wojda</a></p>
+  <p class="byline">A project by <a href="https://gitnoise.github.io/portfolio/">Patrick Wojda</a></p>
 </header>
 
 <div class="picker" id="chart">
@@ -99,19 +100,26 @@
   .masthead { margin: 0 -1rem var(--space-5); font-family: var(--font-sans); font-size: 0.88rem; }
   .masthead .inner { max-width: 46rem; margin-inline: auto; padding: 0.9rem 1rem; display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap; }
   .masthead .title { font-weight: 700; }
+  .masthead .project { color: var(--text-muted); }
+  @media (max-width: 30rem) { .masthead .project { display: none; } }   /* phones: name and links on one line */
   .masthead .links { margin-left: auto; display: flex; gap: 1.25rem; }
   .masthead a { color: var(--text); text-decoration: none; }
   .masthead a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   .intro, .picker, .frame, .all, footer { max-width: 46rem; margin-inline: auto; }
-  .intro { margin-bottom: 0; }
-  .intro h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 700; line-height: 1.06; letter-spacing: -0.015em;
-              margin: 0 0 var(--space-2); text-wrap: balance; }
+  .intro h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 7.5vw, 4.2rem); font-weight: 800; line-height: 1; letter-spacing: -0.01em;
+              margin: 0 0 var(--space-4); text-wrap: balance; }
+  /* a little punk: the question cut out as a label, and the title acting out its own rise and fall */
+  .intro h1 .label { background: var(--text); color: var(--page); padding: 0 0.18em; margin-right: 0.05em; box-decoration-break: clone;
+                     -webkit-box-decoration-break: clone; display: inline-block; transform: rotate(-1.5deg); }
+  .intro h1 .rose, .intro h1 .fell { display: inline-block; }
+  .intro h1 .rose { transform: translateY(-0.22em) rotate(-6deg); }
+  .intro h1 .fell { transform: translateY(0.22em) rotate(7deg); transform-origin: left center; }
   .dek { font-size: 1.25rem; line-height: 1.5; margin: 0 0 var(--space-2); max-width: 40rem; text-wrap: pretty; }
   .byline { font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted); margin: 0; }
 
   /* the picker box and the link to the grid, side by side on the text column's left edge */
-  .picker { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-top: var(--space-5); margin-bottom: var(--space-3);
+  .picker { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-top: var(--space-6); margin-bottom: var(--space-3);
             font-family: var(--font-sans); font-size: 0.9rem; scroll-margin-top: 1rem; }
   .bar { display: flex; align-items: stretch; min-width: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
   .bar label { display: flex; align-items: center; padding: 0.5rem 0.75rem; border-inline: 1px solid var(--rule); }
@@ -139,9 +147,9 @@
   .source { font-family: var(--font-sans); color: var(--text-muted); font-size: 0.78rem; line-height: 1.6; margin: var(--space-2) 0 0; }
 
   .all { margin-top: var(--space-6); scroll-margin-top: 1rem; }
-  .all h2 { font-size: 2rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; margin: 0 0 var(--space-1); }
+  .all h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 var(--space-1); }
   .all p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.45; margin: 0; }
-  footer { margin-top: var(--space-7); font-family: var(--font-sans); font-size: 0.82rem; color: var(--text-muted); }
+  footer { margin-top: var(--space-6); font-family: var(--font-sans); font-size: 0.82rem; color: var(--text-muted); }
   footer a, .byline a { color: var(--text); text-underline-offset: 3px; }
   footer p { margin: 0 0 0.4rem; }
 </style>

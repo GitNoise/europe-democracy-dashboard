@@ -1,10 +1,12 @@
 /* Design tokens, light and dark. Component styles live in each .svelte file.
-   A personal data exploration, in the plain style of pre-2020s data journalism: white paper, bold serif headlines, serif reading text, sans for labels and
-   controls, mono for charts (Datawrapper-style), space between sections instead of dividers, one blue accent. */
+   A personal data exploration, in the plain style of pre-2020s data journalism. Three type families, one job each:
+   Archivo for headings, labels and controls; Source Serif for reading text; IBM Plex Mono for charts (Datawrapper-style).
+   White paper, space between sections instead of dividers, one blue accent. */
 :root {
   color-scheme: light dark;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;   /* every heading, set heavy */
   --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --font-sans: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;   /* labels and controls: the heading face at text weights */
   --font-chart: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;   /* chart labels; lib/text.js measures with this */
   --ink: #141414;            /* the line, arrows, brackets */
   --text: #141414;
@@ -18,13 +20,13 @@
   --grid: #ebebeb;
   --popover: #ffffff;
   --popover-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  /* one spacing scale for the whole page: tight inside a group, wide between groups */
+  /* one spacing scale: space-1/2 inside a block, space-3/5 between blocks in a section, space-6 between sections */
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
+  --space-4: 2rem;
   --space-5: 3rem;
   --space-6: 4rem;
-  --space-7: 6rem;
 }
 
 @media (prefers-color-scheme: dark) {

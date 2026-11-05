@@ -99,7 +99,7 @@
   .controls button[aria-pressed='true'] { background: var(--text); color: var(--page); font-weight: 600; }
   .controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; position: relative; }
 
-  h3 { display: flex; align-items: baseline; gap: 0.5rem; font-family: var(--font-sans); font-size: 1.2rem; font-weight: 700;
+  h3 { display: flex; align-items: baseline; gap: 0.5rem; font-family: var(--font-display); font-size: 1.2rem; font-weight: 800;
        margin: var(--space-5) 0 0.25rem; }
   .count { font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted); }
   .note { color: var(--text-muted); font-size: 0.95rem; margin: 0.6rem 0 0; }
