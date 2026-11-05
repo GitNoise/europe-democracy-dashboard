@@ -2,7 +2,7 @@
   // The main chart. All layout is worked out in lib/chartLayout.js; this component draws it and runs the tooltip.
   import { bisector, format, hsl } from 'd3';
   import { chartLayout } from '../lib/chartLayout.js';
-  import { REGIME } from '../lib/constants.js';
+  import { GREY, REGIME } from '../lib/constants.js';
   import { LINE_HEIGHT } from '../lib/notes.js';
 
   let { country } = $props();
@@ -19,24 +19,50 @@
     return c.l > 0.6 ? c.darker(1.6).formatHex() : colour;
   };
 
-  // tooltip: the year under the pointer, who governed, the score and what drove the move it belongs to
+  // tooltip: one year in plain words — the score and how it moved, who governed, and the move the year is part of
+  const fmtChange = format('+.2f');
+  const MOVE_NAMES = { rise: ['Rise', 'Rise'], fall: ['Fall', 'Fall'], jump: ['Sudden rise', 'Sudden drop'], dip: ['Brief dip', 'Brief dip'], spike: ['Brief spike', 'Brief spike'] };
   const nearest = bisector((d) => d.date).center;
+  let tipWidth = $state(0), tipHeight = $state(0);
+
+  function moveFor(year) {
+    const rank = { rise: 0, fall: 0, jump: 1, dip: 2, spike: 2 };
+    const move = country.episodes
+      .filter((e) => e.kind in rank)
+      .filter((e) => (['dip', 'spike'].includes(e.kind) ? e.from === year : e.from < year && year <= e.to))
+      .sort((p, q) => rank[p.kind] - rank[q.kind] || (q.reason ? 1 : 0) - (p.reason ? 1 : 0))[0];
+    if (!move) return null;
+    const name = MOVE_NAMES[move.kind][move.change < 0 ? 1 : 0];
+    const years = move.from === move.to ? `${move.to}` : `${move.from}–${move.to}`;
+    const driver = move.drivers.split(';')[0].replace(/\s*\d+%$/, '').trim().toLowerCase();
+    return { label: `${name} ${years}`, text: move.reason || (driver ? `mostly ${driver}` : '') };
+  }
+
   function onPointer(event) {
     const svg = event.currentTarget.ownerSVGElement, box = svg.getBoundingClientRect();
     const px = (event.clientX - box.left) * (layout.width / box.width);
-    const d = country.series[nearest(country.series, layout.plot.x.invert(px))];
+    const i = nearest(country.series, layout.plot.x.invert(px));
+    const d = country.series[i], prev = country.series[i - 1];
     const government = country.governments.find((g) => g.s <= +d.date && +d.date < g.e);
-    const rank = { rise: 0, fall: 0, jump: 1, dip: 2, spike: 2, trend: 3 };
-    const move = country.episodes
-      .filter((e) => e.drivers && e.kind in rank)
-      .filter((e) => (['dip', 'spike', 'trend'].includes(e.kind) ? e.from === d.year : e.from < d.year && d.year <= e.to))
-      .sort((p, q) => rank[p.kind] - rank[q.kind])[0];
     hover = {
       d, x: layout.plot.x(d.date), y: layout.plot.y(d.val), scale: box.width / layout.width,
-      government: government?.name, drivers: move?.drivers.replaceAll('; ', ', '),
+      change: prev && prev.year === d.year - 1 ? d.val - prev.val : null,
+      government: government && { name: government.name, colour: government.colour },
       regime: Number.isFinite(d.reg) ? REGIME[d.reg].replace(/^an? /, '') : null,
+      move: moveFor(d.year),
     };
   }
+
+  // keep the tooltip inside the chart: beside the pointer, flipped to the left when there's no room on the right
+  const tipPos = $derived.by(() => {
+    if (!hover) return null;
+    const px = hover.x * hover.scale, py = hover.y * hover.scale, gap = 14;
+    let left = px + gap;
+    if (left + tipWidth > width) left = px - gap - tipWidth;
+    left = Math.max(0, Math.min(left, width - tipWidth));
+    const top = Math.max(0, Math.min(py - tipHeight / 2, height - tipHeight));
+    return { left, top };
+  });
 </script>
 
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
@@ -106,14 +132,24 @@
     </svg>
 
     {#if hover}
-      <div class="tip" style:left="{(hover.x * hover.scale > width / 2 ? hover.x * hover.scale - 12 : hover.x * hover.scale + 12)}px"
-           style:top="{Math.max(0, hover.y * hover.scale - 40)}px" class:left={hover.x * hover.scale > width / 2}>
-        <div class="muted">{hover.d.year}{hover.d.election ? ' · national election' : ''}</div>
-        {#if hover.government}<div class="muted">In power: {hover.government}</div>{/if}
-        <div class="row"><span>Liberal democracy</span><b>{fmt(hover.d.val)}</b></div>
-        {#if Number.isFinite(hover.d.lo)}<div class="muted">Range {fmt(hover.d.lo)}–{fmt(hover.d.hi)}</div>{/if}
-        {#if hover.regime}<div class="muted">{hover.regime}</div>{/if}
-        {#if hover.drivers}<div class="muted wrap">Driven by: {hover.drivers}</div>{/if}
+      <div class="tip" bind:clientWidth={tipWidth} bind:clientHeight={tipHeight}
+           style:left="{tipPos?.left ?? 0}px" style:top="{tipPos?.top ?? 0}px" style:visibility={tipWidth ? 'visible' : 'hidden'}>
+        <div class="year"><b>{hover.d.year}</b>{#if hover.d.election}<span>Election year</span>{/if}</div>
+        <div class="score">
+          <b>{fmt(hover.d.val)}</b>
+          {#if hover.change !== null}<span>{Math.abs(hover.change) < 0.005 ? 'no change' : fmtChange(hover.change)} on {hover.d.year - 1}</span>{/if}
+        </div>
+        {#if hover.regime}<div class="muted">{hover.regime[0].toUpperCase() + hover.regime.slice(1)}</div>{/if}
+        {#if hover.government || hover.move}
+          <div class="more">
+            {#if hover.government}
+              <div class="gov"><i style:background={hover.government.colour || GREY}></i>{hover.government.name}</div>
+            {/if}
+            {#if hover.move}
+              <div class="move"><b>{hover.move.label}</b>{hover.move.text ? `: ${hover.move.text}` : ''}</div>
+            {/if}
+          </div>
+        {/if}
       </div>
     {/if}
   {/if}
@@ -128,12 +164,16 @@
   .years { font-size: 0.66rem; fill: var(--text-muted); font-variant-numeric: tabular-nums; }
   .end { font-size: 0.75rem; font-weight: 700; fill: var(--text); font-variant-numeric: tabular-nums; }
   .note { font-size: 0.75rem; font-weight: 500; fill: var(--text); }
-  .tip { position: absolute; pointer-events: none; z-index: 2; background: var(--popover); border: 1px solid var(--border);
-         border-radius: 0; box-shadow: var(--popover-shadow); padding: 6px 10px; font-size: 0.75rem; line-height: 1.45;
-         white-space: nowrap; max-width: 16rem; }
-  .tip.left { transform: translateX(-100%); }
-  .tip .muted { color: var(--text-muted); }
-  .tip .wrap { white-space: normal; }
-  .tip .row { display: flex; gap: 0.6rem; }
-  .tip .row b { margin-left: auto; }
+  .tip { position: absolute; pointer-events: none; z-index: 2; box-sizing: border-box; width: 15rem; max-width: 100%;
+         background: var(--popover); border: 1px solid var(--rule); box-shadow: var(--popover-shadow);
+         padding: 0.55rem 0.7rem 0.6rem; font-size: 0.72rem; line-height: 1.4; }
+  .tip .year { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+  .tip .year span { color: var(--text-muted); font-size: 0.65rem; }
+  .tip .score { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 0.15rem; }
+  .tip .score b { font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+  .tip .score span, .tip .muted { color: var(--text-muted); }
+  .tip .more { margin-top: 0.45rem; padding-top: 0.45rem; border-top: 1px solid var(--border); display: grid; gap: 0.3rem; }
+  .tip .gov { display: flex; gap: 0.4rem; align-items: baseline; }
+  .tip .gov i { flex: none; width: 0.6rem; height: 0.6rem; transform: translateY(0.05rem); }
+  .tip .move b { font-weight: 600; }
 </style>
