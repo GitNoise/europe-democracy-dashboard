@@ -107,17 +107,19 @@
   .dek { font-size: 1.25rem; line-height: 1.5; margin: 0 0 1.1rem; max-width: 40rem; text-wrap: pretty; }
   .byline { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin: 0; }
 
-  .bar { display: flex; flex-wrap: wrap; align-items: stretch; margin-bottom: 1.75rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  .bar { display: flex; align-items: stretch; margin-bottom: 1.75rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
          font-family: var(--font-mono); font-size: 0.8rem; scroll-margin-top: 1rem; }
   .bar label { display: flex; align-items: center; padding: 0.5rem 0.75rem 0.5rem 0; border-right: 1px solid var(--rule); }
   select { font: inherit; font-weight: 600; color: var(--text); background: transparent; border: none; border-radius: 0; cursor: pointer;
            padding: 0.5rem 1.8rem 0.5rem 0.75rem; appearance: none;
            background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(-45deg, transparent 50%, currentColor 50%);
            background-size: 5px 5px; background-position: right 12px center, right 7px center; background-repeat: no-repeat; }
-  select { flex: 1 1 7rem; min-width: 0; }
+  /* the dropdown is its own box, closed by a rule; the link to the grid sits apart on the right */
+  select { flex: 0 1 15rem; min-width: 0; border-right: 1px solid var(--rule); }
   select:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-  .link { all: unset; cursor: pointer; margin-left: auto; padding: 0.5rem 0.9rem; background: var(--text); color: var(--page); font-weight: 600; }
-  .link:hover { background: var(--accent); }
+  .link { all: unset; cursor: pointer; margin-left: auto; padding: 0.5rem 0 0.5rem 1rem; color: var(--text); text-decoration: underline;
+          text-underline-offset: 3px; white-space: nowrap; }
+  .link:hover { color: var(--accent); }
   .link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .frame { position: relative; aspect-ratio: 4 / 5; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden; }
