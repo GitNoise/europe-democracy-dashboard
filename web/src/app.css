@@ -1,38 +1,41 @@
 /* Design tokens, light and dark. Component styles live in each .svelte file.
-   One typeface (Libre Franklin); hierarchy from size and weight. Plain page, no boxes; one accent colour for highlights. */
+   Magazine style: warm paper, serif for headlines and reading text, monospace for labels, the chart and controls,
+   thin black rules instead of boxes, one ink-blue accent. */
 :root {
   color-scheme: light dark;
-  --font-sans: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
-  --ink: #1a1a1a;            /* the line, arrows, brackets */
-  --text: #1a1a1a;
-  --text-muted: #666666;
-  --accent: #d0490f;         /* the selected country, links on hover */
-  --page: #ffffff;
-  --panel: #ffffff;          /* same as the page: used to cut gaps between bands and for the hover dot */
-  --border: #e2e2e2;
-  --rule: #1a1a1a;           /* thin rules above sections */
-  --axis: #9a9a9a;
-  --grid: #ebebeb;
-  --popover: #ffffff;
-  --popover-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-chart: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;   /* chart labels; lib/text.js measures with this */
+  --ink: #141414;            /* the line, arrows, brackets */
+  --text: #141414;
+  --text-muted: #5f5a54;
+  --accent: #2f3a8f;         /* the selected country, active controls */
+  --page: #fbf6f0;
+  --panel: #fbf6f0;          /* same as the page: cuts gaps between bands, fills the hover dot */
+  --border: #ddd5cb;
+  --rule: #141414;
+  --axis: #9a948c;
+  --grid: #e8e0d6;
+  --popover: #fffdfa;
+  --popover-shadow: 0 2px 8px rgba(40, 30, 20, 0.12);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --ink: #ececec;
-    --text: #ececec;
-    --text-muted: #a0a0a0;
-    --accent: #ff8a4c;
-    --page: #121212;
-    --panel: #121212;
-    --border: #333333;
-    --rule: #ececec;
-    --axis: #777777;
-    --grid: #2a2a2a;
-    --popover: #1f1f1f;
+    --ink: #ece7e0;
+    --text: #ece7e0;
+    --text-muted: #a39d95;
+    --accent: #9fa9ff;
+    --page: #161412;
+    --panel: #161412;
+    --border: #3a3530;
+    --rule: #ece7e0;
+    --axis: #7a746c;
+    --grid: #2c2824;
+    --popover: #211e1b;
     --popover-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   }
 }
 
 html, body { margin: 0; background: var(--page); color: var(--text); }
-body { padding: 2.5rem 1rem 3rem; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+body { padding: 0 1rem 3rem; font-family: var(--font-serif); -webkit-font-smoothing: antialiased; }

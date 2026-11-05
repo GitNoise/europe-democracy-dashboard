@@ -120,7 +120,7 @@
 </div>
 
 <style>
-  .chart { position: relative; flex: 1 1 0; min-height: 0; }
+  .chart { position: relative; flex: 1 1 0; min-height: 0; font-family: var(--font-chart); }
   svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
   /* sizes must match lib/text.js FONTS */
   .axis { font-size: 0.7rem; fill: var(--text-muted); font-variant-numeric: tabular-nums; }
@@ -129,7 +129,7 @@
   .end { font-size: 0.75rem; font-weight: 700; fill: var(--text); font-variant-numeric: tabular-nums; }
   .note { font-size: 0.75rem; font-weight: 500; fill: var(--text); }
   .tip { position: absolute; pointer-events: none; z-index: 2; background: var(--popover); border: 1px solid var(--border);
-         border-radius: 2px; box-shadow: var(--popover-shadow); padding: 6px 10px; font-size: 0.75rem; line-height: 1.45;
+         border-radius: 0; box-shadow: var(--popover-shadow); padding: 6px 10px; font-size: 0.75rem; line-height: 1.45;
          white-space: nowrap; max-width: 16rem; }
   .tip.left { transform: translateX(-100%); }
   .tip .muted { color: var(--text-muted); }

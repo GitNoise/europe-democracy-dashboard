@@ -1,8 +1,8 @@
 // Measuring chart text before drawing it, so labels and notes can be laid out without overlaps.
 
-// Sizes and weights match the classes in Chart.svelte; the family is read from the page's --font-sans,
+// Sizes and weights match the classes in Chart.svelte; the family is read from the page's --font-chart,
 // so measuring and drawing always use the same font, whichever one actually loads.
-const family = () => getComputedStyle(document.documentElement).getPropertyValue('--font-sans').trim() || 'sans-serif';
+const family = () => getComputedStyle(document.documentElement).getPropertyValue('--font-chart').trim() || 'sans-serif';
 export const FONTS = {
   axis: ['400', 11.2],
   partyName: ['700', 11.2],

@@ -19,8 +19,8 @@
 {/if}
 
 <style>
-  h1 { font-size: 1.6rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 0.5rem; text-wrap: balance; }
-  p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.45; margin: 0 0 0.35rem; text-wrap: pretty; }
-  p.last { margin-bottom: 1.25rem; }
-  b { color: var(--text); font-variant-numeric: tabular-nums; }
+  h1 { font-size: 1.9rem; font-weight: 500; line-height: 1.1; letter-spacing: -0.015em; margin: 0 0 0.6rem; text-wrap: balance; }
+  p { color: var(--text-muted); font-size: 1rem; line-height: 1.45; margin: 0 0 0.35rem; text-wrap: pretty; }
+  p.last { margin-bottom: 1.4rem; }
+  b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
 </style>
