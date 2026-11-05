@@ -5,13 +5,21 @@ from .config import T
 from .detect import core_span
 
 
+def banded(moves):
+    """Moves that get a band: rises, falls, swings, and jumps of band_min or more."""
+    big = moves.change.astype(float).abs() >= T["band_min"]
+    return moves[moves.kind.isin(["rise", "fall", "swing"]) | ((moves.kind == "jump") & big)]
+
+
+def move_line(m):
+    return f"{m.id} {m.kind} {m.start}–{m.end} ({float(m.change):+.2f}; driven by {m.drivers or '—'}"
+
+
 def government_gaps(moves, governments):
     """Years inside a shaded move that no government covers (a new data year inside a move shows up here)."""
     g = governments.assign(s=pd.to_datetime(governments.start), e=pd.to_datetime(governments.end))
-    change = moves.change.astype(float).abs()
-    shaded = moves[moves.kind.isin(["rise", "fall", "swing"]) | ((moves.kind == "jump") & (change >= T["band_min"]))]
     gaps = []
-    for m in shaded.itertuples():
+    for m in banded(moves).itertuples():
         for year in range(int(m.start) + 1, int(m.end) + 1):
             mid = pd.Timestamp(year, 7, 1)
             if g[(g.id == m.id) & (g.s <= mid) & (g.e > mid)].empty:
@@ -22,31 +30,26 @@ def government_gaps(moves, governments):
 def steps_without_note(moves, series, scores, exceptions):
     """Jumps under band_min that stand out as steps: outside every band, flat for step_window years on each side
     (range at most step_flat; a side with no data counts as flat), and with no note or `no_note` exception."""
-    change = moves.change.astype(float)
+    bands = banded(moves)
     shaded = {}
-    for m in moves.itertuples():
-        c = abs(float(m.change))
+    for m in bands.itertuples():
+        a, b, chg = int(m.start), int(m.end), float(m.change)
         if m.kind in ("rise", "fall"):
-            a, b = core_span(series[m.id], int(m.start), int(m.end), float(m.change))
-        elif m.kind == "swing" or (m.kind == "jump" and c >= T["band_min"]):
-            a, b = int(m.start), int(m.end)
-        else:
-            continue
+            a, b = core_span(series[m.id], a, b, chg)
         shaded.setdefault(m.id, set()).update(range(a + 1, b + 1))
     skip = {(o.id, int(o.start), int(o.end)) for o in exceptions.itertuples() if o.kind == "jump" and o.action == "no_note"}
     w, flat = T["step_window"], T["step_flat"]
     out = []
-    for m in moves[(moves.kind == "jump") & (change.abs() < T["band_min"]) & (moves.reason == "")].itertuples():
-        a, b, s = int(m.start), int(m.end), series[m.id]
+    jumps = moves[(moves.kind == "jump") & (moves.reason == "")].drop(index=bands.index, errors="ignore")
+    for m in jumps.itertuples():
+        a, b, chg, s = int(m.start), int(m.end), float(m.change), series[m.id]
         if b in shaded.get(m.id, ()) or (m.id, a, b) in skip:
             continue
-        before, after = s[(s.index >= a - w) & (s.index <= a)], s[(s.index >= b) & (s.index <= b + w)]
-        if before.max() - before.min() > flat or after.max() - after.min() > flat:
+        if any(x.max() - x.min() > flat for x in (s.loc[a - w:a], s.loc[b:b + w])):
             continue
         lo, hi = scores.loc[(m.id, a)], scores.loc[(m.id, b)]
-        clears = hi.libdem_low > lo.libdem_high if float(m.change) > 0 else hi.libdem_high < lo.libdem_low
-        out.append(f"{m.id} jump {a}–{b} ({float(m.change):+.2f}; driven by {m.drivers or '—'}; "
-                   f"{'clears' if clears else 'within'} V-Dem's uncertainty)")
+        clears = hi.libdem_low > lo.libdem_high if chg > 0 else hi.libdem_high < lo.libdem_low
+        out.append(f"{move_line(m)}; {'clears' if clears else 'within'} V-Dem's uncertainty)")
     return out
 
 
@@ -64,7 +67,7 @@ def write(path, *, vdem_file, scores, moves, log, gaps, unnamed, steps, previous
         f"V-Dem file: `{vdem_file}` · {scores.id.nunique()} countries · {scores.year.min()}–{scores.year.max()}", "",
         "## Detected", "", ", ".join(f"{k}: {v}" for k, v in moves.kind.value_counts().items()), "",
         *section("Rises and falls without a note — research them, add to notes.csv",
-                 [f"{m.id} {m.kind} {m.start}–{m.end} ({float(m.change):+.2f}; driven by {m.drivers or '—'})" for m in unexplained.itertuples()]),
+                 [move_line(m) + ")" for m in unexplained.itertuples()]),
         *section("Steps between flat years without a note — research them, add to notes.csv "
                  "(or a `no_note` exception in exceptions.csv)", steps),
         *section("Notes whose move shifted with the new data — check they still fit", log["moved"]),

@@ -36,7 +36,8 @@ def main():
     # 3. notes and exceptions; arrows, brackets and periods follow by rule
     log = {"moved": [], "unmatched": []}
     moves = notes.attach_notes(moves, notes.load_notes(), log)
-    moves = notes.apply_exceptions(moves, notes.load_exceptions(), log)
+    exceptions = notes.load_exceptions()
+    moves = notes.apply_exceptions(moves, exceptions, log)
     moves = notes.derive_presentation(moves, series, scores_by_year)
 
     for c in COLUMNS:
@@ -51,7 +52,7 @@ def main():
     lines = report.write(PIPELINE_DIR / "report.md", vdem_file=args.vdem.name, scores=scores, moves=moves, log=log,
                          gaps=report.government_gaps(moves, governments),
                          unnamed=report.parties_without_headline_name(governments),
-                         steps=report.steps_without_note(moves, series, scores_by_year, notes.load_exceptions()),
+                         steps=report.steps_without_note(moves, series, scores_by_year, exceptions),
                          previous=previous)
     print("\n".join(lines[:7]))
     print(f"Wrote {SCORES_FILE.name}, {EPISODES_FILE.name} and report.md")
