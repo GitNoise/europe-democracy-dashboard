@@ -83,7 +83,7 @@
 {#if countries.length && fontsReady}
   <section class="all" id="all">
     <h2>All countries at a glance</h2>
-    <p>Every country since 1945 on the same scale, with the same shading as the chart above. Select one to open its chart.</p>
+    <p>Every country from 1945 to 2025 on the same scale, with the same shading as the chart above. Under each chart: how far its score moved since 2015. Select one to open its chart.</p>
     <SmallMultiples {countries} selected={country?.id} onselect={(id) => { select(id); scrollToChart(); }} />
   </section>
 {/if}
