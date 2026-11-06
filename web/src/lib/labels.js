@@ -4,7 +4,7 @@
 // and only moves up a row when there's no room.
 import { FONTS, textWidth } from './text.js';
 
-export const LABEL_ROW_HEIGHT = 27;
+export const LABEL_ROW_HEIGHT = 32;
 const GAP = 8;
 
 /**

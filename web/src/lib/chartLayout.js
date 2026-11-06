@@ -1,5 +1,5 @@
 // Everything the main chart draws, worked out as plain data. Chart.svelte only renders it.
-import { format, line, scaleLinear, scaleUtc } from 'd3';
+import { format, line, min, scaleLinear, scaleUtc } from 'd3';
 import { FIRST_YEAR, GREY } from './constants.js';
 import { yearEnd } from './data.js';
 import { LABEL_ROW_HEIGHT, layoutPartyLabels } from './labels.js';
@@ -10,6 +10,13 @@ import { FONTS, textWidth } from './text.js';
 const fmt = format('.2f');
 const TICK_YEARS = [1945, 1955, 1965, 1975, 1985, 1995, 2005, 2015, 2025];
 
+/** Stripes for one government's parties: one party fills the strip; in a coalition the leader takes 60%. */
+function stripes(parties, height) {
+  if (parties.length === 1) return [{ y: 0, h: height, colour: parties[0].colour || GREY }];
+  const lead = height * 0.6, rest = (height - lead) / (parties.length - 1);
+  return parties.map((p, i) => ({ y: i ? lead + rest * (i - 1) : 0, h: i ? rest : lead, colour: p.colour || GREY }));
+}
+
 export function chartLayout(country, width, height) {
   const { series, last } = country;
   const W = Math.max(300, width);
@@ -17,7 +24,9 @@ export function chartLayout(country, width, height) {
   // the plot starts right of the axis labels ('1.0', 'most', 'democratic') and leaves room for the end value
   const left = Math.ceil(textWidth('democratic', FONTS.axis)) + 8;
   const right = W - (Math.ceil(textWidth('0.00', FONTS.endValue)) + 16);
-  const marginBottom = 24;
+  // under the years: a strip with every government in its party colour
+  const STRIP = { gap: 26, height: 24 };
+  const marginBottom = STRIP.gap + STRIP.height + 4;
   const x = scaleUtc([Date.UTC(FIRST_YEAR, 0, 1), yearEnd(last.year)], [left, right]);
 
   // bands are drawn only over the years with data; labels give the party's real time in power
@@ -30,9 +39,12 @@ export function chartLayout(country, width, height) {
   const top = Math.max(26, rows * LABEL_ROW_HEIGHT + 10);
   const H = Math.max(top + marginBottom + 160, height);
   const bottom = H - marginBottom;
-  const y = scaleLinear([0, 1], [bottom, top]);
-  const plot = { x, y, left, right, top, bottom,
-    contains: (b) => b.l >= left + 2 && b.r <= right - 2 && b.t >= top + 2 && b.b <= y(0) - 12 };
+  // the scale runs to 1 at the top; the bottom starts a step below the country's lowest score (0 at most),
+  // so a country that never fell low doesn't leave half the chart empty
+  const floor = Math.max(0, Math.floor((min(series, (r) => r.val) - 0.05) * 10) / 10);
+  const y = scaleLinear([floor, 1], [bottom, top]);
+  const plot = { x, y, floor, left, right, top, bottom,
+    contains: (b) => b.l >= left + 2 && b.r <= right - 2 && b.t >= top + 2 && b.b <= y(floor) - 12 };
 
   // obstacles the notes must keep clear of
   const boxes = [{ l: 0, r: textWidth('democratic', FONTS.axis) + 2, t: y(1) + 2, b: y(1) + 26 }];
@@ -71,7 +83,15 @@ export function chartLayout(country, width, height) {
     bands: bands.map((b, k) => ({ x: b.xa, width: Math.max(1, b.xb - b.xa), colour: b.colour || GREY,
                                   divider: k > 0 && bands[k - 1].b === b.a })),
     labels: labels.map((l) => ({ ...l, baseline: top - 8 - l.row * LABEL_ROW_HEIGHT })),
-    gridlines: [0.5, 1].map((v) => ({ y: y(v), label: v === 1 ? '1.0' : String(v) })),
+    // 0.5 and 1.0 when they're on the scale; a raised floor gets its own label on the baseline
+    gridlines: [...(floor > 0 ? [floor] : []), ...[0.5, 1].filter((v) => v > floor)]
+      .map((v) => ({ y: y(v), label: v === 1 ? '1.0' : v.toFixed(1), base: v === floor })),
+    // a coalition is stacked stripes: the leading party on top and thicker, partners below
+    governments: country.governments
+      .map((g) => ({ xa: x(Math.max(g.s, +x.domain()[0])), xb: x(Math.min(g.e, dataEnd)), name: g.name,
+                     stripes: stripes(g.parties, STRIP.height) }))
+      .filter((g) => g.xb > g.xa),
+    strip: { y: bottom + STRIP.gap, height: STRIP.height },
     // each year's label sits under the middle of that year's segment (its score is plotted at 31 December)
     // narrow charts (phones) label every other decade so the years don't run into each other
     ticks: TICK_YEARS.filter((_, i) => width >= 480 || i % 2 === 0).map((yr) => ({ x: x(Date.UTC(yr, 6, 1)), label: String(yr) })),

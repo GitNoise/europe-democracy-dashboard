@@ -47,7 +47,11 @@
     hover = {
       d, x: layout.plot.x(d.date), y: layout.plot.y(d.val), scale: box.width / layout.width,
       change: prev && prev.year === d.year - 1 ? d.val - prev.val : null,
-      government: government && { name: government.name, colour: government.colour },
+      // a coalition shows its name without the bracketed party list, then each party with its colour, leader first
+      government: government && {
+        name: government.parties.length > 1 ? government.name.replace(/\s*\([^)]*\)\s*$/, '') : government.name,
+        colour: government.colour, parties: government.parties.length > 1 ? government.parties : null,
+      },
       regime: Number.isFinite(d.reg) ? REGIME[d.reg].replace(/^an? /, '') : null,
       move: moveFor(d.year),
     };
@@ -81,20 +85,30 @@
         {#if band.divider}<line x1={band.x} x2={band.x} y1={plot.top} y2={plot.bottom} stroke="var(--panel)" stroke-width="1.5" />{/if}
       {/each}
       {#each layout.labels as label}
-        <text class="party" x={label.x} y={label.baseline - 12} text-anchor={label.anchor} fill={ink(label.colour)}>{label.party}</text>
+        <text class="party" x={label.x} y={label.baseline - 14} text-anchor={label.anchor} fill={ink(label.colour)}>{label.party}</text>
         <text class="years" x={label.x} y={label.baseline} text-anchor={label.anchor}>{label.years}</text>
       {/each}
 
       <!-- axes -->
       {#each layout.gridlines as g}
-        <line x1="0" x2={plot.right} y1={g.y} y2={g.y} stroke="var(--grid)" />
+        {#if !g.base}<line x1="0" x2={plot.right} y1={g.y} y2={g.y} stroke="var(--grid)" />{/if}
         <text class="axis" x="0" y={g.y - 4}>{g.label}</text>
       {/each}
       <text class="axis" x="0" y={plot.y(1) + 12}>most</text>
       <text class="axis" x="0" y={plot.y(1) + 23}>democratic</text>
-      <line x1={plot.left} x2={plot.right} y1={plot.y(0)} y2={plot.y(0)} stroke="var(--axis)" />
+      <line x1={plot.left} x2={plot.right} y1={plot.y(plot.floor)} y2={plot.y(plot.floor)} stroke="var(--axis)" />
       {#each layout.ticks as t}
         <text class="axis" x={t.x} y={plot.bottom + 16} text-anchor="middle">{t.label}</text>
+      {/each}
+
+      <!-- who governed, every year -->
+      <text class="axis" x="0" y={layout.strip.y + layout.strip.height / 2} dy="0.35em">In power</text>
+      <rect x={plot.left} y={layout.strip.y} width={layout.end.x - plot.left} height={layout.strip.height} fill="var(--grid)" />
+      {#each layout.governments as g}
+        {#each g.stripes as s}
+          <rect x={g.xa} y={layout.strip.y + s.y} width={Math.max(1, g.xb - g.xa)} height={s.h} fill={s.colour}><title>{g.name}</title></rect>
+        {/each}
+        <line x1={g.xa} x2={g.xa} y1={layout.strip.y} y2={layout.strip.y + layout.strip.height} stroke="var(--panel)" />
       {/each}
 
       <!-- lowest / highest since -->
@@ -143,7 +157,14 @@
         {#if hover.government || hover.move}
           <div class="more">
             {#if hover.government}
-              <div class="gov"><i style:background={hover.government.colour || GREY}></i>{hover.government.name}</div>
+              {#if hover.government.parties}
+                <div class="gov-name">{hover.government.name}</div>
+                <div class="parties">
+                  {#each hover.government.parties as p}<span class="gov"><i style:background={p.colour || GREY}></i>{p.party}</span>{/each}
+                </div>
+              {:else}
+                <div class="gov"><i style:background={hover.government.colour || GREY}></i>{hover.government.name}</div>
+              {/if}
             {/if}
             {#if hover.move}
               <div class="move"><b>{hover.move.label}</b>{hover.move.text ? `: ${hover.move.text}` : ''}</div>
@@ -160,7 +181,7 @@
   svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
   /* sizes must match lib/text.js FONTS */
   .axis { font-size: 0.7rem; fill: var(--text-muted); font-variant-numeric: tabular-nums; }
-  .party { font-size: 0.7rem; font-weight: 700; }
+  .party { font-family: var(--font-display); font-size: 15px; font-weight: 800; }
   .years { font-size: 0.66rem; fill: var(--text-muted); font-variant-numeric: tabular-nums; }
   .end { font-size: 0.75rem; font-weight: 700; fill: var(--text); font-variant-numeric: tabular-nums; }
   .note { font-size: 0.75rem; font-weight: 500; fill: var(--text); }
@@ -174,6 +195,7 @@
   .tip .score span, .tip .muted { color: var(--text-muted); }
   .tip .more { margin-top: 0.45rem; padding-top: 0.45rem; border-top: 1px solid var(--border); display: grid; gap: 0.3rem; }
   .tip .gov { display: flex; gap: 0.4rem; align-items: baseline; }
+  .tip .parties { display: flex; flex-wrap: wrap; gap: 0.15rem 0.7rem; }
   .tip .gov i { flex: none; width: 0.6rem; height: 0.6rem; transform: translateY(0.05rem); }
   .tip .move b { font-weight: 600; }
 </style>

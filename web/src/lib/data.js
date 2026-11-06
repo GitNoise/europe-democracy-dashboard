@@ -4,15 +4,17 @@ import { FIRST_YEAR } from './constants.js';
 
 /** Load every data file once. Files live in public/data and are written by the pipeline. */
 export async function loadData(base = import.meta.env.BASE_URL) {
-  const [scores, governments, episodes, flags] = await Promise.all([
+  const [scores, governments, partyColours, episodes, flags] = await Promise.all([
     csv(`${base}data/scores.csv`),
     csv(`${base}data/governments.csv`),
+    csv(`${base}data/party_colours.csv`),
     csv(`${base}data/episodes.csv`),
     json(`${base}data/flags.json`),
   ]);
   return {
     scoresById: group(scores, (r) => r.id),
     governmentsById: group(governments, (r) => r.id),
+    partyColoursById: group(partyColours, (r) => r.id),
     episodesById: group(episodes, (r) => r.id),
     flagsById: new Map(flags.map((f) => [f.id, f.svg])),
   };
@@ -66,10 +68,23 @@ export function countryView(db, id) {
   };
 }
 
-/** The governments table for one country, oldest first. */
+/**
+ * The governments table for one country, oldest first. Each government also lists its parties, leading party first:
+ * from an optional `parties` column ("ÖVP+SPÖ"), else from a coalition name joined with an en dash ("ÖVP–SPÖ").
+ * A party takes the colour it has elsewhere in the country's table, else the one in party_colours.csv, or none.
+ */
 function governmentsFor(db, id) {
-  return (db.governmentsById.get(id) ?? [])
-    .map((r) => ({ party: r.party, name: r.name, colour: r.colour || '', headline: r.headline || '', s: +new Date(r.start), e: +new Date(r.end) }))
+  const rows = db.governmentsById.get(id) ?? [];
+  const colourOf = new Map([
+    ...(db.partyColoursById?.get(id) ?? []).map((r) => [r.party, r.colour]),
+    ...rows.filter((r) => r.colour).map((r) => [r.party, r.colour]),
+  ]);
+  return rows
+    .map((r) => {
+      const names = (r.parties ? r.parties.split('+') : r.party.split('–')).map((p) => p.trim()).filter(Boolean);
+      const parties = names.length > 1 ? names.map((p) => ({ party: p, colour: colourOf.get(p) || '' })) : [{ party: r.party, colour: r.colour || colourOf.get(r.party) || '' }];
+      return { party: r.party, name: r.name, colour: r.colour || '', headline: r.headline || '', parties, s: +new Date(r.start), e: +new Date(r.end) };
+    })
     .filter((g) => Number.isFinite(g.s) && Number.isFinite(g.e))
     .sort((a, b) => a.s - b.s);
 }
