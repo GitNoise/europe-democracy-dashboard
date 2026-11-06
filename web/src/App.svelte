@@ -93,9 +93,8 @@
   <p>
     <b>The index.</b> Each chart follows V-Dem’s Liberal Democracy Index (version 16), built from expert assessments and
     scored from 0 (least democratic) to 1 (most). It combines free and fair elections with the checks on power: courts,
-    parliament and civil liberties. The scale always ends at 1; it starts one step below the country’s lowest score, so a
-    country that never fell far doesn’t leave half the chart empty. The regime class in each subtitle is V-Dem’s Regimes
-    of the World.
+    parliament and civil liberties. Every chart shows the full scale, 0 to 1, so countries compare at a glance. The regime
+    class in each subtitle is V-Dem’s Regimes of the World.
   </p>
   <p>
     <b>Big moves.</b> Rises and falls follow V-Dem’s Episodes of Regime Transformation: a move starts when the score

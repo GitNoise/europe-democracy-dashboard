@@ -1,5 +1,5 @@
 // Everything the main chart draws, worked out as plain data. Chart.svelte only renders it.
-import { format, line, min, scaleLinear, scaleUtc } from 'd3';
+import { format, line, scaleLinear, scaleUtc } from 'd3';
 import { FIRST_YEAR, GREY } from './constants.js';
 import { yearEnd } from './data.js';
 import { LABEL_ROW_HEIGHT, layoutPartyLabels } from './labels.js';
@@ -39,12 +39,10 @@ export function chartLayout(country, width, height) {
   const top = Math.max(26, rows * LABEL_ROW_HEIGHT + 10);
   const H = Math.max(top + marginBottom + 160, height);
   const bottom = H - marginBottom;
-  // the scale runs to 1 at the top; the bottom starts a step below the country's lowest score (0 at most),
-  // so a country that never fell low doesn't leave half the chart empty
-  const floor = Math.max(0, Math.floor((min(series, (r) => r.val) - 0.05) * 10) / 10);
-  const y = scaleLinear([floor, 1], [bottom, top]);
-  const plot = { x, y, floor, left, right, top, bottom,
-    contains: (b) => b.l >= left + 2 && b.r <= right - 2 && b.t >= top + 2 && b.b <= y(floor) - 12 };
+  // every chart runs the full scale, 0 to 1, so countries compare at a glance
+  const y = scaleLinear([0, 1], [bottom, top]);
+  const plot = { x, y, left, right, top, bottom,
+    contains: (b) => b.l >= left + 2 && b.r <= right - 2 && b.t >= top + 2 && b.b <= y(0) - 12 };
 
   // obstacles the notes must keep clear of
   const boxes = [{ l: 0, r: textWidth('democratic', FONTS.axis) + 2, t: y(1) + 2, b: y(1) + 26 }];
@@ -83,9 +81,7 @@ export function chartLayout(country, width, height) {
     bands: bands.map((b, k) => ({ x: b.xa, width: Math.max(1, b.xb - b.xa), colour: b.colour || GREY,
                                   divider: k > 0 && bands[k - 1].b === b.a })),
     labels: labels.map((l) => ({ ...l, baseline: top - 8 - l.row * LABEL_ROW_HEIGHT })),
-    // 0.5 and 1.0 when they're on the scale; a raised floor gets its own label on the baseline
-    gridlines: [...(floor > 0 ? [floor] : []), ...[0.5, 1].filter((v) => v > floor)]
-      .map((v) => ({ y: y(v), label: v === 1 ? '1.0' : v.toFixed(1), base: v === floor })),
+    gridlines: [0.5, 1].map((v) => ({ y: y(v), label: v === 1 ? '1.0' : String(v) })),
     // a coalition is stacked stripes: the leading party on top and thicker, partners below
     governments: country.governments
       .map((g) => ({ xa: x(Math.max(g.s, +x.domain()[0])), xb: x(Math.min(g.e, dataEnd)), name: g.name,

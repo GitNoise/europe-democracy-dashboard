@@ -68,7 +68,7 @@ For a move (1 and 4): regime class changed → said in plain words with its dire
 ## 7. Subtitle, footer, axis [page]
 
 - Subtitle: what the shading shows; for move headlines the numbers ("the score went from A in Y1 to B in Y2"); a slow-trend sentence when one exists ("From Y1 to Y2, the score rose slowly by X, mainly through <driver>"); V-Dem's regime class with a one-phrase explanation (liberal democracy: free elections, plus courts, parliament and civil liberties that check the government; electoral democracy: free and fair elections, but weaker checks on the government; electoral autocracy: elections are held, but they are not free and fair; closed autocracy: no meaningful multiparty elections).
-- Each year's score is plotted at 31 December; year labels sit under the middle of each year's segment. Top gridline "1.0 / most / democratic". The scale starts one step (0.1) below the country's lowest score, rounded down, at 0 at most; a raised start is labelled on the baseline.
+- Each year's score is plotted at 31 December; year labels sit under the middle of each year's segment. Top gridline "1.0 / most / democratic". Every chart runs the full scale, 0 to 1.
 - "In power" strip under the years: every government in its party colour; a coalition is stacked stripes, the leading party on top (60% of the height) and partners sharing the rest; grey where a colour is unknown.
 - Note under each chart: source and a one-line key to the shading and the strip, linking to the "How this works" section, which explains the method in plain words.
 - "Lowest/highest since" dotted line starts where the series last crossed today's level.

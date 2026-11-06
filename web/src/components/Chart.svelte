@@ -91,12 +91,12 @@
 
       <!-- axes -->
       {#each layout.gridlines as g}
-        {#if !g.base}<line x1="0" x2={plot.right} y1={g.y} y2={g.y} stroke="var(--grid)" />{/if}
+        <line x1="0" x2={plot.right} y1={g.y} y2={g.y} stroke="var(--grid)" />
         <text class="axis" x="0" y={g.y - 4}>{g.label}</text>
       {/each}
       <text class="axis" x="0" y={plot.y(1) + 12}>most</text>
       <text class="axis" x="0" y={plot.y(1) + 23}>democratic</text>
-      <line x1={plot.left} x2={plot.right} y1={plot.y(plot.floor)} y2={plot.y(plot.floor)} stroke="var(--axis)" />
+      <line x1={plot.left} x2={plot.right} y1={plot.y(0)} y2={plot.y(0)} stroke="var(--axis)" />
       {#each layout.ticks as t}
         <text class="axis" x={t.x} y={plot.bottom + 16} text-anchor="middle">{t.label}</text>
       {/each}
