@@ -74,11 +74,8 @@
     <Header {country} />
     {#key country.id}<Chart {country} />{/key}
     <p class="source">
-      Source: V-Dem Institute (v16). Countries: all European states in V-Dem, including Türkiye,
-      Cyprus and the South Caucasus. Shaded: the party leading the government during a rise or fall of 0.10 or more (when
-      at least a quarter of the move happened on its watch), after V-Dem’s Episodes of Regime Transformation; grey for
-      coalitions, caretakers and unknown party colours. Governments, party colours and notes compiled from public records.
-      Flags: flag-icons (MIT).
+      Source: V-Dem Institute (v16). Shaded: the party in power during each big rise or fall. In power: every government,
+      coalition partners stacked under the leading party. <a href="#method">How this works</a>.
     </p>
   {/if}
 </main>
@@ -91,8 +88,50 @@
   </section>
 {/if}
 
+<section class="method" id="method">
+  <h2>How this works</h2>
+  <p>
+    <b>The index.</b> Each chart follows V-Dem’s Liberal Democracy Index (version 16), built from expert assessments and
+    scored from 0 (least democratic) to 1 (most). It combines free and fair elections with the checks on power: courts,
+    parliament and civil liberties. The scale always ends at 1; it starts one step below the country’s lowest score, so a
+    country that never fell far doesn’t leave half the chart empty. The regime class in each subtitle is V-Dem’s Regimes
+    of the World.
+  </p>
+  <p>
+    <b>Big moves.</b> Rises and falls follow V-Dem’s Episodes of Regime Transformation: a move starts when the score
+    moves 0.01 in a year, continues while it keeps going that way, and ends when it turns back by 0.03 in a year, gives
+    back 0.10 in total, or stalls for five years. It counts if it adds up to 0.10 or more. Back-and-forth swings (0.15 of
+    movement within three years) and one-year jumps of 0.10 or more count too.
+  </p>
+  <p>
+    <b>Shading.</b> A party is shaded when at least a quarter of a big move happened while it was in power, for its whole
+    term. A rise or fall is measured over its core: the shortest run of years that carries 80% of it. A coalition takes
+    the colour of the party that leads it; provisional, caretaker, technocratic and all-party unity governments are grey.
+    A headline names a party when it held power for 60% of the move.
+  </p>
+  <p>
+    <b>In power.</b> The strip under each chart shows every government since 1945, in its leading party’s colour, with
+    coalition partners stacked below. Governments are from ParlGov and Wikipedia’s lists of heads of
+    government; party colours are the parties’ own.
+  </p>
+  <p>
+    <b>Notes.</b> Each note names an event that coincides with a move, with a source for it. It shows what happened
+    at the time, not proof that it caused the change. A note marks a year with an arrow, or a period with a bracket.
+  </p>
+  <p>
+    <b>Limits.</b> V-Dem scores are expert estimates with uncertainty, and each new release can revise past years. Shading
+    shows who governed during a move, not who was responsible for it. Party colours and the line between a coalition and
+    a unity government are judgment calls.
+  </p>
+  <p>
+    Every threshold is in <a href="https://github.com/GitNoise/europe-democracy-dashboard/blob/main/pipeline/RULES.md">the rules</a>
+    and the pipeline’s <a href="https://github.com/GitNoise/europe-democracy-dashboard/blob/main/pipeline/config.json">config</a>.
+    Flags: flag-icons (MIT).
+  </p>
+</section>
+
 <footer>
-  <p>Methods, data and code: <a href="https://github.com/GitNoise/europe-democracy-dashboard">github.com/GitNoise/europe-democracy-dashboard</a>.</p>
+  <p>Data and code: <a href="https://github.com/GitNoise/europe-democracy-dashboard">github.com/GitNoise/europe-democracy-dashboard</a>.</p>
   <p>Made by Patrick Wojda. More of my work is in my <a href="https://gitnoise.github.io/portfolio/">portfolio</a>, or find me on <a href="https://www.linkedin.com/in/patrickwojda/">LinkedIn</a>.</p>
 </footer>
 
@@ -106,7 +145,7 @@
   .masthead a { color: var(--text); text-decoration: none; }
   .masthead a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-  .intro, .picker, .frame, .all, footer { max-width: 46rem; margin-inline: auto; }
+  .intro, .picker, .frame, .all, .method, footer { max-width: 46rem; margin-inline: auto; }
   .intro h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 7.5vw, 4.2rem); font-weight: 800; line-height: 1; letter-spacing: -0.01em;
               margin: 0 0 var(--space-4); text-wrap: balance; }
   /* a little punk: the question cut out as a label, and the title acting out its own rise and fall */
@@ -149,6 +188,11 @@
   .all { margin-top: var(--space-6); scroll-margin-top: 1rem; }
   .all h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 var(--space-1); }
   .all p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.45; margin: 0; }
+  .method { margin-top: var(--space-6); scroll-margin-top: 1rem; }
+  .method h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 var(--space-3); }
+  .method p { font-size: 1.05rem; line-height: 1.55; margin: 0 0 var(--space-2); max-width: 40rem; }
+  .method b { font-family: var(--font-display); font-weight: 700; }
+  .method a, .source a { color: var(--text); text-underline-offset: 3px; }
   footer { margin-top: var(--space-6); font-family: var(--font-sans); font-size: 0.82rem; color: var(--text-muted); }
   footer a, .byline a { color: var(--text); text-underline-offset: 3px; }
   footer p { margin: 0 0 0.4rem; }

@@ -6,7 +6,7 @@ Every rule that turns V-Dem data into a chart. Rules marked **[build]** are appl
 
 - Source: V-Dem country-year dataset. Countries: `countries` in `config.json` (all European countries in V-Dem, incl. Türkiye, Cyprus and the South Caucasus). Years from `first_year` (1945) to the last year in the release.
 - Per country-year: Liberal Democracy Index (`v2x_libdem`) with its low and high estimates (`_codelow`, `_codehigh`, ±1 standard deviation), Regimes of the World class (`v2x_regime`: 0 closed autocracy, 1 electoral autocracy, 2 electoral democracy, 3 liberal democracy), national election year (`v2xel_elecparl` or `v2xel_elecpres` = 1).
-- Governments (`web/public/data/governments.csv`) are maintained by hand: party code, full name, colour, headline name, start and end date. They only need to cover years inside shaded moves.
+- Governments (`web/public/data/governments.csv`): every government since 1945 (from ParlGov and Wikipedia's lists of heads of government), with party code, full name, colour, headline name, start and end date, its `parties` (leading party first, joined with `+`) and an optional `kind` for governments not led by one party (provisional, caretaker, technocratic, unity, collegial, power-sharing). Coalition partners' colours are in `party_colours.csv`.
 
 ## 2. Detection [build]
 
@@ -32,7 +32,7 @@ All on the Liberal Democracy Index, one series per country.
 4. A government is shaded if **at least 25% of the move happened while it was in power**: each year's change is spread over that year and shared among governments by their time in office.
 5. A shaded party keeps its band for following terms it governs without a break while the move is still running.
 6. Each shaded government is shown for its **full term**; bands are clipped to the years the country has data.
-7. Colour: the party's colour; grey for coalitions, caretakers, juntas and parties without a confirmed colour.
+7. Colour: the party's colour; a coalition takes its leading party's colour; grey for governments with a `kind` (provisional, caretaker, technocratic, unity, collegial, power-sharing), juntas and parties without a confirmed colour.
 
 ## 4. Party labels [page]
 
@@ -68,7 +68,9 @@ For a move (1 and 4): regime class changed → said in plain words with its dire
 ## 7. Subtitle, footer, axis [page]
 
 - Subtitle: what the shading shows; for move headlines the numbers ("the score went from A in Y1 to B in Y2"); a slow-trend sentence when one exists ("From Y1 to Y2, the score rose slowly by X, mainly through <driver>"); V-Dem's regime class with a one-phrase explanation (liberal democracy: free elections, plus courts, parliament and civil liberties that check the government; electoral democracy: free and fair elections, but weaker checks on the government; electoral autocracy: elections are held, but they are not free and fair; closed autocracy: no meaningful multiparty elections).
-- Each year's score is plotted at 31 December; year labels sit under the middle of each year's segment. Top gridline "1.0 / most / democratic".
+- Each year's score is plotted at 31 December; year labels sit under the middle of each year's segment. Top gridline "1.0 / most / democratic". The scale starts one step (0.1) below the country's lowest score, rounded down, at 0 at most; a raised start is labelled on the baseline.
+- "In power" strip under the years: every government in its party colour; a coalition is stacked stripes, the leading party on top (60% of the height) and partners sharing the rest; grey where a colour is unknown.
+- Note under each chart: source and a one-line key to the shading and the strip, linking to the "How this works" section, which explains the method in plain words.
 - "Lowest/highest since" dotted line starts where the series last crossed today's level.
-- Tooltip: year, party in power, score, range, regime class, "Driven by" for the move the year belongs to.
+- Tooltip: year, score and its change, regime class, the government in power (a coalition lists its parties with their colours, leading party first), and the move the year belongs to.
 - Small multiples: same scales and shading, sorted by the latest score; no labels or notes.

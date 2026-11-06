@@ -72,6 +72,8 @@ export function countryView(db, id) {
  * The governments table for one country, oldest first. Each government also lists its parties, leading party first:
  * from an optional `parties` column ("ÖVP+SPÖ"), else from a coalition name joined with an en dash ("ÖVP–SPÖ").
  * A party takes the colour it has elsewhere in the country's table, else the one in party_colours.csv, or none.
+ * `shade` is the colour its band takes: its own, else a coalition's leading party's; none for governments marked
+ * with a `kind` (provisional, caretaker, technocratic, all-party unity, collegial, power-sharing).
  */
 function governmentsFor(db, id) {
   const rows = db.governmentsById.get(id) ?? [];
@@ -83,7 +85,8 @@ function governmentsFor(db, id) {
     .map((r) => {
       const names = (r.parties ? r.parties.split('+') : r.party.split('–')).map((p) => p.trim()).filter(Boolean);
       const parties = names.length > 1 ? names.map((p) => ({ party: p, colour: colourOf.get(p) || '' })) : [{ party: r.party, colour: r.colour || colourOf.get(r.party) || '' }];
-      return { party: r.party, name: r.name, colour: r.colour || '', headline: r.headline || '', parties, s: +new Date(r.start), e: +new Date(r.end) };
+      const shade = r.colour || (!r.kind && parties.length > 1 ? parties[0].colour : '');
+      return { party: r.party, name: r.name, colour: r.colour || '', shade, headline: r.headline || '', parties, s: +new Date(r.start), e: +new Date(r.end) };
     })
     .filter((g) => Number.isFinite(g.s) && Number.isFinite(g.e))
     .sort((a, b) => a.s - b.s);

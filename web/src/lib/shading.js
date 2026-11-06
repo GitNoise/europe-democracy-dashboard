@@ -102,7 +102,7 @@ export function shadedBands(country) {
   for (const i of [...picked].sort((a, b) => a - b)) {
     const g = terms[i], prev = bands[bands.length - 1];
     if (prev && prev.party === g.party && prev.b === g.s) prev.b = g.e;
-    else bands.push({ party: g.party, name: g.name, colour: g.colour, a: g.s, b: g.e });
+    else bands.push({ party: g.party, name: g.name, colour: g.shade, a: g.s, b: g.e });
   }
   for (const run of runs) {
     if (!terms.some((g) => g.s < run.b && g.e > run.a)) bands.push({ party: '', name: '', colour: '', a: run.a, b: run.b });
