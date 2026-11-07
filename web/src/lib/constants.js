@@ -4,8 +4,8 @@
 export const DEFAULT_COUNTRY = 'HUN';
 export const FIRST_YEAR = 1945;
 
-/** Moves since this year count as "recent" for headlines. */
-export const RECENT_YEAR = 2018;
+// A move is recent when it ended within this many years of the latest data (headline rule 1).
+export const RECENT_YEARS = 10;
 
 /** Bands are drawn only for moves at least this big. */
 export const BAND_MIN = 0.1;

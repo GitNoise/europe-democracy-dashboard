@@ -2,6 +2,8 @@
 import { csv, json, group } from 'd3';
 import { FIRST_YEAR } from './constants.js';
 
+const RECORD_TOLERANCE = 0.01;
+
 /** Load every data file once. Files live in public/data and are written by the pipeline. */
 export async function loadData(base = import.meta.env.BASE_URL) {
   const [scores, governments, partyColours, episodes, flags] = await Promise.all([
@@ -25,6 +27,19 @@ const num = (v) => (v === '' || v == null ? NaN : Number(v));
 /** Each year's score is plotted at 31 December, the date V-Dem's scores refer to. */
 export const yearEnd = (year) => Date.UTC(year, 11, 31);
 
+/** Where a country's latest score ranks among all countries: { position, of }, 1 = most democratic. */
+const ranks = new WeakMap();
+function rankOf(db, id) {
+  if (!ranks.has(db)) {
+    const latest = [...db.scoresById].map(([k, rs]) => {
+      const r = rs.filter((q) => q.libdem !== '').at(-1);
+      return { k, val: r ? Number(r.libdem) : -1 };
+    }).sort((p, q) => q.val - p.val);
+    ranks.set(db, new Map(latest.map((d, i) => [d.k, { position: i + 1, of: latest.length }])));
+  }
+  return ranks.get(db).get(id) ?? null;
+}
+
 /** One country's yearly scores, plus the facts the headline needs. */
 export function countryView(db, id) {
   const raw = db.scoresById.get(id) ?? [];
@@ -44,14 +59,16 @@ export function countryView(db, id) {
   if (!series.length) return null;
   const last = series[series.length - 1];
 
-  // "Less / more democratic today than at any time since …": the last earlier year at or beyond today's level
-  const lower = series.filter((r) => r.year < last.year && r.val <= last.val);
-  const higher = series.filter((r) => r.year < last.year && r.val >= last.val);
-  const lowSince = lower.length ? lower[lower.length - 1].year : null;
+  // "Less / more democratic today than at any time since …": the last earlier year clearly at or beyond today's level,
+  // or the first year when none is (a country at its lowest ever). Scores within RECORD_TOLERANCE of today count as
+  // the same level (V-Dem's year-to-year noise), so a slightly lower score last year doesn't hide a long-run low.
+  const lower = series.filter((r) => r.year < last.year && r.val <= last.val - RECORD_TOLERANCE);
+  const higher = series.filter((r) => r.year < last.year && r.val >= last.val + RECORD_TOLERANCE);
+  const lowSince = lower.length ? lower[lower.length - 1].year : series[0].year;
   const highSince = higher.length ? higher[higher.length - 1].year : null;
   let record = null;
   if (lowSince !== null && last.year - lowSince >= 10) record = { kind: 'low', since: lowSince };
-  else if (!higher.length) record = { kind: 'highest-ever' };
+  else if (!series.some((r) => r.year < last.year && r.val >= last.val)) record = { kind: 'highest-ever' }; // strict: a true record
   else if (highSince !== null && last.year - highSince >= 10) record = { kind: 'high', since: highSince };
 
   return {
@@ -61,6 +78,7 @@ export function countryView(db, id) {
     series,
     last,
     record,
+    rank: rankOf(db, id),
     elections: rows.filter((r) => r.election).map((r) => r.year),
     governments: governmentsFor(db, id),
     episodes: episodesFor(db, id),

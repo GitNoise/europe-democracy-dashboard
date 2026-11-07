@@ -56,14 +56,17 @@ All on the Liberal Democracy Index, one series per country.
 
 ## 6. Headline [page]
 
-Order of preference:
-1. Most recent rise or fall ending 2018 or later (from its high to its low).
-2. "less / more democratic today than at any time since Y" (today's level last seen at least ten years earlier), or "has never been more democratic".
-3. A slow trend still running in 2018 or later.
-4. The most recent rise or fall at any time.
-5. "has been a stable democracy / autocracy since Y".
+Order of preference: a big move in the last ten years if there is one, else what is true today, else history.
+1. Most recent rise or fall ending in the last ten years (2015 or later for 2025 data) that still holds, from its high to its low. A move still holds when less than half of it has been undone since and today's regime class hasn't gone back past the one it ended in. A move told by its size takes its record (3) in the same direction: "…, to its lowest level since Y" (or "…, and is now at its lowest level since Y" when the move ended before the latest year).
+2. "less / more democratic today than at any time since Y" (today's level last seen at least ten years earlier; scores within 0.01 of today count as the same level; with no earlier year clearly lower, Y is the first year of data), or "has never been more democratic" (strict). Only when it is news: today at least 0.05 below (or above) the country's highest (or lowest) score since 2010.
+3. "is among Europe's three most / least democratic countries" (rank by latest score; not an exact rank, as V-Dem's uncertainty ranges overlap).
+4. A slow trend still running in the last ten years.
+5. "is among Europe's ten most democratic countries" (old history is not news for a country near the top today).
+6. The most recent rise or fall at any time that still holds.
+7. Else the latest rise or fall, with "but has since slipped back" (or "recovered").
+8. "has been a stable democracy / autocracy since Y" (no big move at all).
 
-For a move (1 and 4): regime class changed → said in plain words with its direction, no V-Dem class names: up to liberal democracy "became a full democracy (again)", up to electoral democracy "became a democracy (again)", up from closed autocracy "began holding elections, but remained an autocracy"; down from liberal to electoral democracy "lost its status as a full democracy", down to electoral autocracy "slid from democracy into autocracy", down to closed autocracy "became a dictatorship" ("again" when the country held that class before); else a fall of 25%+ of the score → "democracy score fell by a quarter / about a third / nearly half / more than half"; else a rise after a fall in the previous three years → "has won back all / most / much / some of the democratic ground it lost"; else "democracy eroded" / "became more democratic". "Under <party>" only when one coloured party held power for 60%+ of the move (its `headline` name). Years ("between Y1 and Y2") are added unless the move is recent and a party is named. Countries that take "the": United Kingdom, Netherlands.
+For a move (1, 6 and 7): regime class changed → said in plain words with its direction, no V-Dem class names: up to liberal democracy "became a full democracy (again)", up to electoral democracy "became a democracy (again)", up from closed autocracy "began holding elections, but remained an autocracy"; down from liberal to electoral democracy "lost its status as a full democracy", down to electoral autocracy "slid from democracy into autocracy", down to closed autocracy "became a dictatorship" ("again" when the country held that class before); else a recent rise after a fall in the previous three years → "has won back all / most / much / some of the democratic ground it lost"; else a change of 15%+ of the score → "democracy score fell / rose by a sixth / a fifth / a quarter / about a third / nearly half / more than half" (a rise of 100%+ "nearly / more than doubled"); else "democracy eroded" / "became more democratic". "Under <party>" only when one coloured party held power for 60%+ of the move (its `headline` name). Years ("between Y1 and Y2") are added unless the move ended in the last ten years and a party is named. Countries that take "the": United Kingdom, Netherlands.
 
 ## 7. Subtitle, footer, axis [page]
 
