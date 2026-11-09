@@ -116,8 +116,8 @@ function governmentsFor(db, id) {
 /** Every detected move for one country (rises, falls, swings, jumps, dips, spikes, trend changes, slow trends). */
 /**
  * Heads of state in the years they share or hold power over the cabinet, or have a strong veto over laws
- * (pipeline/democracy_pipeline/heads.py). Years are as V-Dem records them, on 31 December; a spell is drawn over
- * its whole years. A party takes the colour it has in the governments table, else party_colours.csv, else grey.
+ * (pipeline/democracy_pipeline/heads.py). Years are as V-Dem records them, on 31 December; a spell is drawn
+ * centred on those dates, so the hover line at a year's score runs through that year's term. A party takes the colour it has in the governments table, else party_colours.csv, else grey.
  */
 function headsFor(db, id) {
   const colourOf = new Map([
@@ -125,8 +125,9 @@ function headsFor(db, id) {
     ...(db.governmentsById.get(id) ?? []).filter((r) => r.colour).map((r) => [r.party, r.colour]),
   ]);
   return (db.headsById?.get(id) ?? []).map((r) => ({
-    s: Date.UTC(Number(r.start), 0, 1),
-    e: Date.UTC(Number(r.end) + 1, 0, 1),
+    // V-Dem names the head of state on 31 December, so each year's mark is centred on that day: from 1 July to 1 July
+    s: Date.UTC(Number(r.start), 6, 1),
+    e: Date.UTC(Number(r.end) + 1, 6, 1),
     name: r.name,
     party: r.party,
     role: r.role,

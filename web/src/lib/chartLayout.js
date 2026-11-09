@@ -104,7 +104,7 @@ export function chartLayout(country, width, height) {
     gridlines: [0.5, 1].map((v) => ({ y: y(v), label: v === 1 ? '1.0' : String(v) })),
     // a coalition is stacked stripes: the leading party on top and thicker, partners below
     governments: country.governments
-      .map((g) => ({ xa: x(Math.max(g.s, +x.domain()[0])), xb: x(Math.min(g.e, dataEnd)), name: g.name,
+      .map((g) => ({ s: g.s, e: g.e, xa: x(Math.max(g.s, +x.domain()[0])), xb: x(Math.min(g.e, dataEnd)), name: g.name,
                      stripes: stripes(g.parties, STRIP.height) }))
       .filter((g) => g.xb > g.xa),
     strip: { y: bottom + STRIP.gap, height: STRIP.height },
@@ -115,8 +115,8 @@ export function chartLayout(country, width, height) {
         .filter((h) => h.power === l.power)
         .map((h) => ({ s: Math.max(h.s, +x.domain()[0]), e: Math.min(h.e, dataEnd + 1), h }))
         .filter((d) => d.e > d.s)
-        .map(({ s, e, h }) => ({ xa: x(s), xb: x(e), name: h.name, party: h.party, colour: h.colour || GREY,
-                                 years: `${new Date(s).getUTCFullYear()}–${new Date(e - 1).getUTCFullYear()}` })),
+        .map(({ s, e, h }) => ({ s: h.s, e: h.e, xa: x(s), xb: x(e), name: h.name, party: h.party, colour: h.colour || GREY,
+                                 years: `${new Date(h.s).getUTCFullYear()}–${new Date(h.e).getUTCFullYear() - 1}` })),
     })),
     headRadius: 3,
     // each year's label sits under the middle of that year's segment (its score is plotted at 31 December)

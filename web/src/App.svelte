@@ -34,25 +34,6 @@
   const scrollToChart = () => document.getElementById('chart')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const scrollToAll = () => document.getElementById('all')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  const fmt2 = (v) => v.toFixed(2);
-  /** Numbers for "Reading the score", from the latest year in the data, so they follow each new release. */
-  const facts = $derived.by(() => {
-    if (!countries.length) return {};
-    const year = Math.max(...countries.map((c) => c.last.year));
-    const now = countries.filter((c) => c.last.year === year).sort((a, b) => b.last.val - a.last.val);
-    const pick = (id) => now.find((c) => c.id === id);
-    const liberal = now.filter((c) => c.last.reg === 3).at(-1), electoral = now.find((c) => c.last.reg === 2);
-    const widths = now.map((c) => c.last.hi - c.last.lo).sort((a, b) => a - b);
-    return {
-      year, top: now[0], bottom: now.at(-1),
-      anchors: ['DEU', 'HUN'].map(pick).filter((c) => c && c !== now[0] && c !== now.at(-1)),
-      overlap: liberal && electoral && electoral.last.val > liberal.last.val ? { liberal, electoral } : null,
-      width: widths[Math.floor(widths.length / 2)],
-      example: pick('DEU') ?? now[0],
-    };
-  });
-
-  /** The key to the head-of-state lane under the chart, naming only the kinds of bar this country has. */
   // footnotes to the head-of-state lanes, numbered as on the chart (lib/chartLayout.js headLanes)
   const FOOTNOTES = {
     cabinet: 'Head of state, cabinet: years when V-Dem judges the head of state to share or hold the power to appoint and dismiss ministers.',
@@ -123,82 +104,51 @@
 
 <section class="method" id="method">
   <h2>How this works</h2>
-  <h3 id="index">Reading the score</h3>
-  <p>
-    <b>What it measures.</b> Each chart follows V-Dem’s Liberal Democracy Index (version 16). It asks how far a country
-    lives up to the ideal of liberal democracy, on a scale from 0 (least democratic) to 1 (most). It is built from the
-    ratings of country experts, several for each country and year, combined by a statistical model. It has two halves:
-    elections (free and fair votes, the right to vote, freedom of expression and association, elected officials) and
-    limits on power (independent courts, a parliament that checks the government, the rule of law and civil liberties).
-    Half of the index is the two multiplied together, so a country needs both to score high: free elections don’t make
-    up for captured courts.
+  <p id="index">
+    <b>The score.</b> V-Dem’s Liberal Democracy Index (version 16) rates how far a country lives up to liberal
+    democracy, from 0 (least democratic) to 1 (most). Country experts rate each country and year, and a statistical model
+    combines their ratings. It has two halves, free and fair elections and limits on power (courts, parliament, the rule
+    of law, civil liberties); half of the index is the two multiplied, so a country needs both to score high. Every chart
+    shows the full scale.
   </p>
   <p>
-    <b>Liberal and electoral democracy.</b> An electoral democracy holds free and fair elections. A liberal democracy
-    also limits what the winners can do: courts, parliament and the law constrain the government and protect the rights
-    of people who lost the vote. The regime class in each subtitle is V-Dem’s Regimes of the World, which uses its own thresholds rather than a cut-off on this score{#if facts.overlap}: {facts.overlap.liberal.name} ({fmt2(facts.overlap.liberal.last.val)})
-    is a liberal democracy while {facts.overlap.electoral.name} ({fmt2(facts.overlap.electoral.last.val)}) is an
-    electoral democracy{/if}.
-  </p>
-  {#if facts.top}
-    <p>
-      <b>What the numbers mean.</b> In {facts.year}, {facts.top.name} scores highest in Europe at {fmt2(facts.top.last.val)},
-      {#each facts.anchors as a, i}{a.name} {fmt2(a.last.val)}{i < facts.anchors.length - 1 ? ', ' : ''}{/each}, and
-      {facts.bottom.name} lowest at {fmt2(facts.bottom.last.val)}. No country reaches 1. A change of a few hundredths in a
-      year is usually within the noise; this page calls a rise or fall big at 0.10, and V-Dem calls a country
-      autocratizing when it falls by 0.05 or more over ten years beyond its uncertainty. Every chart shows the full scale,
-      0 to 1, so countries compare at a glance.
-    </p>
-    <p>
-      <b>Uncertainty.</b> Each score is an estimate. V-Dem gives a range that holds the true value with 68% probability
-      (about one standard deviation each side); for European countries in {facts.year} it is typically about
-      {fmt2(facts.width)} wide: {facts.example.name}’s {fmt2(facts.example.last.val)} most likely lies between
-      {fmt2(facts.example.last.lo)} and {fmt2(facts.example.last.hi)}. Two countries whose ranges overlap can’t be ranked with
-      confidence, and a change counts as real only when the ranges before and after don’t overlap, which is how the
-      trajectories in the grid are grouped. New V-Dem releases can also revise past years.
-    </p>
-  {/if}
-  <p>
-    <b>Big moves.</b> Rises and falls follow V-Dem’s Episodes of Regime Transformation: a move starts when the score
-    moves 0.01 in a year, continues while it keeps going that way, and ends when it turns back by 0.03 in a year, gives
-    back 0.10 in total, or stalls for five years. It counts if it adds up to 0.10 or more. Back-and-forth swings (0.15 of
-    movement within three years) and one-year jumps of 0.10 or more count too.
+    <b>Regime class.</b> An electoral democracy holds free and fair elections; a liberal democracy also limits what the
+    winners can do. The class in each subtitle is V-Dem’s Regimes of the World, which uses its own criteria, not a
+    cut-off on the score, so a lower-scoring country can be the more democratic class.
   </p>
   <p>
-    <b>Shading.</b> A party is shaded when at least a quarter of a big move happened while it was in power, for its whole
-    term. A rise or fall is measured over its core: the shortest run of years that carries 80% of it. A coalition takes
-    the colour of the party that leads it; provisional, caretaker, technocratic and all-party unity governments are grey.
-    A headline names a party when it held power for 60% of the move.
+    <b>Uncertainty.</b> Each score is an estimate, with a range that holds the true value with 68% probability.
+    Countries whose ranges overlap can’t be ranked against each other, and a change counts only when the ranges before
+    and after don’t overlap. New V-Dem releases can revise past years.
   </p>
   <p>
-    <b>Government and head of state.</b> The strip under each chart shows every government since 1945, in its leading
-    party’s colour, with coalition partners stacked below. Where a president runs the country (Russia, Belarus,
-    Ukraine), the strip shows the president. Governments are from ParlGov and Wikipedia’s lists of heads of
-    government; party colours are the parties’ own. Under it, a thin bar marks each head of state in the years V-Dem
-    scores them as sharing or holding power over the appointment and dismissal of ministers, such as France’s
-    presidents since 1958, Finland’s before 2000 or Türkiye’s since 2018, when the president also became head of
-    government. A second lane, marked “veto”, shows the years a head of state can block laws that parliament can only
-    override with a supermajority or not at all, such as Poland’s presidents since 1992; a head of state with both
-    powers, such as Russia’s, shows in both lanes. In other years the head of state’s role is ceremonial.
+    <b>Big moves.</b> Rises and falls follow V-Dem’s Episodes of Regime Transformation and count from 0.10. Sharp
+    back-and-forth swings and one-year jumps count too.
   </p>
   <p>
-    <b>Notes.</b> Each note names an event that coincides with a move. It shows what happened at the time, not proof
-    that it caused the change. A note marks a year with an arrow, or a period with a bracket. Every note has a source,
-    listed in the <a href="https://github.com/gitnoise/europe-democracy-dashboard/blob/main/pipeline/notes.csv">notes
-    file</a>: for an event, a fixed revision of its English Wikipedia article and its Wikidata entry; for a judgment
-    about how a country was governed, an expert source such as V-Dem’s Democracy Report, Freedom House, OSCE/ODIHR
-    election observers, the Venice Commission or the European Commission’s Rule of Law reports. Each source was
-    checked against the note, and the note reworded where the source said less.
+    <b>Shading.</b> A party is shaded when at least a quarter of a big move happened while it governed. A coalition takes
+    its leading party’s colour; provisional, caretaker, technocratic and unity governments are grey. A headline names a
+    party only when it governed for most of the move.
   </p>
   <p>
-    <b>Limits.</b> V-Dem scores are expert estimates with uncertainty, and each new release can revise past years. Shading
-    shows who governed during a move, not who was responsible for it. Party colours and the line between a coalition and
-    a unity government are judgment calls.
+    <b>Government and head of state.</b> The strip shows every government since 1945, coalition partners stacked under
+    the leading party, or the president where the president runs the country. Below it, the head of state appears only
+    in the years V-Dem judges them to share power over ministers (“cabinet”) or to hold a veto that parliament can only
+    override with a supermajority (“veto”). Otherwise the role is ceremonial.
+  </p>
+  <p>
+    <b>Notes.</b> A note names an event that coincides with a move, not proof that it caused it. Every note has a checked
+    source in the <a href="https://github.com/gitnoise/europe-democracy-dashboard/blob/main/pipeline/notes.csv">notes
+    file</a>: Wikipedia and Wikidata for events, expert reports for judgements about how a country was governed.
+  </p>
+  <p>
+    <b>Limits.</b> Shading shows who governed during a move, not who caused it. Party colours, and where a coalition
+    ends and a unity government begins, are judgement calls.
   </p>
   <p>
     Every threshold is in <a href="https://github.com/GitNoise/europe-democracy-dashboard/blob/main/pipeline/RULES.md">the rules</a>
     and the pipeline’s <a href="https://github.com/GitNoise/europe-democracy-dashboard/blob/main/pipeline/config.json">config</a>.
-    Flags: flag-icons (MIT).
+    Data: V-Dem, ParlGov, Wikipedia and Wikidata. Flags: flag-icons (MIT).
   </p>
 </section>
 
@@ -266,7 +216,7 @@
   .all p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.45; margin: 0; }
   .method { margin-top: var(--space-6); scroll-margin-top: 1rem; }
   .method h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 var(--space-3); }
-  .method h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; margin: var(--space-3) 0 var(--space-1); scroll-margin-top: var(--space-3); }
+  .method p[id] { scroll-margin-top: var(--space-3); }
   .method p { font-size: 1.05rem; line-height: 1.55; margin: 0 0 var(--space-2); max-width: 40rem; }
   .method b { font-family: var(--font-display); font-weight: 700; }
   .method a, .source a { color: var(--text); text-underline-offset: 3px; }

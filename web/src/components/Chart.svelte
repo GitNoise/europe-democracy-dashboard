@@ -49,7 +49,7 @@
     const d = country.series[i], prev = country.series[i - 1];
     const government = country.governments.find((g) => g.s <= +d.date && +d.date < g.e);
     hover = {
-      d, x: layout.plot.x(d.date), y: layout.plot.y(d.val), scale: box.width / layout.width,
+      d, t: +d.date, x: layout.plot.x(d.date), y: layout.plot.y(d.val), scale: box.width / layout.width,
       change: prev && prev.year === d.year - 1 ? d.val - prev.val : null,
       // a coalition shows its name without the bracketed party list, then each party with its colour, leader first
       government: government && {
@@ -111,9 +111,12 @@
       <text class="axis" x="0" y={layout.strip.y + layout.strip.height / 2} dy="0.35em">Government</text>
       <rect x={plot.left} y={layout.strip.y} width={layout.end.x - plot.left} height={layout.strip.height} fill="var(--grid)" />
       {#each layout.governments as g}
-        {#each g.stripes as s}
-          <rect x={g.xa} y={layout.strip.y + s.y} width={Math.max(1, g.xb - g.xa)} height={s.h} fill={s.colour}><title>{g.name}</title></rect>
-        {/each}
+        <!-- on hover, the government in the tooltip stays full strength and the others fade -->
+        <g class="block" class:faded={hover && !(g.s <= hover.t && hover.t < g.e)}>
+          {#each g.stripes as s}
+            <rect x={g.xa} y={layout.strip.y + s.y} width={Math.max(1, g.xb - g.xa)} height={s.h} fill={s.colour}><title>{g.name}</title></rect>
+          {/each}
+        </g>
         <line x1={g.xa} x2={g.xa} y1={layout.strip.y} y2={layout.strip.y + layout.strip.height} stroke="var(--panel)" />
       {/each}
 
@@ -127,7 +130,8 @@
         {#each lane.heads as h}
           <!-- each term is a thin pill, a little short of its ends so consecutive terms stay apart -->
           {@const w = Math.max(layout.headRadius * 2, h.xb - h.xa - 2)}
-          <rect x={(h.xa + h.xb) / 2 - w / 2} y={lane.y + lane.height / 2 - layout.headRadius} width={w}
+          <rect class="block" class:faded={hover && !(h.s <= hover.t && hover.t < h.e)}
+                x={(h.xa + h.xb) / 2 - w / 2} y={lane.y + lane.height / 2 - layout.headRadius} width={w}
                 height={layout.headRadius * 2} rx={layout.headRadius} fill={h.colour}><title>{h.years}: {h.name}{h.party ? ` (${h.party})` : ''}</title></rect>
         {/each}
       {/each}
@@ -162,6 +166,10 @@
       <!-- tooltip target -->
       {#if hover}
         <line x1={hover.x} x2={hover.x} y1={plot.top} y2={plot.bottom} stroke="var(--axis)" />
+        <!-- the same year marked across the lanes under the chart, at 31 December like the score above -->
+        <line x1={hover.x} x2={hover.x} y1={layout.strip.y - 3}
+              y2={(layout.lanes.length ? layout.lanes.at(-1).y + layout.lanes.at(-1).height : layout.strip.y + layout.strip.height) + 3}
+              stroke="var(--ink)" stroke-width="1.5" pointer-events="none" />
         <circle cx={hover.x} cy={hover.y} r="4" fill="var(--panel)" stroke="var(--ink)" stroke-width="2" />
       {/if}
       <!-- the hover target runs from the top of the plot down through the government strip and the head-of-state lanes -->
@@ -205,6 +213,8 @@
 </div>
 
 <style>
+  /* hovering: blocks in the strip and lanes that aren't in the tooltip fade */
+  .block.faded { opacity: 0.3; }
   .chart { position: relative; flex: 1 1 0; min-height: 0; font-family: var(--font-chart); }
   svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
   /* sizes must match lib/text.js FONTS */
