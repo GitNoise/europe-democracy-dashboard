@@ -1,0 +1,109 @@
+id,start,end,name,party,role
+ALB,1986,1990,Alia,PPSh,
+ALB,1992,1996,Berisha,PD,
+ARM,1990,1997,Ter-Petrosyan,ANM,
+ARM,1998,2007,Kocharyan,,
+ARM,2008,2012,Sargsyan,HHK,
+ARM,2013,2017,Sargsyan,HHK,
+AUT,1950,1950,Figl,ÖVP,
+AZE,1990,1991,Mutallibov,Communists,
+AZE,1992,1992,Elchibey,APF,
+AZE,1993,2002,Heydar Aliyev,YAP,
+AZE,2003,2025,Ilham Aliyev,YAP,
+BGR,1971,1988,Zhivkov,BSP,
+BGR,1989,1989,Mladenov,BSP,
+BIH,1992,1995,Izetbegović,SDA,
+BLR,1995,2025,Lukashenko,,
+CHE,1945,2025,Federal Council,Federal Council,collective
+CYP,1945,1945,Woolley,,foreign
+CYP,1946,1948,Fletcher,,foreign
+CYP,1949,1953,Wright,,foreign
+CYP,1954,1954,Armitage,,foreign
+CYP,1955,1956,Harding,,foreign
+CYP,1957,1959,Foot,,foreign
+CYP,1960,1963,Makarios and Küçük,,collective
+CYP,1964,1973,Makarios,Makarios,
+CYP,1974,1976,Makarios,Makarios,
+CYP,1977,1987,Kyprianou,DIKO,
+CYP,1988,1992,Vassiliou,Vassiliou,
+CYP,1993,2002,Clerides,DISY,
+CYP,2003,2007,Papadopoulos,DIKO,
+CYP,2008,2012,Christofias,AKEL,
+CYP,2013,2022,Anastasiades,DISY,
+CYP,2023,2025,Christodoulides,Christodoulides,
+CZE,1948,1952,Gottwald,KSČ,
+CZE,1957,1967,Novotný,KSČ,
+CZE,1975,1986,Husák,KSČ,
+ESP,1945,1974,Franco,Francoist,
+ESP,1975,1976,Juan Carlos I,,monarch
+FIN,1945,1945,Mannerheim,,
+FIN,1946,1955,Paasikivi,KOK,
+FIN,1956,1980,Kekkonen,KESK,
+FIN,1981,1993,Koivisto,SDP,
+FIN,1994,1999,Ahtisaari,SDP,
+FRA,1945,1945,de Gaulle,Gaullists,
+FRA,1946,1946,Bidault,MRP,
+FRA,1958,1958,Coty,CNIP,
+FRA,1959,1968,de Gaulle,Gaullists,
+FRA,1969,1973,Pompidou,Gaullists,
+FRA,1974,1980,Giscard d’Estaing,UDF,
+FRA,1981,1994,Mitterrand,PS,
+FRA,1995,2006,Chirac,RPR,
+FRA,2007,2011,Sarkozy,LR,
+FRA,2012,2016,Hollande,PS,
+FRA,2017,2025,Macron,RE,
+GEO,1990,1991,Gamsakhurdia,Round Table,
+GEO,1992,2003,Shevardnadze,Shevardnadze,
+GEO,2004,2011,Saakashvili,UNM,
+GRC,1972,1972,Papadopoulos,,military
+HUN,1945,1945,High National Council,,collective
+ITA,2017,2017,Mattarella,,
+MDA,1990,1993,Snegur,,
+MDA,2001,2008,Voronin,PCRM,
+MLT,1945,1945,Schreiber,,foreign
+MLT,1946,1946,Douglas,,foreign
+MLT,1958,1958,Laycock,,foreign
+MLT,1959,1961,Grantham,,foreign
+NLD,1945,1945,Queen Wilhelmina,,monarch
+POL,1945,1951,Bierut,PZPR,
+POL,1985,1988,Jaruzelski,PZPR,
+ROU,1945,1947,King Michael,,monarch
+ROU,1948,1951,Parhon,,
+ROU,1952,1957,Groza,FP,
+ROU,1958,1960,Maurer,PCR,
+ROU,1961,1964,Gheorghiu-Dej,PCR,
+ROU,1965,1966,Stoica,PCR,
+ROU,1967,1988,Ceaușescu,PCR,
+RUS,1945,1952,Stalin,CPSU,
+RUS,1953,1963,Khrushchev,CPSU,
+RUS,1964,1981,Brezhnev,CPSU,
+RUS,1982,1983,Andropov,CPSU,
+RUS,1984,1984,Chernenko,CPSU,
+RUS,1985,1990,Gorbachev,CPSU,
+RUS,1991,1998,Yeltsin,,
+RUS,1999,2007,Putin,United Russia,
+RUS,2008,2011,Medvedev,United Russia,
+RUS,2012,2025,Putin,United Russia,
+SRB,1945,1952,Ribar,SKJ,
+SRB,1953,1979,Tito,SKJ,
+SRB,1980,1980,Mijatović,SKJ,
+SRB,1981,1981,Kraigher,SKJ,
+SRB,1982,1982,Stambolić,SKJ,
+SRB,1983,1983,Spiljak,SKJ,
+SRB,1984,1984,Đuranović,SKJ,
+SRB,1985,1985,Vlajković,SKJ,
+SRB,1986,1986,Hasani,SKJ,
+SRB,1987,1987,Mojsov,SKJ,
+SRB,1988,1988,Dizdarević,SKJ,
+SRB,1989,1999,Milošević,SPS,
+SRB,2000,2000,Koštunica,DSS,
+TUR,1960,1960,Gürsel,,military
+TUR,1980,1982,Evren,,military
+TUR,2017,2025,Erdoğan,AKP,
+UKR,1990,1993,Kravchuk,,
+UKR,1994,2004,Kuchma,,
+UKR,2005,2005,Yushchenko,Our Ukraine,
+UKR,2010,2013,Yanukovych,PoR,
+UKR,2019,2025,Zelensky,SN,
+XKX,1999,2000,Kouchner,,foreign
+XKX,2001,2001,Hækkerup,,foreign

@@ -7,6 +7,7 @@ Every rule that turns V-Dem data into a chart. Rules marked **[build]** are appl
 - Source: V-Dem country-year dataset. Countries: `countries` in `config.json` (all European countries in V-Dem, incl. Türkiye, Cyprus and the South Caucasus). Years from `first_year` (1945) to the last year in the release.
 - Per country-year: Liberal Democracy Index (`v2x_libdem`) with its low and high estimates (`_codelow`, `_codehigh`, ±1 standard deviation), Regimes of the World class (`v2x_regime`: 0 closed autocracy, 1 electoral autocracy, 2 electoral democracy, 3 liberal democracy), national election year (`v2xel_elecparl` or `v2xel_elecpres` = 1).
 - Governments (`web/public/data/governments.csv`): every government since 1945 (from ParlGov and Wikipedia's lists of heads of government), with party code, full name, colour, headline name, start and end date, its `parties` (leading party first, joined with `+`) and an optional `kind` for governments not led by one party (provisional, caretaker, technocratic, unity, collegial, power-sharing). Coalition partners' colours are in `party_colours.csv`.
+- Heads of state (`web/public/data/heads_of_state.csv`, written by `python -m democracy_pipeline.heads --vdem <full V-Dem CSV>`): V-Dem's head of state on 31 December of each year (`v2exnamhos`), kept in the years V-Dem scores their power over the appointment and dismissal of cabinet ministers at 0.5 or more (`v2ex_hosw`: 0.5 = shared equally with the head of government, 1 = more). Every such year is drawn, whoever holds the office (a president, a monarch, a junta leader, a colonial governor) and whatever their party, the same party as the government or not. A head of state who is also head of government (`v2exhoshog`) scores 1: Türkiye's president since 2018, Cyprus's presidents, Switzerland's Federal Council. Their party, display name and role are in `pipeline/head_of_state_parties.csv`, kept by hand; the step stops if a name is missing.
 
 ## 2. Detection [build]
 
@@ -43,7 +44,7 @@ All on the Liberal Democracy Index, one series per country.
 
 ## 5. Notes (annotations) [content in `notes.csv`; arrow/bracket by rule [build]; placement [page]]
 
-- A note is content: `reason` (short, one topic, no years, neutral verbs), an optional `event_year` (the year of the event it names), `source` and `checked`. Nothing else about a note is set by hand.
+- A note is content: `reason` (short, one topic, no years, neutral verbs), an optional `event_year` (the year of the event it names), `source`, `source_title`, `wikidata` and `checked`. Nothing else about a note is set by hand.
 - Shown for rises, falls and jumps with a note, and for dips/spikes with a note that clear V-Dem's uncertainty against the shoulder of their larger leg.
 - **Arrow or bracket, by rule [build]**, for a rise or fall with a note, in this order:
   1. it has an `event_year` → **arrow** pointing at that year;
@@ -53,6 +54,15 @@ All on the Liberal Democracy Index, one series per country.
   Jumps: arrow on the event year (or the jump's year). Dips/spikes: arrow on their year.
 - On the page an arrow points at the middle of its year's segment, landing square to the line. Dip brackets go below the V first, everything else above; brackets may sit far from the line.
 - Placement: about 130 candidate spots per note (11 distances × 4 sides × 3 wrap widths), open side of the move first (above-left / below-right of a rise, above-right / below-left of a fall); cost = distance + side + narrower wrap + arrow length. Biggest moves pick first; then up to four repair passes (move to a cheaper spot; a missing note may move the one note blocking it). Never overlapping text, arrows crossing each other or any text, or notes on the same side out of their points' left-to-right order. A note that can't be placed is left out (smallest moves first).
+
+### Sources (every note has one)
+
+1. **Event notes** (a coup, election, revolution, new constitution or law, end of communist rule, independence, EU accession, referendum): `source` is the English Wikipedia article as a permanent revision link (`https://en.wikipedia.org/w/index.php?title=…&oldid=…`), `wikidata` the event's Wikidata QID when one exists. The `event_year` must match the date on Wikidata or Wikipedia; a liberation or other event that happened before the year the arrow would point at gets no `event_year`.
+2. **Interpretive notes** (a judgment on how a country was governed, e.g. "Erdoğan consolidates power", "Disputed elections and crackdowns"): a primary or expert source first, covering the years of the move — V-Dem Democracy Report, Freedom House (Freedom in the World or Nations in Transit), OSCE/ODIHR election observation reports, Venice Commission opinions, the European Commission's Rule of Law or enlargement reports, or Bertelsmann BTI. Wikipedia (rule 1 form) only when none of these covers it.
+3. A note says no more than its source. If no source supports a note as written, it is reworded to what the source says, or listed for review; an unsupported claim is not kept.
+4. `source_title` is a short label for the source ("Wikipedia: Velvet Revolution", "Freedom House, Nations in Transit 2018: Moldova"). `checked` is the date (YYYY-MM-DD) the source was last opened and read against the note.
+5. Sources live in the data, not on the chart: the page shows no note numbers or source list, and the "How this works" section links to `notes.csv`.
+6. **Checked by the pipeline** (`report.source_problems`, listed in `report.md` under "Notes whose source breaks the rules"): every note has a source; it is an https link on a domain listed in `config.json` → `sources.domains` (a domain matches its subdomains); a Wikipedia link is a fixed revision (`oldid=`); `source_title` is filled; `wikidata`, when given, is a Q-id; `checked` is a date no older than `sources.recheck_days` (730). Rules 1–3 (which kind of source, and that the note says no more than it) need a person.
 
 ## 6. Headline [page]
 
@@ -72,8 +82,9 @@ For a move (1, 6 and 7): regime class changed → said in plain words with its d
 
 - Subtitle: what the shading shows; for move headlines the numbers ("the score went from A in Y1 to B in Y2"); a slow-trend sentence when one exists ("From Y1 to Y2, the score rose slowly by X, mainly through <driver>"); V-Dem's regime class with a one-phrase explanation (liberal democracy: free elections, plus courts, parliament and civil liberties that check the government; electoral democracy: free and fair elections, but weaker checks on the government; electoral autocracy: elections are held, but they are not free and fair; closed autocracy: no meaningful multiparty elections).
 - Each year's score is plotted at 31 December; year labels sit under the middle of each year's segment. Top gridline "1.0 / most / democratic". Every chart runs the full scale, 0 to 1.
-- "In power" strip under the years: every government in its party colour; a coalition is stacked stripes, the leading party on top (60% of the height) and partners sharing the rest; grey where a colour is unknown.
-- Note under each chart: source and a one-line key to the shading and the strip, linking to the "How this works" section, which explains the method in plain words.
+- "Government" strip under the years: every government in its party colour; a coalition is stacked stripes, the leading party on top (60% of the height) and partners sharing the rest; grey where a colour is unknown.
+- "Head of state" lane under the strip, only for countries that ever had a head of state with shared or more power over the cabinet: a thin bar with rounded ends for each head of state's term with power (so a person reads apart from the government's band), in their party colour, with a small gap between terms; nothing in the years the head of state's role is ceremonial. It can repeat the strip where the president is the ruler (Putin, Lukashenko); that is kept so the lane always means the same thing. The tooltip adds "Head of state: <name> (<party>)".
+- Note under each chart: source and a one-line key to the shading, the strip and (only where the lane is drawn) why the head of state shows in some years and not others, linking to the "How this works" section, which explains the method in plain words.
 - "Lowest/highest since" dotted line starts where the series last crossed today's level.
-- Tooltip: year, score and its change, regime class, the government in power (a coalition lists its parties with their colours, leading party first), and the move the year belongs to.
+- Tooltip (on hover anywhere from the plot down through the government strip and head-of-state lane): year, score and its change, regime class, the government in power (a coalition lists its parties with their colours, leading party first), and the move the year belongs to.
 - Small multiples: same scales and shading, sorted by the latest score; no labels or notes.

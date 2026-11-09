@@ -1,7 +1,11 @@
 """Checks after a build, and the report listing what needs a person."""
+import re
+from datetime import date
+from urllib.parse import urlparse
+
 import pandas as pd
 
-from .config import T
+from .config import CONFIG, T
 from .detect import core_span
 
 
@@ -58,7 +62,37 @@ def parties_without_headline_name(governments):
     return [f"{r.id} {r.party}" for r in missing.itertuples()]
 
 
-def write(path, *, vdem_file, scores, moves, log, gaps, unnamed, steps, previous=None):
+def source_problems(notes, today):
+    """Notes that break the source rules (RULES.md §5, Sources): every note needs a source from a listed domain, a
+    permanent link when it is Wikipedia, a short title, a well-formed Wikidata id when it has one, and a `checked`
+    date no older than `recheck_days`."""
+    rules = CONFIG["sources"]
+    out = []
+    for n in notes.itertuples():
+        what = f"{n.id} {n.kind} {n.start}–{n.end} “{n.reason}”"
+        host = urlparse(n.source).hostname or ""
+        if not n.source:
+            out.append(f"{what}: no source"); continue
+        if not n.source.startswith("https://"):
+            out.append(f"{what}: source is not an https link")
+        elif not any(host == d or host.endswith("." + d) for d in rules["domains"]):
+            out.append(f"{what}: {host} is not on the list of source domains in config.json")
+        if host.endswith("wikipedia.org") and "oldid=" not in n.source:
+            out.append(f"{what}: Wikipedia link is not a fixed revision (oldid)")
+        if not n.source_title:
+            out.append(f"{what}: no source_title")
+        if n.wikidata and not re.fullmatch(r"Q\d+", n.wikidata):
+            out.append(f"{what}: wikidata “{n.wikidata}” is not a Q-id")
+        try:
+            age = (today - date.fromisoformat(n.checked)).days
+            if age > rules["recheck_days"]:
+                out.append(f"{what}: checked {n.checked}, more than {rules['recheck_days']} days ago — read the source again")
+        except ValueError:
+            out.append(f"{what}: `checked` is not a date (YYYY-MM-DD)")
+    return out
+
+
+def write(path, *, vdem_file, scores, moves, log, gaps, unnamed, steps, sources, previous=None):
     rises_falls = moves[moves.kind.isin(["rise", "fall"])]
     unexplained = rises_falls[rises_falls.reason == ""]
     section = lambda title, items: [f"## {title} ({len(items)})", "", *[f"- {i}" for i in items], ""]
@@ -74,6 +108,7 @@ def write(path, *, vdem_file, scores, moves, log, gaps, unnamed, steps, previous
         *section("Notes or exceptions that no longer match any move — edit notes.csv / exceptions.csv", log["unmatched"]),
         *section("Years in a shaded move with no government — add to governments.csv", gaps),
         *section("Coloured parties without a headline name — fill `headline` in governments.csv", unnamed),
+        *section("Notes whose source breaks the rules — fix notes.csv", sources),
     ]
     if previous is not None:
         key = lambda df: set(zip(df.id, df.kind, df.start.astype(str), df.end.astype(str)))

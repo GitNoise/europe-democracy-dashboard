@@ -52,6 +52,7 @@
         name: government.parties.length > 1 ? government.name.replace(/\s*\([^)]*\)\s*$/, '') : government.name,
         colour: government.colour, parties: government.parties.length > 1 ? government.parties : null,
       },
+      head: country.heads.find((h) => h.s <= +d.date && +d.date < h.e) ?? null,
       regime: Number.isFinite(d.reg) ? REGIME[d.reg].replace(/^an? /, '') : null,
       move: moveFor(d.year),
     };
@@ -102,7 +103,7 @@
       {/each}
 
       <!-- who governed, every year -->
-      <text class="axis" x="0" y={layout.strip.y + layout.strip.height / 2} dy="0.35em">In power</text>
+      <text class="axis" x="0" y={layout.strip.y + layout.strip.height / 2} dy="0.35em">Government</text>
       <rect x={plot.left} y={layout.strip.y} width={layout.end.x - plot.left} height={layout.strip.height} fill="var(--grid)" />
       {#each layout.governments as g}
         {#each g.stripes as s}
@@ -110,6 +111,18 @@
         {/each}
         <line x1={g.xa} x2={g.xa} y1={layout.strip.y} y2={layout.strip.y + layout.strip.height} stroke="var(--panel)" />
       {/each}
+
+      <!-- a head of state who shares or holds power over the cabinet, in the years they do -->
+      {#if layout.lane}
+        <text class="axis" x="0" y={layout.lane.y + layout.lane.height / 2} dy="0.35em">Head of state<title>Drawn only in the years V-Dem judges the head of state to share or hold the power to appoint and dismiss ministers. In other years the role is ceremonial.</title></text>
+        <line x1={plot.left} x2={layout.end.x} y1={layout.lane.y + layout.lane.height / 2} y2={layout.lane.y + layout.lane.height / 2} stroke="var(--grid)" />
+        {#each layout.heads as h}
+          <!-- each term with power is a thin pill, a little short of its ends so consecutive terms stay apart -->
+          {@const w = Math.max(layout.headRadius * 2, h.xb - h.xa - 2)}
+          <rect x={(h.xa + h.xb) / 2 - w / 2} y={layout.lane.y + layout.lane.height / 2 - layout.headRadius} width={w}
+                height={layout.headRadius * 2} rx={layout.headRadius} fill={h.colour}><title>{h.years}: {h.name}{h.party ? ` (${h.party})` : ''}</title></rect>
+        {/each}
+      {/if}
 
       <!-- lowest / highest since -->
       {#if layout.reference}
@@ -141,7 +154,9 @@
         <line x1={hover.x} x2={hover.x} y1={plot.top} y2={plot.bottom} stroke="var(--axis)" />
         <circle cx={hover.x} cy={hover.y} r="4" fill="var(--panel)" stroke="var(--ink)" stroke-width="2" />
       {/if}
-      <rect x={plot.left} y={plot.top} width={plot.right - plot.left} height={plot.bottom - plot.top} fill="transparent"
+      <!-- the hover target runs from the top of the plot down through the government strip and the head-of-state lane -->
+      <rect x={plot.left} y={plot.top} width={plot.right - plot.left}
+            height={(layout.lane ? layout.lane.y + layout.lane.height : layout.strip.y + layout.strip.height) - plot.top} fill="transparent"
             role="presentation" onpointermove={onPointer} onpointerenter={onPointer} onpointerleave={() => (hover = null)} />
     </svg>
 
@@ -165,6 +180,9 @@
               {:else}
                 <div class="gov"><i style:background={hover.government.colour || GREY}></i>{hover.government.name}</div>
               {/if}
+            {/if}
+            {#if hover.head}
+              <div class="gov"><i style:background={hover.head.colour || GREY}></i>Head of state: {hover.head.name}{hover.head.party ? ` (${hover.head.party})` : ''}</div>
             {/if}
             {#if hover.move}
               <div class="move"><b>{hover.move.label}</b>{hover.move.text ? `: ${hover.move.text}` : ''}</div>

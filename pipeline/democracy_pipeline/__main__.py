@@ -5,6 +5,7 @@
 Writes web/public/data/scores.csv and episodes.csv, and pipeline/report.md listing what needs a person.
 """
 import argparse
+from datetime import date
 from pathlib import Path
 
 import pandas as pd
@@ -13,7 +14,7 @@ from . import detect, drivers, notes, report, vdem
 from .config import EPISODES_FILE, GOVERNMENTS_FILE, PIPELINE_DIR, SCORES_FILE
 
 COLUMNS = ["id", "kind", "start", "end", "change", "anchor", "mark", "note_from", "note_to", "reason", "event_year",
-           "slope_before", "slope_after", "driver", "driver_share", "drivers", "source", "checked"]
+           "slope_before", "slope_after", "driver", "driver_share", "drivers", "source", "source_title", "wikidata", "checked"]
 
 
 def main():
@@ -35,7 +36,8 @@ def main():
 
     # 3. notes and exceptions; arrows, brackets and periods follow by rule
     log = {"moved": [], "unmatched": []}
-    moves = notes.attach_notes(moves, notes.load_notes(), log)
+    note_rows = notes.load_notes()
+    moves = notes.attach_notes(moves, note_rows, log)
     exceptions = notes.load_exceptions()
     moves = notes.apply_exceptions(moves, exceptions, log)
     moves = notes.derive_presentation(moves, series, scores_by_year)
@@ -53,6 +55,7 @@ def main():
                          gaps=report.government_gaps(moves, governments),
                          unnamed=report.parties_without_headline_name(governments),
                          steps=report.steps_without_note(moves, series, scores_by_year, exceptions),
+                         sources=report.source_problems(note_rows, date.today()),
                          previous=previous)
     print("\n".join(lines[:7]))
     print(f"Wrote {SCORES_FILE.name}, {EPISODES_FILE.name} and report.md")

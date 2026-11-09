@@ -13,7 +13,7 @@ def load_exceptions():
     return pd.read_csv(EXCEPTIONS_FILE, keep_default_na=False, dtype=str)
 
 
-NOTE_COLS = ['reason', 'event_year', 'source', 'checked']
+NOTE_COLS = ['reason', 'event_year', 'source', 'source_title', 'wikidata', 'checked']
 
 
 def attach_notes(ep, notes, log):

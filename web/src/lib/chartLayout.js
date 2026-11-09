@@ -21,12 +21,16 @@ export function chartLayout(country, width, height) {
   const { series, last } = country;
   const W = Math.max(300, width);
 
-  // the plot starts right of the axis labels ('1.0', 'most', 'democratic') and leaves room for the end value
-  const left = Math.ceil(textWidth('democratic', FONTS.axis)) + 8;
+  // the plot starts right of the labels on its left ('1.0', 'most', 'democratic', and the lanes' 'Government' and
+  // 'Head of state', kept the same on every chart) and leaves room for the end value
+  const left = Math.ceil(Math.max(...['democratic', 'Head of state'].map((t) => textWidth(t, FONTS.axis)))) + 8;
   const right = W - (Math.ceil(textWidth('0.00', FONTS.endValue)) + 16);
-  // under the years: a strip with every government in its party colour
+  // under the years: a strip with every government in its party colour, and under it a thinner lane for a head of
+  // state who shares or holds power over the cabinet, where the country ever had one
   const STRIP = { gap: 26, height: 24 };
-  const marginBottom = STRIP.gap + STRIP.height + 4;
+  const LANE = { gap: 6, height: 12 };
+  const hasLane = country.heads.length > 0;
+  const marginBottom = STRIP.gap + STRIP.height + (hasLane ? LANE.gap + LANE.height : 0) + 4;
   const x = scaleUtc([Date.UTC(FIRST_YEAR, 0, 1), yearEnd(last.year)], [left, right]);
 
   // bands are drawn only over the years with data; labels give the party's real time in power
@@ -88,6 +92,14 @@ export function chartLayout(country, width, height) {
                      stripes: stripes(g.parties, STRIP.height) }))
       .filter((g) => g.xb > g.xa),
     strip: { y: bottom + STRIP.gap, height: STRIP.height },
+    // a thin rounded bar for each head of state's term with power, so a person reads apart from the government's band
+    heads: country.heads
+      .map((h) => ({ s: Math.max(h.s, +x.domain()[0]), e: Math.min(h.e, dataEnd + 1), h }))
+      .filter((d) => d.e > d.s)
+      .map(({ s, e, h }) => ({ x: x((s + e) / 2), xa: x(s), xb: x(e), name: h.name, party: h.party, colour: h.colour || GREY,
+                               years: `${new Date(s).getUTCFullYear()}–${new Date(e - 1).getUTCFullYear()}` })),
+    headRadius: 3,
+    lane: hasLane ? { y: bottom + STRIP.gap + STRIP.height + LANE.gap, height: LANE.height } : null,
     // each year's label sits under the middle of that year's segment (its score is plotted at 31 December)
     // narrow charts (phones) label every other decade so the years don't run into each other
     ticks: TICK_YEARS.filter((_, i) => width >= 480 || i % 2 === 0).map((yr) => ({ x: x(Date.UTC(yr, 6, 1)), label: String(yr) })),

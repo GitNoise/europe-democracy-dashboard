@@ -1,0 +1,107 @@
+id,name,short,party,role
+ALB,Ramiz Tafë Alia,Alia,PPSh,
+ALB,Sali Ram Berisha,Berisha,PD,
+ARM,Levon Hakobi Ter-Petrosyan,Ter-Petrosyan,ANM,
+ARM,Robert Sedraki Kocharyan,Kocharyan,,
+ARM,Serzh Azati Sargsyan,Sargsyan,HHK,
+ARM,Serzh Azati Sarkisyan,Sargsyan,HHK,
+AZE,Ayaz Niyazi oglu Mutallibov,Mutallibov,Communists,
+AZE,Abulfez Kadyrgula oglu Elchibey,Elchibey,APF,
+AZE,Heydar Alirza oglu Aliyev,Heydar Aliyev,YAP,
+AZE,Ilham Heydar oglu Aliyev,Ilham Aliyev,YAP,
+BGR,Todor Khristov Zhivkov,Zhivkov,BSP,
+BGR,Petur Toshev Mladenov,Mladenov,BSP,
+BIH,Alija Izetbegovic,Izetbegović,SDA,
+BLR,Alyaksandr Ryhoravich Lukashenka,Lukashenko,,
+CYP,Charles Campbell Woolley,Woolley,,foreign
+CYP,Thomas Herbert Fletcher,Fletcher,,foreign
+CYP,Andrew Barkworth Wright,Wright,,foreign
+CYP,Robert Perceval Armitage,Armitage,,foreign
+CYP,John Alan Francis Harding,Harding,,foreign
+CYP,Hugh Mackintosh Foot,Foot,,foreign
+CZE,Klement Gottwald,Gottwald,KSČ,
+CZE,Antonín Novotný,Novotný,KSČ,
+CZE,Gustáv Husák,Husák,KSČ,
+ESP,Francisco Franco Bahamonde,Franco,Francoist,
+ESP,Juan Carlos I,Juan Carlos I,,monarch
+FIN,Carl Gustaf Emil Mannerheim,Mannerheim,,
+FIN,Juho Kusti Paasikivi,Paasikivi,KOK,
+FIN,Urho Kaleva Kekkonen,Kekkonen,KESK,
+FIN,Mauno Henrik Koivisto,Koivisto,SDP,
+FIN,Martti Oiva Kalevi Ahtisaari,Ahtisaari,SDP,
+FRA,René Jules Gustave Coty,Coty,CNIP,
+FRA,Charles de Gaulle,de Gaulle,Gaullists,
+FRA,Georges Pompidou,Pompidou,Gaullists,
+FRA,Valéry Giscard d'Estaing,Giscard d’Estaing,UDF,
+FRA,François Mitterrand,Mitterrand,PS,
+FRA,Jacques Chirac,Chirac,RPR,
+FRA,Nicolas Sarkozy,Sarkozy,LR,
+FRA,François Hollande,Hollande,PS,
+FRA,Emmanuel Macron,Macron,RE,
+GEO,Zviad Konstantines dze Gamsakhurdia,Gamsakhurdia,Round Table,
+GEO,Eduard Amvrosis dze Shevardnadze,Shevardnadze,Shevardnadze,
+GEO,Mikheil Nikolozis dze Saakashvili,Saakashvili,UNM,
+MDA,Mircea Ion Snegur,Snegur,,
+MDA,Vladimir Nicolae Voronin,Voronin,PCRM,
+MLT,Edmond Charles Acton Schreiber,Schreiber,,foreign
+MLT,Francis Campbell Ross Douglas,Douglas,,foreign
+MLT,Robert Edward Laycock,Laycock,,foreign
+MLT,Guy Grantham,Grantham,,foreign
+POL,Bolesław Bierut,Bierut,PZPR,
+POL,Wojciech Witold Jaruzelski,Jaruzelski,PZPR,
+ROU,Mihai I,King Michael,,monarch
+ROU,Constantin Ion Parhon,Parhon,,
+ROU,Petru Groza,Groza,FP,
+ROU,Ion Gheorghe Maurer,Maurer,PCR,
+ROU,Gheorghe Gheorghiu-Dej,Gheorghiu-Dej,PCR,
+ROU,Chivu Stoica,Stoica,PCR,
+ROU,Nicolae Ceausescu,Ceaușescu,PCR,
+RUS,Josef Vissarionovich Stalin,Stalin,CPSU,
+RUS,Nikita Sergeyevich Khrushchev,Khrushchev,CPSU,
+RUS,Leonid Ilich Brezhnev,Brezhnev,CPSU,
+RUS,Yury Vladimirovich Andropov,Andropov,CPSU,
+RUS,Konstantin Ustinovich Chernenko,Chernenko,CPSU,
+RUS,Mikhail Sergeyevich Gorbachev,Gorbachev,CPSU,
+RUS,Boris Nikolayevich Yeltsin,Yeltsin,,
+RUS,Vladimir Vladimirovich Putin,Putin,United Russia,
+RUS,Dmitry Anatolyevich Medvedev,Medvedev,United Russia,
+SRB,Ivan Ribar,Ribar,SKJ,
+SRB,Josip Broz Tito,Tito,SKJ,
+SRB,Cvijetin Mijatovic,Mijatović,SKJ,
+SRB,Sergej Kraigher,Kraigher,SKJ,
+SRB,Petar Stambolic,Stambolić,SKJ,
+SRB,Mika Spiljak,Spiljak,SKJ,
+SRB,Veselin Djuranovic,Đuranović,SKJ,
+SRB,Radovan Vlajkovic,Vlajković,SKJ,
+SRB,Sinan Hasani,Hasani,SKJ,
+SRB,Lazar Mojsov,Mojsov,SKJ,
+SRB,Raif Dizdarevic,Dizdarević,SKJ,
+SRB,Slobodan Milosevic,Milošević,SPS,
+SRB,Vojislav Kostunica,Koštunica,DSS,
+TUR,Kenan Evren,Evren,,military
+TUR,Recep Tayyip Erdogan,Erdoğan,AKP,
+UKR,Leonid Makarovych Kravchuk,Kravchuk,,
+UKR,Leonid Danylovych Kuchma,Kuchma,,
+UKR,Viktor Andriyovich Yushchenko,Yushchenko,Our Ukraine,
+UKR,Viktor Fedorovych Yanukovych,Yanukovych,PoR,
+UKR,Volodymyr Oleksandrovych Zelensky,Zelensky,SN,
+XKX,Bernard Kouchner,Kouchner,,foreign
+XKX,Hans Hækkerup,Hækkerup,,foreign
+CHE,[Collective Body],Federal Council,Federal Council,collective
+CYP,[Collective body],Makarios and Küçük,,collective
+CYP,Archbishop Makarios III,Makarios,Makarios,
+CYP,Makarios III,Makarios,Makarios,
+CYP,Spyros Achilleos Kyprianou,Kyprianou,DIKO,
+CYP,Georgios Vasou Vasiliou,Vassiliou,Vassiliou,
+CYP,Glafkos Ioannou Kliridis,Clerides,DISY,
+CYP,Efstathios (Tassos) Nikolaou Papadopoulos,Papadopoulos,DIKO,
+CYP,Dimitris Christofi Christofias,Christofias,AKEL,
+CYP,Nikos Chrysanthou Anastasiadis,Anastasiades,DISY,
+CYP,Nikos Christodoulides,Christodoulides,Christodoulides,
+FRA,Georges Bidault,Bidault,MRP,
+AUT,Leopold Figl,Figl,ÖVP,
+GRC,Georgios Christou Papadopoulos,Papadopoulos,,military
+HUN,[Collective Body],High National Council,,collective
+ITA,Sergio Mattarella,Mattarella,,
+NLD,Wilhelmina,Queen Wilhelmina,,monarch
+TUR,Cemal Gürsel,Gürsel,,military

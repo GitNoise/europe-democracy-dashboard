@@ -6,16 +6,18 @@ const RECORD_TOLERANCE = 0.01;
 
 /** Load every data file once. Files live in public/data and are written by the pipeline. */
 export async function loadData(base = import.meta.env.BASE_URL) {
-  const [scores, governments, partyColours, episodes, flags] = await Promise.all([
+  const [scores, governments, partyColours, episodes, flags, heads] = await Promise.all([
     csv(`${base}data/scores.csv`),
     csv(`${base}data/governments.csv`),
     csv(`${base}data/party_colours.csv`),
     csv(`${base}data/episodes.csv`),
     json(`${base}data/flags.json`),
+    csv(`${base}data/heads_of_state.csv`),
   ]);
   return {
     scoresById: group(scores, (r) => r.id),
     governmentsById: group(governments, (r) => r.id),
+    headsById: group(heads, (r) => r.id),
     partyColoursById: group(partyColours, (r) => r.id),
     episodesById: group(episodes, (r) => r.id),
     flagsById: new Map(flags.map((f) => [f.id, f.svg])),
@@ -81,6 +83,7 @@ export function countryView(db, id) {
     rank: rankOf(db, id),
     elections: rows.filter((r) => r.election).map((r) => r.year),
     governments: governmentsFor(db, id),
+    heads: headsFor(db, id),
     episodes: episodesFor(db, id),
     flag: db.flagsById.get(id) ?? null,
   };
@@ -111,6 +114,26 @@ function governmentsFor(db, id) {
 }
 
 /** Every detected move for one country (rises, falls, swings, jumps, dips, spikes, trend changes, slow trends). */
+/**
+ * Heads of state in the years they share or hold power over the cabinet and aren't already the government in power
+ * (pipeline/democracy_pipeline/heads.py). Years are as V-Dem records them, on 31 December; a spell is drawn over
+ * its whole years. A party takes the colour it has in the governments table, else party_colours.csv, else grey.
+ */
+function headsFor(db, id) {
+  const colourOf = new Map([
+    ...(db.partyColoursById?.get(id) ?? []).map((r) => [r.party, r.colour]),
+    ...(db.governmentsById.get(id) ?? []).filter((r) => r.colour).map((r) => [r.party, r.colour]),
+  ]);
+  return (db.headsById?.get(id) ?? []).map((r) => ({
+    s: Date.UTC(Number(r.start), 0, 1),
+    e: Date.UTC(Number(r.end) + 1, 0, 1),
+    name: r.name,
+    party: r.party,
+    role: r.role,
+    colour: colourOf.get(r.party) || '',
+  }));
+}
+
 function episodesFor(db, id) {
   return (db.episodesById.get(id) ?? []).map((r) => ({
     kind: r.kind,

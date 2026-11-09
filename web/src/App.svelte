@@ -74,8 +74,11 @@
     <Header {country} />
     {#key country.id}<Chart {country} />{/key}
     <p class="source">
-      Source: V-Dem Institute (v16). Shaded: the party in power during each big rise or fall. In power: every government,
-      coalition partners stacked under the leading party. <a href="#method">How this works</a>.
+      Source: V-Dem Institute (v16). Shaded: the party in power during each big rise or fall. Government: every government,
+      coalition partners stacked under the leading party.
+      {#if country.heads.length}Head of state: drawn only in the years V-Dem judges the head of state to share or hold
+        the power to appoint and dismiss ministers; in other years the role is ceremonial.{/if}
+      <a href="#method">How this works</a>.
     </p>
   {/if}
 </main>
@@ -109,13 +112,22 @@
     A headline names a party when it held power for 60% of the move.
   </p>
   <p>
-    <b>In power.</b> The strip under each chart shows every government since 1945, in its leading party’s colour, with
-    coalition partners stacked below. Governments are from ParlGov and Wikipedia’s lists of heads of
-    government; party colours are the parties’ own.
+    <b>Government and head of state.</b> The strip under each chart shows every government since 1945, in its leading
+    party’s colour, with coalition partners stacked below. Where a president runs the country (Russia, Belarus,
+    Ukraine), the strip shows the president. Governments are from ParlGov and Wikipedia’s lists of heads of
+    government; party colours are the parties’ own. Under it, a thin bar marks each head of state in the years V-Dem
+    scores them as sharing or holding power over the appointment and dismissal of ministers, such as France’s
+    presidents since 1958, Finland’s before 2000 or Türkiye’s since 2018, when the president also became head of
+    government. In other years the head of state’s role is ceremonial.
   </p>
   <p>
-    <b>Notes.</b> Each note names an event that coincides with a move, with a source for it. It shows what happened
-    at the time, not proof that it caused the change. A note marks a year with an arrow, or a period with a bracket.
+    <b>Notes.</b> Each note names an event that coincides with a move. It shows what happened at the time, not proof
+    that it caused the change. A note marks a year with an arrow, or a period with a bracket. Every note has a source,
+    listed in the <a href="https://github.com/gitnoise/europe-democracy-dashboard/blob/main/pipeline/notes.csv">notes
+    file</a>: for an event, a fixed revision of its English Wikipedia article and its Wikidata entry; for a judgment
+    about how a country was governed, an expert source such as V-Dem’s Democracy Report, Freedom House, OSCE/ODIHR
+    election observers, the Venice Commission or the European Commission’s Rule of Law reports. Each source was
+    checked against the note, and the note reworded where the source said less.
   </p>
   <p>
     <b>Limits.</b> V-Dem scores are expert estimates with uncertainty, and each new release can revise past years. Shading

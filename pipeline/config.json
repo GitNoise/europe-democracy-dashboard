@@ -68,5 +68,22 @@
     "sharp_min": 0.08,
     "step_window": 2,
     "step_flat": 0.02
+  },
+  "sources": {
+    "_doc": "Where a note's source may come from (RULES.md §5, Sources). A domain matches itself and its subdomains.",
+    "domains": [
+      "wikipedia.org",
+      "wikidata.org",
+      "v-dem.net",
+      "freedomhouse.org",
+      "ecoi.net",
+      "osce.org",
+      "coe.int",
+      "europa.eu",
+      "bti-project.org",
+      "parliament.uk",
+      "riksarkivet.se"
+    ],
+    "recheck_days": 730
   }
 }
