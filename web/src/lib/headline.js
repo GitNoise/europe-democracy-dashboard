@@ -174,7 +174,7 @@ export function headlineFor(country) {
     title,
     numbers: move ? { from: fmt(move.a.val), fromYear: move.a.year, to: fmt(move.b.val), toYear: move.b.year } : null,
     slow: slow ? { from: slow.from, to: slow.to, change: fmt(Math.abs(slow.change)), rising: slow.change >= 0, driver: mainDriver } : null,
-    regime: lastRegime !== null ? { name: REGIME[lastRegime], explained: REGIME_EXPLAINED[lastRegime] } : null,
+    regime: lastRegime !== null ? { index: lastRegime, name: REGIME[lastRegime], explained: REGIME_EXPLAINED[lastRegime] } : null,
     recent,
   };
 }

@@ -20,6 +20,11 @@
   --grid: #ebebeb;
   --popover: #ffffff;
   --popover-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* V-Dem regime class (0–3), as text: blues for democracies, reds for autocracies, as in V-Dem's Democracy Report */
+  --regime-0: #9e1b1b;       /* closed autocracy */
+  --regime-1: #b8561a;       /* electoral autocracy */
+  --regime-2: #2f6fae;       /* electoral democracy */
+  --regime-3: #1b4f8a;       /* liberal democracy */
   /* one spacing scale: space-1/2 inside a block, space-3/5 between blocks in a section, space-6 between sections */
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -43,6 +48,10 @@
     --grid: #2c2824;
     --popover: #211e1b;
     --popover-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    --regime-0: #ff7a7a;
+    --regime-1: #f0a060;
+    --regime-2: #6aa0dc;
+    --regime-3: #9cc3ff;
   }
 }
 

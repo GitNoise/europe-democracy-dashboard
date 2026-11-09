@@ -6,6 +6,10 @@
   import { LINE_HEIGHT } from '../lib/notes.js';
 
   let { country } = $props();
+  const LANE_HELP = {
+    cabinet: 'The head of state in the years V-Dem judges them to share or hold the power to appoint and dismiss ministers.',
+    veto: 'The head of state in the years they can block laws that parliament can only override with a supermajority, or not at all, with or without power over ministers.',
+  };
   let width = $state(0), height = $state(0);
   let hover = $state(null);
 
@@ -52,7 +56,8 @@
         name: government.parties.length > 1 ? government.name.replace(/\s*\([^)]*\)\s*$/, '') : government.name,
         colour: government.colour, parties: government.parties.length > 1 ? government.parties : null,
       },
-      head: country.heads.find((h) => h.s <= +d.date && +d.date < h.e) ?? null,
+      // the head of state that year, with the powers they held (power over ministers, a veto, or both)
+      head: ((hs) => hs.length ? { ...hs[0], powers: hs.map((h) => h.power) } : null)(country.heads.filter((h) => h.s <= +d.date && +d.date < h.e)),
       regime: Number.isFinite(d.reg) ? REGIME[d.reg].replace(/^an? /, '') : null,
       move: moveFor(d.year),
     };
@@ -112,17 +117,20 @@
         <line x1={g.xa} x2={g.xa} y1={layout.strip.y} y2={layout.strip.y + layout.strip.height} stroke="var(--panel)" />
       {/each}
 
-      <!-- a head of state who shares or holds power over the cabinet, in the years they do -->
-      {#if layout.lane}
-        <text class="axis" x="0" y={layout.lane.y + layout.lane.height / 2} dy="0.35em">Head of state<title>Drawn only in the years V-Dem judges the head of state to share or hold the power to appoint and dismiss ministers. In other years the role is ceremonial.</title></text>
-        <line x1={plot.left} x2={layout.end.x} y1={layout.lane.y + layout.lane.height / 2} y2={layout.lane.y + layout.lane.height / 2} stroke="var(--grid)" />
-        {#each layout.heads as h}
-          <!-- each term with power is a thin pill, a little short of its ends so consecutive terms stay apart -->
+      <!-- the head of state, in the years they have power over the cabinet, and (a lane apart) a veto over laws only -->
+      {#if layout.lanes.length}
+        <text class="axis" x="0" y={(layout.lanes[0].y + layout.lanes.at(-1).y + layout.lanes.at(-1).height) / 2} dy="0.35em">Head of state</text>
+      {/if}
+      {#each layout.lanes as lane}
+        <text class="axis" x={layout.end.x + 9} y={lane.y + lane.height / 2} dy="0.35em">{lane.label}<title>{LANE_HELP[lane.power]}</title></text>
+        <line x1={plot.left} x2={layout.end.x} y1={lane.y + lane.height / 2} y2={lane.y + lane.height / 2} stroke="var(--grid)" />
+        {#each lane.heads as h}
+          <!-- each term is a thin pill, a little short of its ends so consecutive terms stay apart -->
           {@const w = Math.max(layout.headRadius * 2, h.xb - h.xa - 2)}
-          <rect x={(h.xa + h.xb) / 2 - w / 2} y={layout.lane.y + layout.lane.height / 2 - layout.headRadius} width={w}
+          <rect x={(h.xa + h.xb) / 2 - w / 2} y={lane.y + lane.height / 2 - layout.headRadius} width={w}
                 height={layout.headRadius * 2} rx={layout.headRadius} fill={h.colour}><title>{h.years}: {h.name}{h.party ? ` (${h.party})` : ''}</title></rect>
         {/each}
-      {/if}
+      {/each}
 
       <!-- lowest / highest since -->
       {#if layout.reference}
@@ -135,6 +143,8 @@
       <path d={layout.path} fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round" />
       <circle cx={layout.end.x} cy={layout.end.y} r="4" fill="var(--ink)" />
       <text class="end" x={layout.end.x + 9} y={layout.end.y} dy="0.35em">{layout.end.label}</text>
+      <!-- today's regime class, V-Dem's Regimes of the World -->
+      {#each layout.end.classLines as l}<text class="axis" x={layout.end.x + 9} y={l.y} style:fill="var(--regime-{layout.end.regime})">{l.text}</text>{/each}
 
       <!-- notes -->
       {#each layout.brackets as b}
@@ -154,9 +164,9 @@
         <line x1={hover.x} x2={hover.x} y1={plot.top} y2={plot.bottom} stroke="var(--axis)" />
         <circle cx={hover.x} cy={hover.y} r="4" fill="var(--panel)" stroke="var(--ink)" stroke-width="2" />
       {/if}
-      <!-- the hover target runs from the top of the plot down through the government strip and the head-of-state lane -->
+      <!-- the hover target runs from the top of the plot down through the government strip and the head-of-state lanes -->
       <rect x={plot.left} y={plot.top} width={plot.right - plot.left}
-            height={(layout.lane ? layout.lane.y + layout.lane.height : layout.strip.y + layout.strip.height) - plot.top} fill="transparent"
+            height={(layout.lanes.length ? layout.lanes.at(-1).y + layout.lanes.at(-1).height : layout.strip.y + layout.strip.height) - plot.top} fill="transparent"
             role="presentation" onpointermove={onPointer} onpointerenter={onPointer} onpointerleave={() => (hover = null)} />
     </svg>
 
@@ -182,7 +192,7 @@
               {/if}
             {/if}
             {#if hover.head}
-              <div class="gov"><i style:background={hover.head.colour || GREY}></i>Head of state: {hover.head.name}{hover.head.party ? ` (${hover.head.party})` : ''}</div>
+              <div class="gov"><i style:background={hover.head.colour || GREY}></i>Head of state: {hover.head.name}{hover.head.party ? ` (${hover.head.party})` : ''}{hover.head.powers.includes('veto') ? (hover.head.powers.includes('cabinet') ? ', plus a veto over laws' : ', veto over laws') : ''}</div>
             {/if}
             {#if hover.move}
               <div class="move"><b>{hover.move.label}</b>{hover.move.text ? `: ${hover.move.text}` : ''}</div>

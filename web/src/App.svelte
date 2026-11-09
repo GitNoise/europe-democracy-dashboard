@@ -6,6 +6,7 @@
   import SmallMultiples from './components/SmallMultiples.svelte';
   import { DEFAULT_COUNTRY } from './lib/constants.js';
   import { countryView, loadData } from './lib/data.js';
+  import { headLanes } from './lib/chartLayout.js';
 
   let db = $state(null);
   let error = $state(null);
@@ -32,6 +33,31 @@
 
   const scrollToChart = () => document.getElementById('chart')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const scrollToAll = () => document.getElementById('all')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const fmt2 = (v) => v.toFixed(2);
+  /** Numbers for "Reading the score", from the latest year in the data, so they follow each new release. */
+  const facts = $derived.by(() => {
+    if (!countries.length) return {};
+    const year = Math.max(...countries.map((c) => c.last.year));
+    const now = countries.filter((c) => c.last.year === year).sort((a, b) => b.last.val - a.last.val);
+    const pick = (id) => now.find((c) => c.id === id);
+    const liberal = now.filter((c) => c.last.reg === 3).at(-1), electoral = now.find((c) => c.last.reg === 2);
+    const widths = now.map((c) => c.last.hi - c.last.lo).sort((a, b) => a - b);
+    return {
+      year, top: now[0], bottom: now.at(-1),
+      anchors: ['DEU', 'HUN'].map(pick).filter((c) => c && c !== now[0] && c !== now.at(-1)),
+      overlap: liberal && electoral && electoral.last.val > liberal.last.val ? { liberal, electoral } : null,
+      width: widths[Math.floor(widths.length / 2)],
+      example: pick('DEU') ?? now[0],
+    };
+  });
+
+  /** The key to the head-of-state lane under the chart, naming only the kinds of bar this country has. */
+  // footnotes to the head-of-state lanes, numbered as on the chart (lib/chartLayout.js headLanes)
+  const FOOTNOTES = {
+    cabinet: 'Head of state, cabinet: years when V-Dem judges the head of state to share or hold the power to appoint and dismiss ministers.',
+    veto: 'Head of state, veto: years when the head of state can block laws that parliament can only override with a supermajority, or not at all.',
+  };
 </script>
 
 <nav class="masthead" aria-label="Site">
@@ -49,8 +75,8 @@
   <h1><span class="label">Who governed</span> when Europe’s democracies <span class="rose">rose</span> and <span class="fell">fell</span></h1>
   <p class="dek">
     Democracies don’t erode or recover on their own: someone is in charge while it happens. For every European country
-    in V-Dem’s data, this page follows the Liberal Democracy Index since 1945, from 0 (least democratic) to 1 (most),
-    and shades the party that led the government during each big rise or fall.
+    in V-Dem’s data, this page follows the Liberal Democracy Index since 1945, from 0 (least democratic) to 1 (most;
+    <a href="#index">what the score means</a>), and shades the party that led the government during each big rise or fall.
   </p>
   <p class="byline">A project by <a href="https://gitnoise.github.io/portfolio/">Patrick Wojda</a></p>
 </header>
@@ -76,10 +102,14 @@
     <p class="source">
       Source: V-Dem Institute (v16). Shaded: the party in power during each big rise or fall. Government: every government,
       coalition partners stacked under the leading party.
-      {#if country.heads.length}Head of state: drawn only in the years V-Dem judges the head of state to share or hold
-        the power to appoint and dismiss ministers; in other years the role is ceremonial.{/if}
       <a href="#method">How this works</a>.
     </p>
+    {#if country.heads.length}
+      <ol class="footnotes">
+        {#each headLanes(country) as l}<li value={l.n}>{FOOTNOTES[l.power]}</li>{/each}
+        <li class="plain">In other years the head of state’s role is ceremonial.</li>
+      </ol>
+    {/if}
   {/if}
 </main>
 
@@ -93,12 +123,41 @@
 
 <section class="method" id="method">
   <h2>How this works</h2>
+  <h3 id="index">Reading the score</h3>
   <p>
-    <b>The index.</b> Each chart follows V-Dem’s Liberal Democracy Index (version 16), built from expert assessments and
-    scored from 0 (least democratic) to 1 (most). It combines free and fair elections with the checks on power: courts,
-    parliament and civil liberties. Every chart shows the full scale, 0 to 1, so countries compare at a glance. The regime
-    class in each subtitle is V-Dem’s Regimes of the World.
+    <b>What it measures.</b> Each chart follows V-Dem’s Liberal Democracy Index (version 16). It asks how far a country
+    lives up to the ideal of liberal democracy, on a scale from 0 (least democratic) to 1 (most). It is built from the
+    ratings of country experts, several for each country and year, combined by a statistical model. It has two halves:
+    elections (free and fair votes, the right to vote, freedom of expression and association, elected officials) and
+    limits on power (independent courts, a parliament that checks the government, the rule of law and civil liberties).
+    Half of the index is the two multiplied together, so a country needs both to score high: free elections don’t make
+    up for captured courts.
   </p>
+  <p>
+    <b>Liberal and electoral democracy.</b> An electoral democracy holds free and fair elections. A liberal democracy
+    also limits what the winners can do: courts, parliament and the law constrain the government and protect the rights
+    of people who lost the vote. The regime class in each subtitle is V-Dem’s Regimes of the World, which uses its own thresholds rather than a cut-off on this score{#if facts.overlap}: {facts.overlap.liberal.name} ({fmt2(facts.overlap.liberal.last.val)})
+    is a liberal democracy while {facts.overlap.electoral.name} ({fmt2(facts.overlap.electoral.last.val)}) is an
+    electoral democracy{/if}.
+  </p>
+  {#if facts.top}
+    <p>
+      <b>What the numbers mean.</b> In {facts.year}, {facts.top.name} scores highest in Europe at {fmt2(facts.top.last.val)},
+      {#each facts.anchors as a, i}{a.name} {fmt2(a.last.val)}{i < facts.anchors.length - 1 ? ', ' : ''}{/each}, and
+      {facts.bottom.name} lowest at {fmt2(facts.bottom.last.val)}. No country reaches 1. A change of a few hundredths in a
+      year is usually within the noise; this page calls a rise or fall big at 0.10, and V-Dem calls a country
+      autocratizing when it falls by 0.05 or more over ten years beyond its uncertainty. Every chart shows the full scale,
+      0 to 1, so countries compare at a glance.
+    </p>
+    <p>
+      <b>Uncertainty.</b> Each score is an estimate. V-Dem gives a range that holds the true value with 68% probability
+      (about one standard deviation each side); for European countries in {facts.year} it is typically about
+      {fmt2(facts.width)} wide: {facts.example.name}’s {fmt2(facts.example.last.val)} most likely lies between
+      {fmt2(facts.example.last.lo)} and {fmt2(facts.example.last.hi)}. Two countries whose ranges overlap can’t be ranked with
+      confidence, and a change counts as real only when the ranges before and after don’t overlap, which is how the
+      trajectories in the grid are grouped. New V-Dem releases can also revise past years.
+    </p>
+  {/if}
   <p>
     <b>Big moves.</b> Rises and falls follow V-Dem’s Episodes of Regime Transformation: a move starts when the score
     moves 0.01 in a year, continues while it keeps going that way, and ends when it turns back by 0.03 in a year, gives
@@ -118,7 +177,9 @@
     government; party colours are the parties’ own. Under it, a thin bar marks each head of state in the years V-Dem
     scores them as sharing or holding power over the appointment and dismissal of ministers, such as France’s
     presidents since 1958, Finland’s before 2000 or Türkiye’s since 2018, when the president also became head of
-    government. In other years the head of state’s role is ceremonial.
+    government. A second lane, marked “veto”, shows the years a head of state can block laws that parliament can only
+    override with a supermajority or not at all, such as Poland’s presidents since 1992; a head of state with both
+    powers, such as Russia’s, shows in both lanes. In other years the head of state’s role is ceremonial.
   </p>
   <p>
     <b>Notes.</b> Each note names an event that coincides with a move. It shows what happened at the time, not proof
@@ -195,12 +256,17 @@
   }
   .status { color: var(--text-muted); margin: auto; font-family: var(--font-sans); font-size: 0.9rem; }
   .source { font-family: var(--font-sans); color: var(--text-muted); font-size: 0.78rem; line-height: 1.6; margin: var(--space-2) 0 0; }
+  /* footnotes to the head-of-state lanes: same face as the source line, numbered like the labels on the chart */
+  .footnotes { font-family: var(--font-sans); color: var(--text-muted); font-size: 0.78rem; line-height: 1.6; margin: 0.3rem 0 0; padding-left: 1.2rem; }
+  .footnotes li::marker { font-family: var(--font-chart); font-size: 0.72rem; }
+  .footnotes li.plain { list-style: none; }
 
   .all { margin-top: var(--space-6); scroll-margin-top: 1rem; }
   .all h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 var(--space-1); }
   .all p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.45; margin: 0; }
   .method { margin-top: var(--space-6); scroll-margin-top: 1rem; }
   .method h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 var(--space-3); }
+  .method h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; margin: var(--space-3) 0 var(--space-1); scroll-margin-top: var(--space-3); }
   .method p { font-size: 1.05rem; line-height: 1.55; margin: 0 0 var(--space-2); max-width: 40rem; }
   .method b { font-family: var(--font-display); font-weight: 700; }
   .method a, .source a { color: var(--text); text-underline-offset: 3px; }

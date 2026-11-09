@@ -115,7 +115,7 @@ function governmentsFor(db, id) {
 
 /** Every detected move for one country (rises, falls, swings, jumps, dips, spikes, trend changes, slow trends). */
 /**
- * Heads of state in the years they share or hold power over the cabinet and aren't already the government in power
+ * Heads of state in the years they share or hold power over the cabinet, or have a strong veto over laws
  * (pipeline/democracy_pipeline/heads.py). Years are as V-Dem records them, on 31 December; a spell is drawn over
  * its whole years. A party takes the colour it has in the governments table, else party_colours.csv, else grey.
  */
@@ -130,6 +130,7 @@ function headsFor(db, id) {
     name: r.name,
     party: r.party,
     role: r.role,
+    power: r.power,   // 'cabinet': shares or holds power over ministers; 'veto': only a strong veto over laws
     colour: colourOf.get(r.party) || '',
   }));
 }

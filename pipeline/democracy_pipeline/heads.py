@@ -1,10 +1,12 @@
-"""Heads of state who share or hold power over the cabinet, for the second lane under each chart (RULES.md §1, §7).
+"""Heads of state with power over the cabinet or a strong veto, for the lanes under each chart (RULES.md §1, §7).
 
     python -m democracy_pipeline.heads --vdem V-Dem-CY-Full+Others-v16.csv
 
-Needs v2exnamhos, v2ex_hosw and v2exhoshog from the full V-Dem release. Writes web/public/data/heads_of_state.csv.
-Every year V-Dem scores the head of state's power over the cabinet at 0.5 or more (shared or more) is drawn, whoever
-they are and whatever their party (a head of state who is also head of government, v2exhoshog, scores 1). Parties come from pipeline/head_of_state_parties.csv.
+Needs v2exnamhos, v2ex_hosw and v2exdfvths_ord from the full V-Dem release. Writes web/public/data/heads_of_state.csv.
+Two independent kinds of year, a year can be both: `cabinet` when V-Dem scores the head of state's power over the
+cabinet at 0.5 or more (shared or more; a head of state who is also head of government scores 1), and `veto` when their
+veto over laws can only be overridden by a supermajority or not at all (v2exdfvths_ord 3 or more). Whoever they are and
+whatever their party. Parties come from pipeline/head_of_state_parties.csv.
 """
 import argparse
 import sys
@@ -14,10 +16,10 @@ import pandas as pd
 
 from .config import CONFIG, DATA_DIR, PIPELINE_DIR
 
-COLUMNS = ["country_text_id", "year", "v2exnamhos", "v2ex_hosw", "v2exhoshog"]
+COLUMNS = ["country_text_id", "year", "v2exnamhos", "v2ex_hosw", "v2exdfvths_ord"]
 PARTIES_FILE = PIPELINE_DIR / "head_of_state_parties.csv"
 OUT_FILE = DATA_DIR / "heads_of_state.csv"
-MIN_POWER = 0.5
+MIN_POWER, MIN_VETO = 0.5, 3
 
 
 def main():
@@ -34,7 +36,9 @@ def main():
     rows, unknown = [], set()
     for c, g in d.groupby("country_text_id"):
         g = g.assign(year=g.year.astype(int))
-        for r in g[g.v2ex_hosw >= MIN_POWER].itertuples():
+        years = [(r, power) for r in g.itertuples()
+                 for power, held in (("cabinet", r.v2ex_hosw >= MIN_POWER), ("veto", r.v2exdfvths_ord >= MIN_VETO)) if held]
+        for r, power in years:
             name = r.v2exnamhos
             if not isinstance(name, str):
                 continue
@@ -42,15 +46,16 @@ def main():
                 unknown.add((c, name))
                 continue
             p = parties.loc[(c, name)]
-            rows.append({"id": c, "year": r.year, "name": name, "short": p.short, "party": p.party, "role": p.role})
+            rows.append({"id": c, "year": r.year, "name": name, "short": p.short, "party": p.party, "role": p.role, "power": power})
     if unknown:
         sys.exit("No party in head_of_state_parties.csv for: " + "; ".join(f"{c} {n}" for c, n in sorted(unknown)))
 
-    # one row per unbroken spell: same person, consecutive years
-    y = pd.DataFrame(rows)
-    spell = ((y.id != y.id.shift()) | (y.name != y.name.shift()) | (y.year != y.year.shift() + 1)).cumsum()
+    # one row per unbroken spell: same person, same kind of power, consecutive years
+    y = pd.DataFrame(rows).sort_values(["id", "power", "year"], kind="stable")
+    spell = ((y.id != y.id.shift()) | (y.name != y.name.shift()) | (y.power != y.power.shift())
+             | (y.year != y.year.shift() + 1)).cumsum()
     out = y.groupby(spell).agg(id=("id", "first"), start=("year", "min"), end=("year", "max"),
-                               name=("short", "first"), party=("party", "first"), role=("role", "first"))
+                               name=("short", "first"), party=("party", "first"), role=("role", "first"), power=("power", "first"))
     out.to_csv(OUT_FILE, index=False)
     print(f"{len(out)} spells in {out.id.nunique()} countries → {OUT_FILE}")
 

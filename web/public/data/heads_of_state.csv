@@ -1,109 +1,185 @@
-id,start,end,name,party,role
-ALB,1986,1990,Alia,PPSh,
-ALB,1992,1996,Berisha,PD,
-ARM,1990,1997,Ter-Petrosyan,ANM,
-ARM,1998,2007,Kocharyan,,
-ARM,2008,2012,Sargsyan,HHK,
-ARM,2013,2017,Sargsyan,HHK,
-AUT,1950,1950,Figl,ÖVP,
-AZE,1990,1991,Mutallibov,Communists,
-AZE,1992,1992,Elchibey,APF,
-AZE,1993,2002,Heydar Aliyev,YAP,
-AZE,2003,2025,Ilham Aliyev,YAP,
-BGR,1971,1988,Zhivkov,BSP,
-BGR,1989,1989,Mladenov,BSP,
-BIH,1992,1995,Izetbegović,SDA,
-BLR,1995,2025,Lukashenko,,
-CHE,1945,2025,Federal Council,Federal Council,collective
-CYP,1945,1945,Woolley,,foreign
-CYP,1946,1948,Fletcher,,foreign
-CYP,1949,1953,Wright,,foreign
-CYP,1954,1954,Armitage,,foreign
-CYP,1955,1956,Harding,,foreign
-CYP,1957,1959,Foot,,foreign
-CYP,1960,1963,Makarios and Küçük,,collective
-CYP,1964,1973,Makarios,Makarios,
-CYP,1974,1976,Makarios,Makarios,
-CYP,1977,1987,Kyprianou,DIKO,
-CYP,1988,1992,Vassiliou,Vassiliou,
-CYP,1993,2002,Clerides,DISY,
-CYP,2003,2007,Papadopoulos,DIKO,
-CYP,2008,2012,Christofias,AKEL,
-CYP,2013,2022,Anastasiades,DISY,
-CYP,2023,2025,Christodoulides,Christodoulides,
-CZE,1948,1952,Gottwald,KSČ,
-CZE,1957,1967,Novotný,KSČ,
-CZE,1975,1986,Husák,KSČ,
-ESP,1945,1974,Franco,Francoist,
-ESP,1975,1976,Juan Carlos I,,monarch
-FIN,1945,1945,Mannerheim,,
-FIN,1946,1955,Paasikivi,KOK,
-FIN,1956,1980,Kekkonen,KESK,
-FIN,1981,1993,Koivisto,SDP,
-FIN,1994,1999,Ahtisaari,SDP,
-FRA,1945,1945,de Gaulle,Gaullists,
-FRA,1946,1946,Bidault,MRP,
-FRA,1958,1958,Coty,CNIP,
-FRA,1959,1968,de Gaulle,Gaullists,
-FRA,1969,1973,Pompidou,Gaullists,
-FRA,1974,1980,Giscard d’Estaing,UDF,
-FRA,1981,1994,Mitterrand,PS,
-FRA,1995,2006,Chirac,RPR,
-FRA,2007,2011,Sarkozy,LR,
-FRA,2012,2016,Hollande,PS,
-FRA,2017,2025,Macron,RE,
-GEO,1990,1991,Gamsakhurdia,Round Table,
-GEO,1992,2003,Shevardnadze,Shevardnadze,
-GEO,2004,2011,Saakashvili,UNM,
-GRC,1972,1972,Papadopoulos,,military
-HUN,1945,1945,High National Council,,collective
-ITA,2017,2017,Mattarella,,
-MDA,1990,1993,Snegur,,
-MDA,2001,2008,Voronin,PCRM,
-MLT,1945,1945,Schreiber,,foreign
-MLT,1946,1946,Douglas,,foreign
-MLT,1958,1958,Laycock,,foreign
-MLT,1959,1961,Grantham,,foreign
-NLD,1945,1945,Queen Wilhelmina,,monarch
-POL,1945,1951,Bierut,PZPR,
-POL,1985,1988,Jaruzelski,PZPR,
-ROU,1945,1947,King Michael,,monarch
-ROU,1948,1951,Parhon,,
-ROU,1952,1957,Groza,FP,
-ROU,1958,1960,Maurer,PCR,
-ROU,1961,1964,Gheorghiu-Dej,PCR,
-ROU,1965,1966,Stoica,PCR,
-ROU,1967,1988,Ceaușescu,PCR,
-RUS,1945,1952,Stalin,CPSU,
-RUS,1953,1963,Khrushchev,CPSU,
-RUS,1964,1981,Brezhnev,CPSU,
-RUS,1982,1983,Andropov,CPSU,
-RUS,1984,1984,Chernenko,CPSU,
-RUS,1985,1990,Gorbachev,CPSU,
-RUS,1991,1998,Yeltsin,,
-RUS,1999,2007,Putin,United Russia,
-RUS,2008,2011,Medvedev,United Russia,
-RUS,2012,2025,Putin,United Russia,
-SRB,1945,1952,Ribar,SKJ,
-SRB,1953,1979,Tito,SKJ,
-SRB,1980,1980,Mijatović,SKJ,
-SRB,1981,1981,Kraigher,SKJ,
-SRB,1982,1982,Stambolić,SKJ,
-SRB,1983,1983,Spiljak,SKJ,
-SRB,1984,1984,Đuranović,SKJ,
-SRB,1985,1985,Vlajković,SKJ,
-SRB,1986,1986,Hasani,SKJ,
-SRB,1987,1987,Mojsov,SKJ,
-SRB,1988,1988,Dizdarević,SKJ,
-SRB,1989,1999,Milošević,SPS,
-SRB,2000,2000,Koštunica,DSS,
-TUR,1960,1960,Gürsel,,military
-TUR,1980,1982,Evren,,military
-TUR,2017,2025,Erdoğan,AKP,
-UKR,1990,1993,Kravchuk,,
-UKR,1994,2004,Kuchma,,
-UKR,2005,2005,Yushchenko,Our Ukraine,
-UKR,2010,2013,Yanukovych,PoR,
-UKR,2019,2025,Zelensky,SN,
-XKX,1999,2000,Kouchner,,foreign
-XKX,2001,2001,Hækkerup,,foreign
+id,start,end,name,party,role,power
+ALB,1986,1990,Alia,PPSh,,cabinet
+ALB,1992,1996,Berisha,PD,,cabinet
+ALB,1945,1945,Gullmann,,,veto
+ALB,1983,1991,Alia,PPSh,,veto
+ARM,1990,1997,Ter-Petrosyan,ANM,,cabinet
+ARM,1998,2007,Kocharyan,,,cabinet
+ARM,2008,2012,Sargsyan,HHK,,cabinet
+ARM,2013,2017,Sargsyan,HHK,,cabinet
+ARM,1991,1997,Ter-Petrosyan,ANM,,veto
+ARM,1998,2007,Kocharyan,,,veto
+ARM,2008,2012,Sargsyan,HHK,,veto
+ARM,2013,2017,Sargsyan,HHK,,veto
+AUT,1950,1950,Figl,ÖVP,,cabinet
+AZE,1990,1991,Mutallibov,Communists,,cabinet
+AZE,1992,1992,Elchibey,APF,,cabinet
+AZE,1993,2002,Heydar Aliyev,YAP,,cabinet
+AZE,2003,2025,Ilham Aliyev,YAP,,cabinet
+AZE,1990,1991,Mutallibov,Communists,,veto
+AZE,1992,1992,Elchibey,APF,,veto
+AZE,1993,2002,Heydar Aliyev,YAP,,veto
+AZE,2003,2025,Ilham Aliyev,YAP,,veto
+BGR,1971,1988,Zhivkov,BSP,,cabinet
+BGR,1989,1989,Mladenov,BSP,,cabinet
+BGR,1971,1988,Zhivkov,BSP,,veto
+BGR,1989,1989,Mladenov,BSP,,veto
+BIH,1992,1995,Izetbegović,SDA,,cabinet
+BLR,1995,2025,Lukashenko,,,cabinet
+BLR,1996,2025,Lukashenko,,,veto
+CHE,1945,2025,Federal Council,Federal Council,collective,cabinet
+CYP,1945,1945,Woolley,,foreign,cabinet
+CYP,1946,1948,Fletcher,,foreign,cabinet
+CYP,1949,1953,Wright,,foreign,cabinet
+CYP,1954,1954,Armitage,,foreign,cabinet
+CYP,1955,1956,Harding,,foreign,cabinet
+CYP,1957,1959,Foot,,foreign,cabinet
+CYP,1960,1963,Makarios and Küçük,,collective,cabinet
+CYP,1964,1973,Makarios,Makarios,,cabinet
+CYP,1974,1976,Makarios,Makarios,,cabinet
+CYP,1977,1987,Kyprianou,DIKO,,cabinet
+CYP,1988,1992,Vassiliou,Vassiliou,,cabinet
+CYP,1993,2002,Clerides,DISY,,cabinet
+CYP,2003,2007,Papadopoulos,DIKO,,cabinet
+CYP,2008,2012,Christofias,AKEL,,cabinet
+CYP,2013,2022,Anastasiades,DISY,,cabinet
+CYP,2023,2025,Christodoulides,Christodoulides,,cabinet
+CYP,1961,1963,Makarios and Küçük,,collective,veto
+CYP,1964,1973,Makarios,Makarios,,veto
+CYP,1974,1976,Makarios,Makarios,,veto
+CYP,1977,1987,Kyprianou,DIKO,,veto
+CYP,1988,1992,Vassiliou,Vassiliou,,veto
+CYP,1993,2002,Clerides,DISY,,veto
+CYP,2003,2007,Papadopoulos,DIKO,,veto
+CYP,2008,2012,Christofias,AKEL,,veto
+CYP,2013,2022,Anastasiades,DISY,,veto
+CYP,2023,2025,Christodoulides,Christodoulides,,veto
+CZE,1948,1952,Gottwald,KSČ,,cabinet
+CZE,1957,1967,Novotný,KSČ,,cabinet
+CZE,1975,1986,Husák,KSČ,,cabinet
+CZE,1945,1946,Beneš,ČSNS,,veto
+CZE,2021,2021,Zeman,,,veto
+ESP,1945,1974,Franco,Francoist,,cabinet
+ESP,1975,1976,Juan Carlos I,,monarch,cabinet
+ESP,1945,1974,Franco,Francoist,,veto
+ESP,1975,1976,Juan Carlos I,,monarch,veto
+FIN,1945,1945,Mannerheim,,,cabinet
+FIN,1946,1955,Paasikivi,KOK,,cabinet
+FIN,1956,1980,Kekkonen,KESK,,cabinet
+FIN,1981,1993,Koivisto,SDP,,cabinet
+FIN,1994,1999,Ahtisaari,SDP,,cabinet
+FIN,1945,1945,Mannerheim,,,veto
+FIN,1946,1955,Paasikivi,KOK,,veto
+FIN,1956,1980,Kekkonen,KESK,,veto
+FIN,1981,1986,Koivisto,SDP,,veto
+FRA,1945,1945,de Gaulle,Gaullists,,cabinet
+FRA,1946,1946,Bidault,MRP,,cabinet
+FRA,1958,1958,Coty,CNIP,,cabinet
+FRA,1959,1968,de Gaulle,Gaullists,,cabinet
+FRA,1969,1973,Pompidou,Gaullists,,cabinet
+FRA,1974,1980,Giscard d’Estaing,UDF,,cabinet
+FRA,1981,1994,Mitterrand,PS,,cabinet
+FRA,1995,2006,Chirac,RPR,,cabinet
+FRA,2007,2011,Sarkozy,LR,,cabinet
+FRA,2012,2016,Hollande,PS,,cabinet
+FRA,2017,2025,Macron,RE,,cabinet
+GEO,1990,1991,Gamsakhurdia,Round Table,,cabinet
+GEO,1992,2003,Shevardnadze,Shevardnadze,,cabinet
+GEO,2004,2011,Saakashvili,UNM,,cabinet
+GEO,1995,1995,Shevardnadze,Shevardnadze,,veto
+GEO,2005,2012,Saakashvili,UNM,,veto
+GEO,2013,2014,Margvelashvili,GD,,veto
+GRC,1972,1972,Papadopoulos,,military,cabinet
+GRC,1968,1971,Zoitakis,,military,veto
+GRC,1972,1972,Papadopoulos,,military,veto
+GRC,1973,1973,Ghizikis,,military,veto
+GRC,1974,1974,Stasinopoulos,,,veto
+HUN,1945,1945,High National Council,,collective,cabinet
+ISL,1945,1951,Björnsson,,,veto
+ISL,1952,1967,Ásgeirsson,,,veto
+ISL,1968,1979,Eldjárn,,,veto
+ISL,1980,1995,Finnbogadóttir,,,veto
+ISL,1996,2015,Grímsson,,,veto
+ISL,2016,2023,Jóhannesson,,,veto
+ISL,2024,2025,Tómasdóttir,,,veto
+ITA,2017,2017,Mattarella,,,cabinet
+MDA,1990,1993,Snegur,,,cabinet
+MDA,2001,2008,Voronin,PCRM,,cabinet
+MLT,1945,1945,Schreiber,,foreign,cabinet
+MLT,1946,1946,Douglas,,foreign,cabinet
+MLT,1958,1958,Laycock,,foreign,cabinet
+MLT,1959,1961,Grantham,,foreign,cabinet
+NLD,1945,1945,Queen Wilhelmina,,monarch,cabinet
+POL,1945,1951,Bierut,PZPR,,cabinet
+POL,1985,1988,Jaruzelski,PZPR,,cabinet
+POL,1992,1994,Wałęsa,Solidarity,,veto
+POL,1995,2004,Kwaśniewski,SLD,,veto
+POL,2005,2009,Kaczyński,PiS,,veto
+POL,2010,2014,Komorowski,PO,,veto
+POL,2015,2024,Duda,PiS,,veto
+POL,2025,2025,Nawrocki,PiS,,veto
+PRT,1976,1981,Eanes,,military,veto
+PRT,2020,2020,Rebelo de Sousa,PSD,,veto
+ROU,1945,1947,King Michael,,monarch,cabinet
+ROU,1948,1951,Parhon,,,cabinet
+ROU,1952,1957,Groza,FP,,cabinet
+ROU,1958,1960,Maurer,PCR,,cabinet
+ROU,1961,1964,Gheorghiu-Dej,PCR,,cabinet
+ROU,1965,1966,Stoica,PCR,,cabinet
+ROU,1967,1988,Ceaușescu,PCR,,cabinet
+ROU,1961,1964,Gheorghiu-Dej,PCR,,veto
+ROU,1965,1966,Stoica,PCR,,veto
+ROU,1967,1988,Ceaușescu,PCR,,veto
+ROU,1989,1989,Iliescu,FSN,,veto
+RUS,1945,1952,Stalin,CPSU,,cabinet
+RUS,1953,1963,Khrushchev,CPSU,,cabinet
+RUS,1964,1981,Brezhnev,CPSU,,cabinet
+RUS,1982,1983,Andropov,CPSU,,cabinet
+RUS,1984,1984,Chernenko,CPSU,,cabinet
+RUS,1985,1990,Gorbachev,CPSU,,cabinet
+RUS,1991,1998,Yeltsin,,,cabinet
+RUS,1999,2007,Putin,United Russia,,cabinet
+RUS,2008,2011,Medvedev,United Russia,,cabinet
+RUS,2012,2025,Putin,United Russia,,cabinet
+RUS,1945,1952,Stalin,CPSU,,veto
+RUS,1953,1963,Khrushchev,CPSU,,veto
+RUS,1964,1981,Brezhnev,CPSU,,veto
+RUS,1982,1983,Andropov,CPSU,,veto
+RUS,1984,1984,Chernenko,CPSU,,veto
+RUS,1985,1990,Gorbachev,CPSU,,veto
+RUS,1991,1998,Yeltsin,,,veto
+RUS,1999,2007,Putin,United Russia,,veto
+RUS,2008,2011,Medvedev,United Russia,,veto
+RUS,2012,2025,Putin,United Russia,,veto
+SRB,1945,1952,Ribar,SKJ,,cabinet
+SRB,1953,1979,Tito,SKJ,,cabinet
+SRB,1980,1980,Mijatović,SKJ,,cabinet
+SRB,1981,1981,Kraigher,SKJ,,cabinet
+SRB,1982,1982,Stambolić,SKJ,,cabinet
+SRB,1983,1983,Spiljak,SKJ,,cabinet
+SRB,1984,1984,Đuranović,SKJ,,cabinet
+SRB,1985,1985,Vlajković,SKJ,,cabinet
+SRB,1986,1986,Hasani,SKJ,,cabinet
+SRB,1987,1987,Mojsov,SKJ,,cabinet
+SRB,1988,1988,Dizdarević,SKJ,,cabinet
+SRB,1989,1999,Milošević,SPS,,cabinet
+SRB,2000,2000,Koštunica,DSS,,cabinet
+SRB,1945,1952,Ribar,SKJ,,veto
+SRB,1953,1979,Tito,SKJ,,veto
+SRB,1980,1980,Mijatović,SKJ,,veto
+TUR,1960,1960,Gürsel,,military,cabinet
+TUR,1980,1982,Evren,,military,cabinet
+TUR,2017,2025,Erdoğan,AKP,,cabinet
+TUR,2018,2025,Erdoğan,AKP,,veto
+UKR,1990,1993,Kravchuk,,,cabinet
+UKR,1994,2004,Kuchma,,,cabinet
+UKR,2005,2005,Yushchenko,Our Ukraine,,cabinet
+UKR,2010,2013,Yanukovych,PoR,,cabinet
+UKR,2019,2025,Zelensky,SN,,cabinet
+UKR,1996,2004,Kuchma,,,veto
+UKR,2005,2009,Yushchenko,Our Ukraine,,veto
+UKR,2010,2013,Yanukovych,PoR,,veto
+UKR,2014,2018,Poroshenko,BPP,,veto
+UKR,2019,2025,Zelensky,SN,,veto
+XKX,1999,2000,Kouchner,,foreign,cabinet
+XKX,2001,2001,Hækkerup,,foreign,cabinet

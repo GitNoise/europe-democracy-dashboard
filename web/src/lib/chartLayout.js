@@ -1,6 +1,6 @@
 // Everything the main chart draws, worked out as plain data. Chart.svelte only renders it.
 import { format, line, scaleLinear, scaleUtc } from 'd3';
-import { FIRST_YEAR, GREY } from './constants.js';
+import { FIRST_YEAR, GREY, REGIME } from './constants.js';
 import { yearEnd } from './data.js';
 import { LABEL_ROW_HEIGHT, layoutPartyLabels } from './labels.js';
 import { placeArrowNotes, placeBrackets } from './notes.js';
@@ -17,6 +17,16 @@ function stripes(parties, height) {
   return parties.map((p, i) => ({ y: i ? lead + rest * (i - 1) : 0, h: i ? rest : lead, colour: p.colour || GREY }));
 }
 
+/**
+ * The head-of-state lanes a country has, in order, each with its footnote number: 'cabinet' (shares or holds power
+ * over ministers) and 'veto' (only a veto over laws). The chart labels each lane with its word and number; the
+ * footnotes under the chart explain them.
+ */
+const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+export const headLanes = (country) => ['cabinet', 'veto']
+  .filter((power) => country.heads.some((h) => h.power === power))
+  .map((power, i) => ({ power, n: i + 1, label: `${power}${SUP[i + 1]}` }));
+
 export function chartLayout(country, width, height) {
   const { series, last } = country;
   const W = Math.max(300, width);
@@ -24,13 +34,16 @@ export function chartLayout(country, width, height) {
   // the plot starts right of the labels on its left ('1.0', 'most', 'democratic', and the lanes' 'Government' and
   // 'Head of state', kept the same on every chart) and leaves room for the end value
   const left = Math.ceil(Math.max(...['democratic', 'Head of state'].map((t) => textWidth(t, FONTS.axis)))) + 8;
-  const right = W - (Math.ceil(textWidth('0.00', FONTS.endValue)) + 16);
-  // under the years: a strip with every government in its party colour, and under it a thinner lane for a head of
-  // state who shares or holds power over the cabinet, where the country ever had one
+  // right of the plot: the end value, with today's regime class in two short lines under (or over) it
+  const endClass = Number.isFinite(last.reg) ? REGIME[last.reg].replace(/^an? /, '').split(' ') : [];
+  const right = W - (Math.ceil(Math.max(textWidth('0.00', FONTS.endValue), textWidth('democracy', FONTS.axis))) + 16);
+  // under the years: a strip with every government in its party colour, then up to two thin lanes for the head of
+  // state, each only where the country ever had one: power over the cabinet, and a veto over laws only
   const STRIP = { gap: 26, height: 24 };
-  const LANE = { gap: 6, height: 12 };
-  const hasLane = country.heads.length > 0;
-  const marginBottom = STRIP.gap + STRIP.height + (hasLane ? LANE.gap + LANE.height : 0) + 4;
+  const LANE = { gap: 0, height: 11, first: 8.5 };   // first: from the government strip to the first lane
+  // one 'Head of state' label on the left for both lanes; each lane says its kind of power, with a footnote, at its right end
+  const LANES = headLanes(country);
+  const marginBottom = STRIP.gap + STRIP.height + (LANES.length ? LANE.first - LANE.gap : 0) + LANES.length * (LANE.gap + LANE.height) + 4;
   const x = scaleUtc([Date.UTC(FIRST_YEAR, 0, 1), yearEnd(last.year)], [left, right]);
 
   // bands are drawn only over the years with data; labels give the party's real time in power
@@ -75,7 +88,10 @@ export function chartLayout(country, width, height) {
       boxes.push({ l: px - 2, r: px + 2, t: py - 2, b: py + 2 });
     }
   }
-  boxes.push({ l: x(last.date) - 4, r: W, t: y(last.val) - 9, b: y(last.val) + 9 });
+  // the class goes under the value, or over it when the line ends near the bottom
+  const classAbove = last.val < 0.15, CLASS_LINE = 11;
+  const classTop = classAbove ? y(last.val) - 9 - endClass.length * CLASS_LINE : y(last.val) + 9;
+  boxes.push({ l: x(last.date) - 4, r: W, t: Math.min(y(last.val) - 9, classTop), b: Math.max(y(last.val) + 9, classTop + endClass.length * CLASS_LINE) });
 
   const brackets = placeBrackets(country, plot, boxes);
   const arrows = placeArrowNotes(country, plot, boxes);
@@ -92,19 +108,23 @@ export function chartLayout(country, width, height) {
                      stripes: stripes(g.parties, STRIP.height) }))
       .filter((g) => g.xb > g.xa),
     strip: { y: bottom + STRIP.gap, height: STRIP.height },
-    // a thin rounded bar for each head of state's term with power, so a person reads apart from the government's band
-    heads: country.heads
-      .map((h) => ({ s: Math.max(h.s, +x.domain()[0]), e: Math.min(h.e, dataEnd + 1), h }))
-      .filter((d) => d.e > d.s)
-      .map(({ s, e, h }) => ({ x: x((s + e) / 2), xa: x(s), xb: x(e), name: h.name, party: h.party, colour: h.colour || GREY,
-                               years: `${new Date(s).getUTCFullYear()}–${new Date(e - 1).getUTCFullYear()}` })),
+    // a thin rounded bar for each head of state's term, so a person reads apart from the government's band
+    lanes: LANES.map((l, i) => ({
+      ...l, y: bottom + STRIP.gap + STRIP.height + LANE.first + i * (LANE.gap + LANE.height), height: LANE.height,
+      heads: country.heads
+        .filter((h) => h.power === l.power)
+        .map((h) => ({ s: Math.max(h.s, +x.domain()[0]), e: Math.min(h.e, dataEnd + 1), h }))
+        .filter((d) => d.e > d.s)
+        .map(({ s, e, h }) => ({ xa: x(s), xb: x(e), name: h.name, party: h.party, colour: h.colour || GREY,
+                                 years: `${new Date(s).getUTCFullYear()}–${new Date(e - 1).getUTCFullYear()}` })),
+    })),
     headRadius: 3,
-    lane: hasLane ? { y: bottom + STRIP.gap + STRIP.height + LANE.gap, height: LANE.height } : null,
     // each year's label sits under the middle of that year's segment (its score is plotted at 31 December)
     // narrow charts (phones) label every other decade so the years don't run into each other
     ticks: TICK_YEARS.filter((_, i) => width >= 480 || i % 2 === 0).map((yr) => ({ x: x(Date.UTC(yr, 6, 1)), label: String(yr) })),
     path: line().x((d) => x(d.date)).y((d) => y(d.val))(series),
-    end: { x: x(last.date), y: y(last.val), label: fmt(last.val) },
+    end: { x: x(last.date), y: y(last.val), label: fmt(last.val),
+           regime: last.reg, classLines: endClass.map((t, i) => ({ text: t, y: classTop + CLASS_LINE * (i + 1) - 2 })) },
     reference, brackets, arrows,
   };
 }
